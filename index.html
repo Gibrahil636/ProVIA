@@ -59,7 +59,34 @@
   .usar{display:flex;align-items:center;gap:8px;margin-top:10px;font-size:14px;color:var(--muted);cursor:pointer;width:fit-content}
   .usar input{width:16px;height:16px;accent-color:var(--acao)}
   .prov.assistido{opacity:.62;background:#FAFBFA}
+  .prov.assistido:has(input:checked){opacity:1;background:var(--card);border-color:var(--acao)}
   .chip.cinza{border-color:#D8DCE0;background:#F1F3F4;color:#6B7480}
+  .chave-acoes{display:flex;align-items:center;gap:10px;margin-top:10px;flex-wrap:wrap}
+  .chave-status{font-family:var(--mono);font-size:12.5px}
+  .chave-status.ok{color:var(--pronto)} .chave-status.ruim{color:var(--erro)}
+  details.mini-guia{margin-top:10px}
+  details.mini-guia summary{cursor:pointer;font-size:14px;color:var(--acao)}
+  details.mini-guia ol{margin:8px 0 0 20px;font-size:14px;color:var(--muted)}
+  details.mini-guia li{margin-bottom:4px}
+  /* stepper de prompts por imagem */
+  #stepper{display:none;margin-top:12px;border:1px solid var(--line);border-radius:8px;padding:14px;background:#FBFCFB}
+  .stp-topo{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:8px}
+  .stp-contador{font-family:var(--mono);font-size:13px;color:var(--muted)}
+  #stepper textarea{width:100%;min-height:80px;padding:11px;border:1px solid var(--line);border-radius:8px;
+    font-family:'Atkinson Hyperlegible',sans-serif;font-size:15.5px;resize:vertical;background:#fff;color:var(--ink)}
+  #stepper textarea:focus{outline:2px solid var(--acao);outline-offset:1px}
+  .stp-nav{display:flex;gap:8px;margin-top:10px}
+  .stp-chips{display:flex;gap:6px;flex-wrap:wrap;margin-top:12px}
+  .stp-chips button{font-family:var(--mono);font-size:11px;border:1px solid var(--line);background:#fff;
+    border-radius:6px;padding:3px 8px;cursor:pointer;color:var(--muted)}
+  .stp-chips button.cheio{border-color:var(--pronto);color:var(--pronto)}
+  .stp-chips button.atual{outline:2px solid var(--acao)}
+  /* cartão assistido */
+  .assist-box{padding:10px;display:flex;flex-direction:column;gap:8px;font-size:13px}
+  .assist-box .ptexto{font-family:var(--mono);font-size:11.5px;color:var(--ink);background:#F4F6F8;
+    border:1px dashed var(--line);border-radius:6px;padding:8px;max-height:88px;overflow:auto}
+  .assist-acoes{display:flex;gap:6px;flex-wrap:wrap}
+  .assist-acoes .mini{text-decoration:none;display:inline-block}
   details.avancado{margin-top:12px}
   details.avancado summary{cursor:pointer;color:var(--muted);font-size:15px;user-select:none}
   details.avancado summary:hover{color:var(--ink)}
@@ -161,14 +188,36 @@
     <div class="prov">
       <div class="prov-cab"><span class="prov-nome">Google Gemini</span><span class="chip gratis">grátis</span></div>
       <p class="nota-prov">Crie uma chave gratuita em <a href="https://aistudio.google.com/apikey" target="_blank" rel="noopener">aistudio.google.com/apikey</a> (conta Google, sem cartão). Há uma cota diária de imagens.</p>
-      <input type="password" id="chaveGemini" placeholder="AIza..." autocomplete="off" aria-label="Chave de API do Gemini">
+      <details class="mini-guia"><summary>como criar a chave (1 minuto)</summary>
+        <ol><li>Abra o link acima e entre com sua conta Google.</li>
+        <li>Clique em <b>Create API key</b> e depois em <b>Copy</b>.</li>
+        <li>Volte aqui, cole no campo abaixo e aperte <b>testar chave</b>.</li></ol>
+      </details>
+      <input type="password" id="chaveGemini" name="provia-chave-g" placeholder="AIza..."
+             autocomplete="new-password" data-lpignore="true" data-1p-ignore data-bwignore
+             aria-label="Chave de API do Gemini">
+      <div class="chave-acoes">
+        <button class="mini" id="testGemini" type="button">testar chave</button>
+        <span class="chave-status" id="stGemini" aria-live="polite"></span>
+      </div>
       <label class="usar"><input type="checkbox" id="usarGemini" checked> usar neste lote</label>
     </div>
 
     <div class="prov">
       <div class="prov-cab"><span class="prov-nome">OpenAI (GPT Image)</span><span class="chip">opcional</span></div>
       <p class="nota-prov">Chave em <a href="https://platform.openai.com/api-keys" target="_blank" rel="noopener">platform.openai.com/api-keys</a>. Contas novas podem receber crédito de boas-vindas; depois, cada imagem custa centavos de dólar (modelo econômico).</p>
-      <input type="password" id="chaveOpenai" placeholder="sk-..." autocomplete="off" aria-label="Chave de API da OpenAI">
+      <details class="mini-guia"><summary>como criar a chave (1 minuto)</summary>
+        <ol><li>Abra o link acima, entre (ou crie conta) e clique em <b>Create new secret key</b>.</li>
+        <li>Copie a chave inteira (começa com <b>sk-</b>) — ela só aparece uma vez.</li>
+        <li>Cole abaixo e aperte <b>testar chave</b>.</li></ol>
+      </details>
+      <input type="password" id="chaveOpenai" name="provia-chave-o" placeholder="sk-..."
+             autocomplete="new-password" data-lpignore="true" data-1p-ignore data-bwignore
+             aria-label="Chave de API da OpenAI">
+      <div class="chave-acoes">
+        <button class="mini" id="testOpenai" type="button">testar chave</button>
+        <span class="chave-status" id="stOpenai" aria-live="polite"></span>
+      </div>
       <label class="usar"><input type="checkbox" id="usarOpenai" checked> usar neste lote</label>
     </div>
 
@@ -177,19 +226,27 @@
       <div class="prov">
         <div class="prov-cab"><span class="prov-nome">OpenRouter</span><span class="chip beta">beta</span></div>
         <p class="nota-prov">Chave em <a href="https://openrouter.ai/keys" target="_blank" rel="noopener">openrouter.ai/keys</a> (uso de imagem é pago, em centavos). Escolha o modelo abaixo — a lista vem do catálogo público do OpenRouter.</p>
-        <input type="password" id="chaveRouter" placeholder="sk-or-..." autocomplete="off" aria-label="Chave de API do OpenRouter">
+        <input type="password" id="chaveRouter" name="provia-chave-r" placeholder="sk-or-..."
+               autocomplete="new-password" data-lpignore="true" data-1p-ignore data-bwignore
+               aria-label="Chave de API do OpenRouter">
         <select id="modeloRouter" aria-label="Modelo de imagem no OpenRouter"></select>
-        <label class="usar"><input type="checkbox" id="usarRouter" checked> usar neste lote</label>
+        <div class="chave-acoes">
+          <button class="mini" id="testRouter" type="button">testar chave</button>
+          <span class="chave-status" id="stRouter" aria-live="polite"></span>
+        </div>
+        <label class="usar"><input type="checkbox" id="usarRouter"> usar neste lote</label>
       </div>
     </details>
 
     <div class="prov assistido">
-      <div class="prov-cab"><span class="prov-nome">Meta AI</span><span class="chip cinza">assistido · módulo 2</span></div>
-      <p class="nota-prov">A Meta não oferece API pública de imagens. No módulo 2, o ProVIA prepara os prompts para você colar no meta.ai / WhatsApp e importar as imagens geradas.</p>
+      <div class="prov-cab"><span class="prov-nome">Meta AI</span><span class="chip cinza">assistido · sem API</span></div>
+      <p class="nota-prov">A Meta não oferece API de imagens — nenhum site do mundo consegue gerar nela por você. No modo assistido, cada imagem vira um cartão com o prompt pronto: <b>copiar → colar no meta.ai → baixar → devolver no cartão</b>. Uns 40 segundos por imagem.</p>
+      <label class="usar"><input type="checkbox" id="usarMeta"> usar neste lote (assistido)</label>
     </div>
     <div class="prov assistido">
-      <div class="prov-cab"><span class="prov-nome">Copilot (Microsoft)</span><span class="chip cinza">assistido · módulo 2</span></div>
-      <p class="nota-prov">O produto Copilot não expõe API pública. Entra pela estação assistida no módulo 2 — ou pelo motor MAI-Image, da própria Microsoft, via OpenRouter acima.</p>
+      <div class="prov-cab"><span class="prov-nome">Copilot (Microsoft)</span><span class="chip cinza">assistido · sem API</span></div>
+      <p class="nota-prov">O produto Copilot não expõe API. Modo assistido igual ao da Meta (copilot.microsoft.com) — ou use o motor MAI-Image, da própria Microsoft, automaticamente via OpenRouter acima.</p>
+      <label class="usar"><input type="checkbox" id="usarCopilot"> usar neste lote (assistido)</label>
     </div>
 
     <label class="lembrar"><input type="checkbox" id="lembrar"> Lembrar minhas chaves neste navegador (ficam salvas só neste aparelho)</label>
@@ -210,14 +267,26 @@
     <div class="passo-cab"><div class="passo-num">3</div><h2 id="t3">Prompts</h2></div>
     <div class="radios" role="radiogroup" aria-label="Modo de prompt">
       <label class="radio-op"><input type="radio" name="modo" value="aleatorio" checked>
-        <span><b>Aleatórios (banco ProVIA)</b><small>Cenas fotorrealistas do cotidiano, sorteadas do banco do projeto — cada uma com nível de dificuldade catalogado.</small></span>
+        <span><b>Aleatórios (banco ProVIA)</b><small>Cenas fotorrealistas do cotidiano, sorteadas com equilíbrio entre os três níveis de dificuldade catalogados.</small></span>
+      </label>
+      <label class="radio-op"><input type="radio" name="modo" value="ia">
+        <span><b>Criados por IA na hora</b><small>O Gemini (texto, grátis) escreve prompts novos e variados para este lote, também equilibrando a dificuldade. Usa a sua chave do Gemini do passo 1.</small></span>
       </label>
       <label class="radio-op"><input type="radio" name="modo" value="proprio">
-        <span><b>Digitar meu prompt</b><small>Um único prompt, aplicado a todas as imagens em todos os motores.</small></span>
+        <span><b>Escrever um prompt por imagem</b><small>Você escreve o prompt da imagem 1, aperta “próximo”, escreve o da imagem 2, e assim até a última.</small></span>
       </label>
     </div>
-    <div id="campoPrompt">
-      <textarea id="promptProprio" placeholder="Ex.: Fotografia realista de uma feira livre no fim de tarde, barracas de frutas, pessoas caminhando..."></textarea>
+    <div id="stepper" aria-label="Prompts, um por imagem">
+      <div class="stp-topo">
+        <strong>Prompt da imagem <span id="stpAtualN">1</span></strong>
+        <span class="stp-contador"><span id="stpFeitos">0</span>/<span id="stpTotal">6</span> escritos</span>
+      </div>
+      <textarea id="stpTexto" placeholder="Ex.: Fotografia realista de uma feira livre no fim de tarde, barracas de frutas, pessoas caminhando..."></textarea>
+      <div class="stp-nav">
+        <button class="mini" id="stpVoltar" type="button">← voltar</button>
+        <button class="mini" id="stpProximo" type="button">salvar e próximo →</button>
+      </div>
+      <div class="stp-chips" id="stpChips" aria-label="Ir para o prompt de uma imagem"></div>
     </div>
   </section>
 
@@ -293,8 +362,26 @@ const BANCO = [
 
 // ---------- Estado ----------
 const $ = s => document.querySelector(s);
+const esc = s => String(s??'').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 let itens = [];            // proveniência de cada imagem
 let gerando = false;
+
+// ---------- Saneamento e validação das chaves ----------
+// O navegador às vezes preenche senhas salvas nestes campos (fundo amarelo).
+// Antes de qualquer chamada, a chave é limpa e conferida no formato oficial.
+const limpaChave = v => String(v||'').replace(/\s+/g,'');
+const FORMATOS = {
+  gemini:{re:/^AIza[0-9A-Za-z_\-]{20,}$/, dica:'chaves do Gemini começam com “AIza”'},
+  openai:{re:/^sk-[0-9A-Za-z_\-]{20,}$/,  dica:'chaves da OpenAI começam com “sk-”'},
+  router:{re:/^sk-or-[0-9A-Za-z_\-]{20,}$/, dica:'chaves do OpenRouter começam com “sk-or-”'}
+};
+function validaChave(prov, valor){
+  const v = limpaChave(valor);
+  if(!v) return {ok:false, msg:'campo vazio'};
+  if(!FORMATOS[prov].re.test(v))
+    return {ok:false, msg:'isso não parece uma chave — '+FORMATOS[prov].dica+'. Se o campo ficou amarelo, o navegador colou uma senha salva: apague e cole a chave de verdade.'};
+  return {ok:true, v};
+}
 
 // ---------- Chaves (memória + localStorage opcional) ----------
 const CAMPOS = {gemini:'#chaveGemini', openai:'#chaveOpenai', router:'#chaveRouter'};
@@ -317,6 +404,28 @@ function sincronizarChaves(){
 $('#lembrar').addEventListener('change', sincronizarChaves);
 for(const k in CAMPOS){ $(CAMPOS[k]).addEventListener('input', ()=>{ sincronizarChaves(); atualizarDistribuicao(); }); }
 
+// ---------- Testar chave (chamada barata, sem gastar cota de imagem) ----------
+const TESTES = {
+  gemini: v => fetch('https://generativelanguage.googleapis.com/v1beta/models?key='+encodeURIComponent(v)),
+  openai: v => fetch('https://api.openai.com/v1/models', {headers:{'Authorization':'Bearer '+v}}),
+  router: v => fetch('https://openrouter.ai/api/v1/key', {headers:{'Authorization':'Bearer '+v}})
+};
+async function testarChave(prov, campoSel, stSel){
+  const st = $(stSel);
+  st.className = 'chave-status'; st.textContent = 'testando…';
+  const val = validaChave(prov, $(campoSel).value);
+  if(!val.ok){ st.classList.add('ruim'); st.textContent = '✖ ' + val.msg; return; }
+  try{
+    const r = await TESTES[prov](val.v);
+    if(r.ok){ st.classList.add('ok'); st.textContent = '✔ chave válida'; }
+    else { st.classList.add('ruim');
+           st.textContent = '✖ recusada pelo provedor (HTTP '+r.status+') — confira se copiou a chave inteira'; }
+  }catch(e){ st.classList.add('ruim'); st.textContent = '✖ falha de rede ao testar'; }
+}
+$('#testGemini').addEventListener('click', ()=>testarChave('gemini','#chaveGemini','#stGemini'));
+$('#testOpenai').addEventListener('click', ()=>testarChave('openai','#chaveOpenai','#stOpenai'));
+$('#testRouter').addEventListener('click', ()=>testarChave('router','#chaveRouter','#stRouter'));
+
 // ---------- Catálogo de modelos do OpenRouter (lista pública) ----------
 async function carregarModelosRouter(){
   const sel = $('#modeloRouter');
@@ -338,19 +447,60 @@ async function carregarModelosRouter(){
 }
 
 // ---------- UI: quantidade, modo, distribuição ----------
-$('#qtd').addEventListener('input', ()=>{ $('#qtdValor').textContent = $('#qtd').value; atualizarDistribuicao(); });
+$('#qtd').addEventListener('input', ()=>{ $('#qtdValor').textContent = $('#qtd').value; atualizarDistribuicao(); stepperAjustaTotal(); });
 document.querySelectorAll('input[name=modo]').forEach(r => r.addEventListener('change', ()=>{
-  $('#campoPrompt').style.display = document.querySelector('input[name=modo]:checked').value==='proprio' ? 'block' : 'none';
+  const m = document.querySelector('input[name=modo]:checked').value;
+  $('#stepper').style.display = m==='proprio' ? 'block' : 'none';
+  if(m==='proprio') stepperRender();
 }));
+
+// ---------- Stepper: um prompt por imagem ----------
+let proprios = [];      // textos escritos pelo usuário, um por imagem
+let stpIdx = 0;         // índice da imagem em edição
+function stepperAjustaTotal(){
+  const n = +$('#qtd').value;
+  proprios.length = Math.min(proprios.length, n);
+  if(stpIdx > n-1) stpIdx = n-1;
+  if(document.querySelector('input[name=modo]:checked').value==='proprio') stepperRender();
+}
+function stepperSalvaAtual(){ proprios[stpIdx] = $('#stpTexto').value.trim(); }
+function stepperRender(){
+  const n = +$('#qtd').value;
+  $('#stpTotal').textContent = n;
+  $('#stpAtualN').textContent = stpIdx+1;
+  $('#stpTexto').value = proprios[stpIdx] || '';
+  $('#stpFeitos').textContent = proprios.filter(p=>p && p.length).slice(0,n).length;
+  $('#stpVoltar').disabled = stpIdx===0;
+  $('#stpProximo').textContent = stpIdx===n-1 ? 'salvar (última) ✓' : 'salvar e próximo →';
+  const chips = $('#stpChips'); chips.innerHTML='';
+  for(let i=0;i<n;i++){
+    const b=document.createElement('button'); b.type='button';
+    b.textContent=i+1;
+    if(proprios[i]) b.classList.add('cheio');
+    if(i===stpIdx) b.classList.add('atual');
+    b.addEventListener('click',()=>{ stepperSalvaAtual(); stpIdx=i; stepperRender(); $('#stpTexto').focus(); });
+    chips.appendChild(b);
+  }
+}
+$('#stpProximo').addEventListener('click', ()=>{
+  stepperSalvaAtual();
+  const n=+$('#qtd').value;
+  if(stpIdx<n-1) stpIdx++;
+  stepperRender(); $('#stpTexto').focus();
+});
+$('#stpVoltar').addEventListener('click', ()=>{ stepperSalvaAtual(); if(stpIdx>0) stpIdx--; stepperRender(); $('#stpTexto').focus(); });
+$('#stpTexto').addEventListener('input', ()=>{ proprios[stpIdx]=$('#stpTexto').value.trim(); stepperRender(); });
 
 function provedoresAtivos(){
   const lista = [];
   if($('#chaveGemini').value.trim() && $('#usarGemini').checked) lista.push({id:'gemini', nome:'Gemini'});
   if($('#chaveOpenai').value.trim() && $('#usarOpenai').checked) lista.push({id:'openai', nome:'OpenAI'});
   if($('#chaveRouter').value.trim() && $('#usarRouter').checked) lista.push({id:'router', nome:'OpenRouter'});
+  if($('#usarMeta').checked)    lista.push({id:'meta',    nome:'Meta AI', assistido:true});
+  if($('#usarCopilot').checked) lista.push({id:'copilot', nome:'Copilot', assistido:true});
   return lista;
 }
-['usarGemini','usarOpenai','usarRouter'].forEach(id =>
+['usarGemini','usarOpenai','usarRouter','usarMeta','usarCopilot'].forEach(id =>
   document.getElementById(id).addEventListener('change', atualizarDistribuicao));
 function distribuir(n, provs){
   // divisão igual; o resto vai, um a um, na ordem dos provedores
@@ -378,6 +528,34 @@ function sortearPrompts(n){
     escolhidos.push(niveis[k].shift());
   }
   return embaralhar(escolhidos);
+}
+
+// ---------- Prompts criados por IA na hora (Gemini texto, nível grátis) ----------
+async function gerarPromptsIA(n, chave){
+  const pedido =
+`Gere ${n} prompts em português do Brasil para criar FOTOGRAFIAS realistas de cenas cotidianas brasileiras (estilo foto casual de celular ou fotografia documental).
+Responda SOMENTE com um array JSON, sem comentários e sem crase, no formato:
+[{"dif":"fácil","tema":"2 a 3 palavras","p":"prompt fotográfico detalhado"}]
+Regras: distribua as dificuldades de forma equilibrada entre "fácil", "média" e "difícil".
+"fácil" = cenas com elementos que geradores de imagem costumam errar (mãos em close, textos legíveis, reflexos de espelho, multidões, instrumentos musicais).
+"difícil" = cenas simples que os geradores dominam (objetos parados, comida, animais em repouso, texturas, paisagens).
+"média" = cenas cotidianas intermediárias. Nada de pessoas famosas, marcas ou violência.`;
+  const r = await fetch('https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key='+encodeURIComponent(chave),
+    {method:'POST', headers:{'Content-Type':'application/json'},
+     body:JSON.stringify({contents:[{parts:[{text:pedido}]}]})});
+  const j = await r.json().catch(()=>({}));
+  if(!r.ok) throw new Error(j.error?.message || ('HTTP '+r.status));
+  const texto = (j.candidates?.[0]?.content?.parts||[]).map(p=>p.text||'').join('');
+  const semCerca = texto.replace(/```json|```/g,'').trim();
+  const ini = semCerca.indexOf('['), fim = semCerca.lastIndexOf(']');
+  const arr = JSON.parse(semCerca.slice(ini, fim+1));
+  const ok = arr.filter(o => o && o.p).slice(0, n).map(o => ({
+    dif: ['fácil','média','difícil'].includes(o.dif) ? o.dif : 'média',
+    tema: String(o.tema||'cena cotidiana').slice(0,40),
+    p: String(o.p)
+  }));
+  if(ok.length < n) throw new Error('a IA devolveu menos prompts que o pedido');
+  return ok;
 }
 
 // ---------- Chamadas às APIs (direto do navegador, chave do usuário) ----------
@@ -442,11 +620,52 @@ async function gerarRouter(chave, prompt){
 
 const MOTORES = {gemini:gerarGemini, openai:gerarOpenai, router:gerarRouter};
 const CHAVE_DE = {gemini:'#chaveGemini', openai:'#chaveOpenai', router:'#chaveRouter'};
+const LINK_ASSISTIDO = {meta:{url:'https://www.meta.ai/', rotulo:'abrir meta.ai ↗'},
+                        copilot:{url:'https://copilot.microsoft.com/', rotulo:'abrir Copilot ↗'}};
 
 // ---------- Cartões e execução ----------
 function criarCartao(item){
   const el = document.createElement('div');
   el.className = 'cartao';
+  if(item.assistido){
+    el.innerHTML = `
+      <div class="quadro"><span class="semaforo s-gerando" title="aguardando você"></span>
+        <span class="aguarde">aguardando você<br>(modo assistido)</span></div>
+      <div class="assist-box">
+        <div class="ptexto">${esc(item.prompt)}</div>
+        <div class="assist-acoes">
+          <button class="mini ac-copiar" type="button">copiar prompt</button>
+          <a class="mini" href="${LINK_ASSISTIDO[item.provedor].url}" target="_blank" rel="noopener">${LINK_ASSISTIDO[item.provedor].rotulo}</a>
+          <label class="mini" style="cursor:pointer">devolver imagem<input type="file" accept="image/*" hidden></label>
+        </div>
+      </div>
+      <div class="etiqueta"></div>
+      <div class="acoes" hidden><button class="mini ac-baixar">baixar</button></div>`;
+    atualizarEtiqueta(el, item);
+    el.querySelector('.ac-copiar').addEventListener('click', async (ev)=>{
+      try{ await navigator.clipboard.writeText(item.prompt); ev.target.textContent='copiado ✓'; }
+      catch(_){ ev.target.textContent='selecione e copie acima'; }
+      setTimeout(()=>ev.target.textContent='copiar prompt', 2200);
+    });
+    el.querySelector('input[type=file]').addEventListener('change', (ev)=>{
+      const f = ev.target.files && ev.target.files[0]; if(!f) return;
+      const leitor = new FileReader();
+      leitor.onload = ()=>{
+        item.src = leitor.result; item.status='pronta';
+        item.modelo = item.provedor==='meta' ? 'meta.ai (assistido)' : 'copilot (assistido)';
+        item.data = new Date().toISOString().slice(0,16).replace('T',' ');
+        const quadro = el.querySelector('.quadro');
+        quadro.innerHTML = `<span class="semaforo s-pronto" title="pronta"></span><img alt="Imagem gerada em modo assistido">`;
+        quadro.querySelector('img').src = item.src;
+        quadro.addEventListener('click', ()=>abrirModal(item));
+        el.querySelector('.acoes').hidden = false;
+        atualizarEtiqueta(el, item); progresso();
+      };
+      leitor.readAsDataURL(f);
+    });
+    el.querySelector('.ac-baixar').addEventListener('click', ()=>baixarItem(item));
+    return el;
+  }
   el.innerHTML = `
     <div class="quadro"><span class="semaforo s-fila" title="na fila"></span>
       <span class="aguarde">na fila…</span></div>
@@ -464,8 +683,8 @@ function criarCartao(item){
 }
 function atualizarEtiqueta(el, it){
   el.querySelector('.etiqueta').innerHTML =
-    `<b>${it.provedorNome.toUpperCase()}</b> · ${it.modelo||'—'}<br>` +
-    (it.dif ? `dificuldade: ${it.dif} · ${it.tema}<br>` : 'prompt próprio<br>') +
+    `<b>${it.provedorNome.toUpperCase()}</b> · ${it.modelo|| (it.assistido?'assistido':'—')}<br>` +
+    (it.dif ? `dificuldade: ${it.dif} · ${it.tema}<br>` : `prompt próprio (imagem ${it.n})<br>`) +
     `${it.data||''}`;
 }
 function marcar(el, estado, textoQuadro){
@@ -479,17 +698,18 @@ async function executarItem(item, el){
   el.querySelector('.erro-txt').hidden = true;
   el.querySelector('.ac-tentar').hidden = true;
   marcar(el,'gerando','gerando…');
-  const chave = $(CHAVE_DE[item.provedor]).value.trim();
+  item.status = 'gerando'; progresso();
+  const chave = limpaChave($(CHAVE_DE[item.provedor]).value);
   for(let tent=0; tent<=2; tent++){
     try{
       const res = await MOTORES[item.provedor](chave, item.prompt);
       item.src = res.src; item.modelo = res.modelo; item.externa = !!res.externa;
       item.status = 'pronta'; item.data = new Date().toISOString().slice(0,16).replace('T',' ');
       const quadro = el.querySelector('.quadro');
-      quadro.innerHTML = `<span class="semaforo s-pronto" title="pronta"></span><img alt="Imagem gerada: ${item.tema||'prompt próprio'}">`;
+      quadro.innerHTML = `<span class="semaforo s-pronto" title="pronta"></span><img alt="Imagem gerada: ${esc(item.tema||'prompt próprio')}">`;
       quadro.querySelector('img').src = item.src;
       el.querySelector('.acoes').hidden = false;
-      atualizarEtiqueta(el, item);
+      atualizarEtiqueta(el, item); progresso();
       return true;
     }catch(e){
       if(e && e.cota && tent<2){
@@ -497,15 +717,29 @@ async function executarItem(item, el){
         await new Promise(res=>setTimeout(res, 8000*(tent+1)));
         continue;
       }
-      item.status = 'erro'; item.erro = (e&&e.msg)||'falha';
+      item.status = 'erro'; item.erro = (e&&(e.msg||e.message))||'falha';
       marcar(el,'erro','—');
       const et = el.querySelector('.erro-txt');
-      et.textContent = item.erro.slice(0,140); et.hidden = false;
+      et.textContent = item.erro.slice(0,160); et.hidden = false;
       el.querySelector('.acoes').hidden = false;
       el.querySelector('.ac-tentar').hidden = false;
+      progresso();
       return false;
     }
   }
+}
+
+// ---------- Progresso (global: lido do estado real dos itens) ----------
+function progresso(){
+  const c = {fila:0, gerando:0, pronta:0, erro:0, aguardando:0};
+  itens.forEach(i => c[i.status] = (c[i.status]||0)+1);
+  const partes = [];
+  if(c.pronta) partes.push(c.pronta+' pronta(s)');
+  if(c.gerando) partes.push(c.gerando+' gerando');
+  if(c.fila) partes.push(c.fila+' na fila');
+  if(c.erro) partes.push(c.erro+' com erro');
+  if(c.aguardando) partes.push(c.aguardando+' aguardando você (assistidas)');
+  $('#progresso').textContent = itens.length ? partes.join(' · ') : '';
 }
 
 $('#btnGerar').addEventListener('click', async ()=>{
@@ -513,19 +747,56 @@ $('#btnGerar').addEventListener('click', async ()=>{
   if(!provs.length || gerando) return;
   const n = +$('#qtd').value;
   const modo = document.querySelector('input[name=modo]:checked').value;
-  const proprio = $('#promptProprio').value.trim();
-  if(modo==='proprio' && !proprio){ $('#promptProprio').focus(); return; }
 
-  // monta a fila
+  // valida o formato das chaves dos motores automáticos antes de qualquer chamada
+  for(const p of provs.filter(x=>!x.assistido)){
+    const val = validaChave(p.id, $(CHAVE_DE[p.id]).value);
+    if(!val.ok){
+      $('#progresso').textContent = p.nome + ': ' + val.msg;
+      $(CHAVE_DE[p.id]).focus(); return;
+    }
+  }
+
+  // resolve os prompts conforme o modo
+  let listaPrompts;
+  if(modo === 'aleatorio'){
+    listaPrompts = sortearPrompts(n);
+  } else if(modo === 'ia'){
+    const valG = validaChave('gemini', $('#chaveGemini').value);
+    if(!valG.ok){
+      $('#progresso').textContent = 'O modo “criados por IA” usa sua chave do Gemini (texto, grátis) — cole-a no passo 1. ' + valG.msg;
+      $('#chaveGemini').focus(); return;
+    }
+    $('#btnGerar').disabled = true;
+    $('#progresso').textContent = 'Pedindo ao Gemini os '+n+' prompts deste lote…';
+    try{ listaPrompts = await gerarPromptsIA(n, valG.v); }
+    catch(e){
+      listaPrompts = sortearPrompts(n);
+      $('#progresso').textContent = 'A IA de prompts falhou ('+(e.message||'erro')+') — usando o banco ProVIA neste lote.';
+    }
+    $('#btnGerar').disabled = false;
+  } else { // proprio: um prompt por imagem
+    stepperSalvaAtual();
+    const faltando = [];
+    for(let i=0;i<n;i++) if(!proprios[i]) faltando.push(i);
+    if(faltando.length){
+      stpIdx = faltando[0]; stepperRender();
+      $('#progresso').textContent = 'Falta escrever o prompt da imagem '+(faltando[0]+1)+' (e de mais '+(faltando.length-1)+').';
+      $('#stpTexto').focus(); return;
+    }
+    listaPrompts = proprios.slice(0,n).map(p => ({p, dif:null, tema:null}));
+  }
+
+  // monta a fila (distribuição igual entre os motores escolhidos)
   itens = [];
   const dist = distribuir(n, provs).filter(p=>p.qtd>0);
-  const sorteio = modo==='aleatorio' ? sortearPrompts(n) : null;
   let idx = 0;
   for(const p of dist){
     for(let i=0;i<p.qtd;i++){
-      const base = sorteio ? sorteio[idx] : {p:proprio, dif:null, tema:null};
-      itens.push({n:idx+1, provedor:p.id, provedorNome:p.nome, prompt:base.p,
-                  dif:base.dif, tema:base.tema, modo, status:'fila',
+      const base = listaPrompts[idx];
+      itens.push({n:idx+1, provedor:p.id, provedorNome:p.nome, assistido:!!p.assistido,
+                  prompt:base.p, dif:base.dif, tema:base.tema, modo,
+                  status: p.assistido ? 'aguardando' : 'fila',
                   modelo:null, src:null, data:null});
       idx++;
     }
@@ -536,31 +807,32 @@ $('#btnGerar').addEventListener('click', async ()=>{
   $('#secResultados').style.display = 'block';
   const mapa = itens.map(it => { const el = criarCartao(it); grade.appendChild(el); return [it, el]; });
   $('#secResultados').scrollIntoView({behavior:'smooth', block:'start'});
-
-  // executa: um "trabalhador" por provedor, sequencial dentro de cada um
-  gerando = true; $('#btnGerar').disabled = true;
-  let prontas = 0, erros = 0;
-  const progresso = ()=>{ $('#progresso').textContent =
-    `Gerando… ${prontas} pronta(s), ${erros} erro(s), ${itens.length-prontas-erros} na fila.`; };
   progresso();
+
+  // executa os automáticos: um "trabalhador" por motor, sequencial dentro de cada um
+  gerando = true; $('#btnGerar').disabled = true;
   const porProvedor = {};
-  mapa.forEach(par => { (porProvedor[par[0].provedor] ||= []).push(par); });
+  mapa.filter(par => !par[0].assistido)
+      .forEach(par => { (porProvedor[par[0].provedor] ||= []).push(par); });
   await Promise.all(Object.values(porProvedor).map(async fila => {
     for(const [it, el] of fila){
-      const ok = await executarItem(it, el);
-      ok ? prontas++ : erros++;
-      progresso();
+      await executarItem(it, el);
       await new Promise(r=>setTimeout(r, 1300)); // respeita limites por minuto
     }
   }));
   gerando = false; atualizarDistribuicao();
-  $('#progresso').textContent = `Concluído: ${prontas} pronta(s), ${erros} erro(s).` +
-    (erros ? ' Use "tentar de novo" nos cartões com erro.' : '');
+  const prontas = itens.filter(i=>i.status==='pronta').length;
+  const erros = itens.filter(i=>i.status==='erro').length;
+  const aguard = itens.filter(i=>i.status==='aguardando').length;
+  const houveAuto = Object.keys(porProvedor).length > 0;
+  $('#progresso').textContent =
+    (houveAuto ? `Motores automáticos concluídos: ${prontas} pronta(s), ${erros} erro(s).` : '') +
+    (erros ? ' Use “tentar de novo” nos cartões com erro.' : '') +
+    (aguard ? ` ${aguard} cartão(ões) assistido(s) aguardando você: copiar → gerar na plataforma → devolver imagem.` : '');
 });
 
 // ---------- Modal, download, manifesto ----------
 const modal = $('#modal'); let itemModal = null;
-const esc = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 function abrirModal(it){
   itemModal = it;
   $('#modalImg').src = it.src;
@@ -576,8 +848,9 @@ $('#modalBaixar').addEventListener('click', ()=>{ if(itemModal) baixarItem(itemM
 
 function baixarItem(it){
   if(it.externa){ window.open(it.src, '_blank'); return; }
+  const ext = ((it.src.match(/^data:image\/(\w+)/)||[])[1]||'png').replace('jpeg','jpg');
   const a = document.createElement('a');
-  a.href = it.src; a.download = `provia_${it.provedor}_${String(it.n).padStart(2,'0')}.png`;
+  a.href = it.src; a.download = `provia_${it.provedor}_${String(it.n).padStart(2,'0')}.${ext}`;
   a.click();
 }
 $('#btnManifesto').addEventListener('click', ()=>{
