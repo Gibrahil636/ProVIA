@@ -1,22 +1,26 @@
+[README(2).md](https://github.com/user-attachments/files/30880600/README.2.md)
 # ProVIA · Laboratório de Imagens
 
 Ferramenta aberta do projeto **ProVIA** (EEB José Arantes, Camboriú-SC) — pesquisa sobre
 letramento midiático e identificação de imagens geradas por inteligência artificial,
 desenvolvida para o 32.º Prêmio Jovem Cientista (CNPq / Fundação Roberto Marinho).
 
-**Módulo 1 — Gerador de imagens multi-IA.** A pessoa escolhe de 3 a 15 imagens, decide
-entre prompts aleatórios (banco do projeto, com dificuldade catalogada) ou um prompt
-próprio, e o site distribui a geração igualmente entre os motores de IA conectados,
-exibindo a galeria com etiqueta de proveniência (motor, modelo, dificuldade, data)
-e manifesto em JSON.
+**Módulo 1 — Laboratório de imagens (modo assistido).** Em três passos:
+(1) quantidade (3 a 15); (2) prompts — o gerador interno do ProVIA escreve um por
+imagem com nível de dificuldade selecionável (🔄 troca a linha, ✏️ edita), ou a pessoa
+escreve os seus; (3) apps — o lote é dividido igualmente entre **Gemini, ChatGPT,
+Copilot e Meta AI**, e cada imagem vira um cartão com o prompt pronto, link direto
+(ChatGPT e Copilot já abrem com o prompt preenchido) e devolução por **Ctrl+V**,
+arrastar da outra aba ou envio de arquivo. Galeria com etiqueta de proveniência
+(app, prompt, dificuldade, data) e manifesto em JSON. **Sem chave de API, sem
+cadastro e sem custo** — usa as contas gratuitas que a pessoa já tem nos aplicativos.
 
 ## Privacidade (princípio do projeto)
 
 O site é **estático**: não tem servidor próprio, não tem banco de dados e **não coleta
-nada de ninguém**. As chaves de API são digitadas pela própria pessoa e enviadas
-diretamente do navegador dela para a empresa do respectivo motor (Google, OpenAI ou
-OpenRouter). Se a pessoa marcar "lembrar", as chaves ficam salvas apenas no
-`localStorage` do aparelho dela.
+nada de ninguém**. As imagens coladas existem apenas na tela até serem baixadas;
+fechar a página apaga tudo. A única coisa salva no aparelho é a preferência de
+quantidade e modo de prompt.
 
 ## Como publicar (sem instalar nada)
 
@@ -27,24 +31,39 @@ OpenRouter). Se a pessoa marcar "lembrar", as chaves ficam salvas apenas no
 4. Vá em **Settings → Pages**; em *Branch*, escolha `main` e pasta `/ (root)`; salve.
 5. Em 1–2 minutos o site fica no ar em `https://SEU-USUARIO.github.io/provia/`.
 
-## Chaves de API suportadas
+## Por que sem chaves de API?
 
-| Motor | Onde criar | Custo |
-|---|---|---|
-| Google Gemini (imagem) | [aistudio.google.com/apikey](https://aistudio.google.com/apikey) | Gratuito, com cota diária; no nível grátis o Google pode usar o conteúdo para aprimorar modelos, e as imagens carregam marca-d'água invisível SynthID |
-| OpenAI (GPT Image mini) | [platform.openai.com/api-keys](https://platform.openai.com/api-keys) | Contas novas podem ter crédito de boas-vindas; depois, a partir de ~US$ 0,005/imagem |
-| OpenRouter (avançado, beta) | [openrouter.ai/keys](https://openrouter.ai/keys) | Pago em centavos; dá acesso a vários modelos de imagem com uma chave |
+Em 2026 o Google fechou a geração de imagens do nível gratuito para contas novas e
+passou a exigir saldo pré-pago; os demais provedores cobram ou não têm API. O modo
+assistido devolve o acesso a todos — inclusive estudantes — usando os aplicativos de
+consumo gratuitos, e mantém a promessa central: o site não tem servidor, não pede
+conta e não guarda nada.
 
-Meta AI e Microsoft Copilot **não oferecem API pública** de geração de imagens (situação
-verificada em ago/2026); no ProVIA eles participam pelo **modo assistido** (módulo 2):
-a ferramenta fornece o prompt pronto para colar manualmente na plataforma.
+## Módulos 2 e 3 (já incluídos)
 
-## Roteiro dos próximos módulos
+**Imagens reais:** sorteio equilibrado entre dois bancos externos, carregados da pasta
+`dados/` deste repositório:
 
-- **Módulo 2** — Estação assistida (Meta AI / Copilot) e imagens reais (COCO val2017 /
-  Agência Brasil, com crédito), completando o catálogo de proveniência.
-- **Módulo 3** — Montagem automática do formulário (pré/pós-teste) via Google Apps
-  Script, no modelo "faça uma cópia" — o formulário nasce na conta de quem usa.
+| Arquivo | Conteúdo |
+|---|---|
+| `dados/coco_val2017.json` | as **5000** imagens do COCO val2017 (id + legenda oficial; 30 já traduzidas). O site monta a URL oficial do dataset — nenhuma imagem é hospedada aqui. |
+| `dados/agencia_brasil.json` | **62** fotos da Agência Brasil com crédito do fotógrafo e licença CC BY 3.0 BR, todas verificadas (2 hospedadas em `reais/`, o restante via URL da EBC). |
+
+Cada cartão exibe a descrição, **de onde vem a descrição** (legenda do dataset ou título
+da reportagem), a fonte, o crédito e o link. O sorteio evita repetir imagens usadas nas
+últimas sessões, e imagens que falharem ao carregar são substituídas automaticamente.
+Sem os arquivos de `dados/`, o site funciona com listas menores embutidas.
+
+**Prévia e geração do formulário:** com as reais confirmadas e as sintéticas
+devolvidas, a prévia mostra os itens na ordem do Forms (↑ ↓ e 🔀), com as perguntas
+fixas (real/IA + confiança) e as opcionais por imagem (indícios com limite de 2 e
+justificativa). O botão **Gerar formulário** baixa `provia_form.gs` — um Apps Script
+com a sua configuração embutida que, colado em script.google.com, cria o Google Forms
+em modo quiz (gabarito automático) na conta de quem executa — mais o
+`provia_form_config.json` de proveniência completa.
+
+## Próximo módulo
+
 - **Módulo 4** — Bloco de análise: pareamento por código anônimo e teste de Wilcoxon.
 
 ## Licença
