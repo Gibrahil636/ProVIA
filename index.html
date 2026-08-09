@@ -113,6 +113,55 @@
     font-family:'Atkinson Hyperlegible',sans-serif;font-size:16px;resize:vertical;background:#FBFCFB;color:var(--ink)}
   #campoPrompt textarea:focus{outline:2px solid var(--acao);outline-offset:1px}
 
+
+  /* ---------- lista de prompts ---------- */
+  #listaPrompts{margin-top:12px;display:flex;flex-direction:column;gap:10px}
+  .prow{display:flex;gap:10px;align-items:flex-start}
+  .pnum{font-family:'Archivo',sans-serif;font-weight:800;font-size:13px;color:var(--muted);width:22px;text-align:right;padding-top:10px;flex:none}
+  .pdif{font-family:var(--mono);font-size:10.5px;padding:3px 6px;border-radius:999px;border:1px solid var(--line);margin-top:8px;flex:none;width:76px;text-align:center;background:#fff;cursor:pointer;-webkit-appearance:none;appearance:none}
+  .pdif:focus{outline:2px solid var(--acao);outline-offset:1px}
+  .pdif.f{border-color:#BFE3D2;background:#EDF8F2;color:#1E7A53}
+  .pdif.m{border-color:#E6D9B8;background:#FBF6E8;color:#8A6D1C}
+  .pdif.d{border-color:#EFC7BA;background:#FBEFEA;color:#B4452F}
+  .pdif.x{background:#F1F3F4;color:#6B7480}
+  .prow-acoes{display:flex;flex-direction:column;gap:6px;margin-top:6px;flex:none}
+  #listaPrompts.travada .prow-acoes{display:none}
+  #listaPrompts.modo-escrever .btn-rgen{display:none}
+  .prow textarea{flex:1;min-height:56px;padding:9px 11px;border:1px solid var(--line);border-radius:8px;
+    font-family:'Atkinson Hyperlegible',sans-serif;font-size:15px;resize:vertical;background:#FBFCFB;color:var(--ink)}
+  .prow textarea:focus{outline:2px solid var(--acao);outline-offset:1px}
+  .prow textarea[readonly]{background:#F3F5F4;color:var(--muted)}
+  .prow-acoes .mini{width:34px}
+  .cartao.alvo{outline:2px solid var(--acao);outline-offset:2px}
+  .cartao.solta .quadro{outline:2px dashed var(--acao);outline-offset:-4px;background:#F0F4FE}
+  #acoesPrompts{display:flex;gap:12px;align-items:center;margin-top:14px;flex-wrap:wrap}
+  #avisoPrompts{font-size:14px;color:var(--erro)}
+  .btn-conf{font-size:15px;padding:10px 18px}
+  #secMotores{display:none}
+
+
+  /* ---------- imagens reais ---------- */
+  #secReais{display:none}
+  .rdesc{font-size:13.5px;color:var(--ink)}
+  .rfonte{font-family:var(--mono);font-size:10.5px;color:var(--muted);line-height:1.5}
+  .rfonte a{color:var(--acao)}
+  /* ---------- prévia do formulário ---------- */
+  #secPrevia{display:none}
+  .previa-item{display:flex;gap:12px;align-items:flex-start;border:1px solid var(--line);
+    border-radius:8px;padding:10px;margin-top:10px;background:#FBFCFB}
+  .pv-ordem{display:flex;flex-direction:column;align-items:center;gap:4px;flex:none}
+  .pv-n{font-family:'Archivo',sans-serif;font-weight:800;font-size:14px;color:var(--muted)}
+  .pv-thumb{width:76px;height:76px;object-fit:cover;border-radius:6px;border:1px solid var(--line);flex:none;background:#EEF0F2}
+  .pv-info{display:flex;flex-direction:column;gap:4px;font-size:13.5px}
+  .pv-info small{color:var(--muted)}
+  .pv-info label{display:flex;gap:7px;align-items:center;color:var(--ink);cursor:pointer}
+  .pv-info input{width:15px;height:15px;accent-color:var(--acao)}
+  .pv-sint{color:#8A2BE2}
+  .pv-real{color:var(--pronto)}
+  .pv-fixas{font-family:var(--mono);font-size:10.5px}
+  .previa-acoes{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px;align-items:center}
+  #avisoGerarForm{font-size:14px;color:var(--pronto)}
+
   /* ---------- gerar ---------- */
   .barra-gerar{display:flex;align-items:center;gap:16px;flex-wrap:wrap;margin-top:4px}
   .btn{font-family:'Archivo',sans-serif;font-weight:600;font-size:17px;color:#fff;background:var(--acao);
@@ -178,124 +227,74 @@
     <div class="marca">Pro<span>VIA</span></div>
     <div class="tag">Laboratório de Imagens · Módulo 1</div>
   </header>
-  <p class="lead">Gere lotes de imagens em vários motores de IA, com <b>proveniência registrada</b> (qual motor, qual prompt, quando). As chaves e as imagens ficam <b>somente no seu navegador</b> — este site não tem servidor e não guarda nada de ninguém.</p>
+  <p class="lead">Crie os prompts aqui, gere as imagens <b>nos aplicativos de IA que você já usa</b> (Gemini, ChatGPT, Copilot, Meta AI) e devolva cada uma no seu cartão — com <b>proveniência registrada</b> (qual app, qual prompt, quando). Tudo fica <b>somente no seu navegador</b>: este site não tem servidor, não pede conta e não guarda nada de ninguém.</p>
 
-  <!-- PASSO 1 · PROVEDORES -->
+  <!-- PASSO 1 · QUANTIDADE -->
+  <section class="passo" aria-labelledby="t2">
+    <div class="passo-cab"><div class="passo-num">1</div><h2 id="t2">Quantidade de imagens</h2></div>
+    <div class="qtd-linha">
+      <input type="range" id="qtd" min="3" max="6" value="3" aria-label="Quantidade de imagens, de 3 a 6">
+      <div class="qtd-valor" id="qtdValor">3</div>
+    </div>
+    <div class="qtd-min-max"><span>3</span><span>6</span></div>
+  </section>
+
+  <!-- PASSO 2 · PROMPTS -->
+  <section class="passo" aria-labelledby="t3">
+    <div class="passo-cab"><div class="passo-num">2</div><h2 id="t3">Prompts</h2></div>
+    <div class="radios" role="radiogroup" aria-label="Modo de prompt">
+      <label class="radio-op"><input type="radio" name="modo" value="ia" checked>
+        <span><b>A IA cria os prompts para mim (grátis)</b><small>Gerados pelo motor interno do ProVIA — 30 cenas-base catalogadas por dificuldade × variações de luz e estilo, combinadas na hora, sem internet e sem chave. Troque o nível no seletor, toque 🔄 para outro prompt do mesmo nível, ou ✏️ para editar o texto.</small></span>
+      </label>
+      <label class="radio-op"><input type="radio" name="modo" value="escrever">
+        <span><b>Escrever eu mesmo, um por imagem</b><small>Uma caixa para cada imagem — preencha todas e confirme.</small></span>
+      </label>
+    </div>
+    <div id="listaPrompts" aria-label="Lista de prompts, um por imagem"></div>
+    <div id="acoesPrompts">
+      <button class="mini" id="btnRefazer" type="button">🔄 refazer todos</button>
+      <button class="btn btn-conf" id="btnConfirmar" type="button">Confirmar prompts ✔</button>
+      <span id="avisoPrompts" aria-live="polite"></span>
+    </div>
+  </section>
+
+  
+
+<section id="secMotores">
+  <!-- PASSO 3 · ONDE GERAR -->
   <section class="passo" aria-labelledby="t1">
-    <div class="passo-cab"><div class="passo-num">1</div><h2 id="t1">Conectar os motores de IA</h2></div>
-    <p class="dica">Cole a chave de API dos motores que você tem. Cada chave é sua, gratuita ou pré-paga, e é enviada apenas para a própria empresa do motor — nunca para este site.</p>
+    <div class="passo-cab"><div class="passo-num">3</div><h2 id="t1">Onde gerar as imagens sintéticas</h2></div>
+    <p class="dica">Sem chave, sem cadastro extra: você gera nos aplicativos que já usa (a conta grátis de cada um serve) e devolve a imagem no cartão — colando com <b>Ctrl+V</b>, arrastando da outra aba, ou enviando o arquivo.</p>
 
     <div class="prov">
-      <div class="prov-cab"><span class="prov-nome">Google Gemini</span><span class="chip gratis">grátis</span></div>
-      <p class="nota-prov">Crie uma chave gratuita em <a href="https://aistudio.google.com/apikey" target="_blank" rel="noopener">aistudio.google.com/apikey</a> (conta Google, sem cartão). Há uma cota diária de imagens.</p>
-      <details class="mini-guia"><summary>como criar a chave (1 minuto)</summary>
-        <ol><li>Abra o link acima e entre com sua conta Google.</li>
-        <li>Clique em <b>Create API key</b> e depois em <b>Copy</b>.</li>
-        <li>Volte aqui, cole no campo abaixo e aperte <b>testar chave</b>.</li></ol>
-      </details>
-      <input type="password" id="chaveGemini" name="provia-chave-g" placeholder="AIza..."
-             autocomplete="new-password" data-lpignore="true" data-1p-ignore data-bwignore
-             aria-label="Chave de API do Gemini">
-      <div class="chave-acoes">
-        <button class="mini" id="testGemini" type="button">testar chave</button>
-        <span class="chave-status" id="stGemini" aria-live="polite"></span>
-      </div>
+      <div class="prov-cab"><span class="prov-nome">Gemini (app do Google)</span><span class="chip gratis">grátis</span></div>
+      <p class="nota-prov">gemini.google.com — entre com o Gmail e peça a imagem.</p>
       <label class="usar"><input type="checkbox" id="usarGemini" checked> usar neste lote</label>
     </div>
-
     <div class="prov">
-      <div class="prov-cab"><span class="prov-nome">OpenAI (GPT Image)</span><span class="chip">opcional</span></div>
-      <p class="nota-prov">Chave em <a href="https://platform.openai.com/api-keys" target="_blank" rel="noopener">platform.openai.com/api-keys</a>. Contas novas podem receber crédito de boas-vindas; depois, cada imagem custa centavos de dólar (modelo econômico).</p>
-      <details class="mini-guia"><summary>como criar a chave (1 minuto)</summary>
-        <ol><li>Abra o link acima, entre (ou crie conta) e clique em <b>Create new secret key</b>.</li>
-        <li>Copie a chave inteira (começa com <b>sk-</b>) — ela só aparece uma vez.</li>
-        <li>Cole abaixo e aperte <b>testar chave</b>.</li></ol>
-      </details>
-      <input type="password" id="chaveOpenai" name="provia-chave-o" placeholder="sk-..."
-             autocomplete="new-password" data-lpignore="true" data-1p-ignore data-bwignore
-             aria-label="Chave de API da OpenAI">
-      <div class="chave-acoes">
-        <button class="mini" id="testOpenai" type="button">testar chave</button>
-        <span class="chave-status" id="stOpenai" aria-live="polite"></span>
-      </div>
-      <label class="usar"><input type="checkbox" id="usarOpenai" checked> usar neste lote</label>
+      <div class="prov-cab"><span class="prov-nome">ChatGPT (OpenAI)</span><span class="chip gratis">grátis</span></div>
+      <p class="nota-prov">chatgpt.com — o link do cartão já abre com o seu prompt preenchido.</p>
+      <label class="usar"><input type="checkbox" id="usarGpt" checked> usar neste lote</label>
     </div>
-
-    <details class="avancado">
-      <summary>Avançado · OpenRouter (uma chave para vários modelos)</summary>
-      <div class="prov">
-        <div class="prov-cab"><span class="prov-nome">OpenRouter</span><span class="chip beta">beta</span></div>
-        <p class="nota-prov">Chave em <a href="https://openrouter.ai/keys" target="_blank" rel="noopener">openrouter.ai/keys</a> (uso de imagem é pago, em centavos). Escolha o modelo abaixo — a lista vem do catálogo público do OpenRouter.</p>
-        <input type="password" id="chaveRouter" name="provia-chave-r" placeholder="sk-or-..."
-               autocomplete="new-password" data-lpignore="true" data-1p-ignore data-bwignore
-               aria-label="Chave de API do OpenRouter">
-        <select id="modeloRouter" aria-label="Modelo de imagem no OpenRouter"></select>
-        <div class="chave-acoes">
-          <button class="mini" id="testRouter" type="button">testar chave</button>
-          <span class="chave-status" id="stRouter" aria-live="polite"></span>
-        </div>
-        <label class="usar"><input type="checkbox" id="usarRouter"> usar neste lote</label>
-      </div>
-    </details>
-
-    <div class="prov assistido">
-      <div class="prov-cab"><span class="prov-nome">Meta AI</span><span class="chip cinza">assistido · sem API</span></div>
-      <p class="nota-prov">A Meta não oferece API de imagens — nenhum site do mundo consegue gerar nela por você. No modo assistido, cada imagem vira um cartão com o prompt pronto: <b>copiar → colar no meta.ai → baixar → devolver no cartão</b>. Uns 40 segundos por imagem.</p>
-      <label class="usar"><input type="checkbox" id="usarMeta"> usar neste lote (assistido)</label>
+    <div class="prov">
+      <div class="prov-cab"><span class="prov-nome">Copilot (Microsoft)</span><span class="chip gratis">grátis</span></div>
+      <p class="nota-prov">copilot.microsoft.com — o link do cartão já abre com o seu prompt preenchido.</p>
+      <label class="usar"><input type="checkbox" id="usarCopilot" checked> usar neste lote</label>
     </div>
-    <div class="prov assistido">
-      <div class="prov-cab"><span class="prov-nome">Copilot (Microsoft)</span><span class="chip cinza">assistido · sem API</span></div>
-      <p class="nota-prov">O produto Copilot não expõe API. Modo assistido igual ao da Meta (copilot.microsoft.com) — ou use o motor MAI-Image, da própria Microsoft, automaticamente via OpenRouter acima.</p>
-      <label class="usar"><input type="checkbox" id="usarCopilot"> usar neste lote (assistido)</label>
-    </div>
-
-    <label class="lembrar"><input type="checkbox" id="lembrar"> Lembrar minhas chaves neste navegador (ficam salvas só neste aparelho)</label>
-  </section>
-
-  <!-- PASSO 2 · QUANTIDADE -->
-  <section class="passo" aria-labelledby="t2">
-    <div class="passo-cab"><div class="passo-num">2</div><h2 id="t2">Quantidade de imagens</h2></div>
-    <div class="qtd-linha">
-      <input type="range" id="qtd" min="3" max="15" value="6" aria-label="Quantidade de imagens, de 3 a 15">
-      <div class="qtd-valor" id="qtdValor">6</div>
-    </div>
-    <div class="qtd-min-max"><span>3</span><span>15</span></div>
-  </section>
-
-  <!-- PASSO 3 · PROMPTS -->
-  <section class="passo" aria-labelledby="t3">
-    <div class="passo-cab"><div class="passo-num">3</div><h2 id="t3">Prompts</h2></div>
-    <div class="radios" role="radiogroup" aria-label="Modo de prompt">
-      <label class="radio-op"><input type="radio" name="modo" value="aleatorio" checked>
-        <span><b>Aleatórios (banco ProVIA)</b><small>Cenas fotorrealistas do cotidiano, sorteadas com equilíbrio entre os três níveis de dificuldade catalogados.</small></span>
-      </label>
-      <label class="radio-op"><input type="radio" name="modo" value="ia">
-        <span><b>Criados por IA na hora</b><small>O Gemini (texto, grátis) escreve prompts novos e variados para este lote, também equilibrando a dificuldade. Usa a sua chave do Gemini do passo 1.</small></span>
-      </label>
-      <label class="radio-op"><input type="radio" name="modo" value="proprio">
-        <span><b>Escrever um prompt por imagem</b><small>Você escreve o prompt da imagem 1, aperta “próximo”, escreve o da imagem 2, e assim até a última.</small></span>
-      </label>
-    </div>
-    <div id="stepper" aria-label="Prompts, um por imagem">
-      <div class="stp-topo">
-        <strong>Prompt da imagem <span id="stpAtualN">1</span></strong>
-        <span class="stp-contador"><span id="stpFeitos">0</span>/<span id="stpTotal">6</span> escritos</span>
-      </div>
-      <textarea id="stpTexto" placeholder="Ex.: Fotografia realista de uma feira livre no fim de tarde, barracas de frutas, pessoas caminhando..."></textarea>
-      <div class="stp-nav">
-        <button class="mini" id="stpVoltar" type="button">← voltar</button>
-        <button class="mini" id="stpProximo" type="button">salvar e próximo →</button>
-      </div>
-      <div class="stp-chips" id="stpChips" aria-label="Ir para o prompt de uma imagem"></div>
+    <div class="prov">
+      <div class="prov-cab"><span class="prov-nome">Meta AI</span><span class="chip gratis">grátis</span></div>
+      <p class="nota-prov">meta.ai ou o WhatsApp — cole o prompt e peça a imagem.</p>
+      <label class="usar"><input type="checkbox" id="usarMeta" checked> usar neste lote</label>
     </div>
   </section>
 
   <!-- GERAR -->
   <div class="barra-gerar">
-    <button class="btn" id="btnGerar">Gerar imagens</button>
+    <button class="btn" id="btnGerar">Criar os cartões de geração</button>
     <span id="distribuicao" aria-live="polite"></span>
   </div>
   <p id="progresso" aria-live="polite"></p>
+  </section>
 
   <!-- RESULTADOS -->
   <section class="passo" id="secResultados" aria-labelledby="t4">
@@ -303,6 +302,37 @@
     <p class="dica">Toque numa imagem para ampliar. A etiqueta de cada cartão registra a proveniência: motor, modelo, dificuldade e data.</p>
     <div class="grade" id="grade"></div>
     <div style="margin-top:18px"><button class="btn btn-sec" id="btnManifesto">Baixar manifesto de proveniência (JSON)</button></div>
+  </section>
+
+  <section id="secReais">
+  <!-- PASSO 3 · IMAGENS REAIS -->
+  <section class="passo" aria-labelledby="tr">
+    <div class="passo-cab"><div class="passo-num">4</div><h2 id="tr">Imagens reais (COCO + Agência Brasil)</h2></div>
+    <p class="dica">O sorteio traz a <b>mesma quantidade</b> de imagens reais que as sintéticas geradas acima, equilibrando as duas fontes. Cada cartão mostra a descrição da imagem, de onde ela veio e o crédito. Não gostou de uma? 🔄 troca só ela.</p>
+    <div class="barra-gerar" style="margin:0 0 6px">
+      <button class="btn btn-sec" id="btnSortearReais" type="button">🎲 Sortear as imagens reais</button>
+      <span id="bancoStatus" class="mono" style="font-size:12px;color:var(--muted)">banco de imagens reais: listas embutidas</span>
+    </div>
+    <div class="grade" id="reaisGrade"></div>
+    <div id="acoesPrompts" style="margin-top:14px">
+      <button class="btn btn-conf" id="btnConfirmarReais" type="button">Confirmar imagens reais ✔</button>
+    </div>
+  </section>
+</section>
+
+  <!-- PASSO 5 · PRÉVIA DO FORMULÁRIO -->
+  <section class="passo" id="secPrevia" aria-labelledby="tp">
+    <div class="passo-cab"><div class="passo-num">5</div><h2 id="tp">Prévia do formulário</h2></div>
+    <p class="dica">É assim que o Google Forms vai ficar. Toda imagem tem as duas perguntas fixas (<b>real ou IA?</b> e <b>nível de confiança</b>); você escolhe em quais entram a pergunta de <b>indícios</b> e a <b>justificativa</b>, e arruma a ordem com ↑ ↓.</p>
+    <div class="previa-acoes">
+      <button class="mini" id="btnEmbaralharForm" type="button">🔀 embaralhar ordem</button>
+      <button class="mini" id="btnBaixarTodas" type="button">⬇ baixar todas (sintéticas)</button>
+    </div>
+    <div id="previaLista"></div>
+    <div class="previa-acoes">
+      <button class="btn" id="btnGerarForm" type="button">Gerar formulário (baixa o script)</button>
+      <span id="avisoGerarForm" aria-live="polite"></span>
+    </div>
   </section>
 
   <dialog id="modal">
@@ -317,518 +347,442 @@
   </dialog>
 
   <footer>
-    <p><b>Privacidade:</b> este site é estático (GitHub Pages), sem servidor próprio. Chaves e imagens existem apenas no seu navegador; nada é coletado.</p>
-    <p><b>Transparência:</b> no nível gratuito do Gemini, o Google pode usar o conteúdo enviado para aprimorar seus modelos, e as imagens saem com marca-d'água invisível SynthID. Na OpenAI, o modelo econômico custa a partir de ~US$ 0,005 por imagem.</p>
+    <p><b>Privacidade:</b> este site é estático (GitHub Pages), sem servidor, sem cadastro e sem chaves. As imagens que você cola existem apenas no seu navegador até você baixá-las; fechar a página apaga tudo.</p>
+    <p><b>Como devolver a imagem:</b> no app de IA, toque na imagem gerada e use "copiar imagem" → volte aqui e aperte <b>Ctrl+V</b> (ou o botão 📋 do cartão). Também dá para arrastar a imagem da outra aba até o cartão, ou baixar e usar "enviar arquivo".</p>
     <p>ProVIA · Projeto de pesquisa sobre letramento midiático e imagens geradas por IA · EEB José Arantes, Camboriú-SC · Código aberto (MIT).</p>
   </footer>
 </div>
 
 <script>
-/* =========================================================
-   ProVIA · Módulo 1 — geração multi-IA com proveniência
-   Nenhum dado sai do navegador. Chaves: só localStorage
-   (opcional) ou memória da sessão.
-   ========================================================= */
-
-// ---------- Banco de prompts (com dificuldade catalogada) ----------
-// dif: 'fácil' = cenas com indícios que geradores costumam errar (mãos, texto, reflexos, multidões)
-// dif: 'difícil' = cenas simples/texturas que os geradores dominam
-const BANCO = [
- {dif:'fácil',  tema:'mãos/instrumento', p:'Fotografia realista em preto e branco de um jovem tocando violino em uma estação de metrô, mãos em destaque no arco e nas cordas, pessoas desfocadas ao fundo'},
- {dif:'fácil',  tema:'texto em cena',    p:'Fotografia realista de uma banca de jornal brasileira pela manhã, capas de revistas e jornais legíveis expostos, luz natural'},
- {dif:'fácil',  tema:'multidão',         p:'Fotografia realista de um bloco de carnaval de rua no Brasil, dezenas de pessoas fantasiadas tocando flautas e instrumentos, luz do dia'},
- {dif:'fácil',  tema:'reflexo/espelho',  p:'Fotografia realista do interior de um salão de beleza, cliente sentada de frente para o espelho enquanto a cabeleireira arruma seu cabelo, produtos na bancada'},
- {dif:'fácil',  tema:'mãos/comida',      p:'Fotografia realista de duas adolescentes montando copos de açaí em uma loja de sobremesas, mãos segurando colheres sobre potes de confeitos coloridos'},
- {dif:'fácil',  tema:'texto/placa',      p:'Fotografia realista de uma esquina de cidade brasileira com placas de rua, faixa de pedestres e semáforo, pessoas atravessando'},
- {dif:'fácil',  tema:'grupo/escola',     p:'Fotografia realista de estudantes de ensino médio no pátio de uma escola pública brasileira no intervalo, mochilas e uniformes, conversando em grupos'},
- {dif:'fácil',  tema:'mãos/trabalho',    p:'Fotografia realista de um artesão trançando fibras de palha em uma feira, close nas mãos em movimento, texturas do trançado visíveis'},
- {dif:'média', tema:'oficina',          p:'Fotografia realista do interior de uma oficina de motos, mecânico agachado ajustando o motor de uma motocicleta antiga, ferramentas penduradas na parede'},
- {dif:'média', tema:'cotidiano/casa',   p:'Fotografia realista de uma senhora regando vasos de plantas na janela de um apartamento, prédios e morro ao fundo, luz da tarde'},
- {dif:'média', tema:'mercado',          p:'Fotografia realista de um sacolão brasileiro, caixas de madeira com tomates, bananas e laranjas empilhadas, cliente escolhendo frutas'},
- {dif:'média', tema:'praia',            p:'Fotografia realista de uma praia de Santa Catarina no fim da tarde, guarda-sóis fechados, pescador recolhendo rede, céu parcialmente nublado'},
- {dif:'média', tema:'cozinha',          p:'Fotografia realista de uma cozinha caseira com panela de pressão no fogão, vapor subindo, azulejos antigos ao fundo'},
- {dif:'média', tema:'ônibus',           p:'Fotografia realista do interior de um ônibus urbano brasileiro à tarde, passageiros sentados olhando o celular, barras de apoio amarelas'},
- {dif:'média', tema:'chuva',            p:'Fotografia realista de uma rua comercial em dia de chuva, pessoas com guarda-chuvas coloridos, reflexos das vitrines no asfalto molhado'},
- {dif:'média', tema:'biblioteca',       p:'Fotografia realista de uma biblioteca escolar, estantes de livros usados, estudante de costas procurando um título na prateleira alta'},
- {dif:'difícil',tema:'animal',           p:'Fotografia realista de um gato preto e branco deitado em cima de um móvel claro, olhos verdes, parede lisa ao fundo'},
- {dif:'difícil',tema:'objeto simples',   p:'Fotografia realista de uma laranja sobre a faixa branca de um estacionamento de asfalto, carros desfocados ao fundo, ângulo baixo'},
- {dif:'difícil',tema:'café da manhã',    p:'Fotografia realista de uma mesa de café da manhã perto de uma janela, xícara de café preto, copo de suco de laranja, torrada com manteiga sobre prato branco'},
- {dif:'difícil',tema:'natureza',         p:'Fotografia realista de folhas de costela-de-adão com gotas de chuva, fundo verde desfocado, luz suave'},
- {dif:'difícil',tema:'objeto/relógio',   p:'Fotografia realista de um relógio de rua antigo de coluna preta com mostrador de números romanos, palmeiras e prédio claro ao fundo, céu azul'},
- {dif:'difícil',tema:'cachorro',         p:'Fotografia realista de um cachorro caramelo sem raça definida deitado em uma calçada ao sol, coleira simples, portão residencial ao fundo'},
- {dif:'difícil',tema:'textura',          p:'Fotografia realista de uma parede de tijolos aparentes com uma janela verde desbotada, sombra diagonal da tarde'},
- {dif:'difícil',tema:'comida',           p:'Fotografia realista de um prato de arroz, feijão, farofa e bife acebolado sobre mesa de restaurante popular, talheres ao lado'}
-];
-
-// ---------- Estado ----------
+// ---------- Utilitários ----------
 const $ = s => document.querySelector(s);
 const esc = s => String(s??'').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-let itens = [];            // proveniência de cada imagem
-let gerando = false;
-
-// ---------- Saneamento e validação das chaves ----------
-// O navegador às vezes preenche senhas salvas nestes campos (fundo amarelo).
-// Antes de qualquer chamada, a chave é limpa e conferida no formato oficial.
 const limpaChave = v => String(v||'').replace(/\s+/g,'');
-const FORMATOS = {
-  gemini:{re:/^AIza[0-9A-Za-z_\-]{20,}$/, dica:'chaves do Gemini começam com “AIza”'},
-  openai:{re:/^sk-[0-9A-Za-z_\-]{20,}$/,  dica:'chaves da OpenAI começam com “sk-”'},
-  router:{re:/^sk-or-[0-9A-Za-z_\-]{20,}$/, dica:'chaves do OpenRouter começam com “sk-or-”'}
+function embaralhar(a){ a=[...a]; for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; } return a; }
+
+// ---------- Estado ----------
+let itens = [];            // proveniência de cada imagem gerada
+let gerando = false;
+let prompts = [];          // [{p, dif, tema}] — um por imagem
+let confirmado = false;
+
+// ---------- Gerador local de prompts (grátis, ilimitado, sem chave) ----------
+// A extensão do prompt acompanha a dificuldade de detecção:
+// fácil = prompt longo e detalhado (mais elementos = mais chance de erro visível)
+// média = prompt intermediário | difícil = prompt curto e simples (cenas que a IA domina)
+const CENAS = {
+ 'fácil':[
+  {tema:'mãos/instrumento', base:'um jovem tocando violino em uma estação de metrô'},
+  {tema:'texto em cena',    base:'uma banca de jornal com revistas e manchetes expostas'},
+  {tema:'multidão',         base:'um bloco de rua com dezenas de pessoas fantasiadas tocando instrumentos'},
+  {tema:'reflexo/espelho',  base:'o interior de um salão de beleza, com cliente diante do espelho'},
+  {tema:'mãos/comida',      base:'duas adolescentes montando copos de açaí em uma loja de sobremesas'},
+  {tema:'texto/placa',      base:'uma esquina movimentada com placas de rua e faixa de pedestres'},
+  {tema:'grupo/escola',     base:'estudantes conversando no pátio de uma escola pública no intervalo'},
+  {tema:'mãos/trabalho',    base:'um artesão trançando fibras de palha em uma feira'},
+  {tema:'selfie/espelho',   base:'três amigas tirando selfie no espelho de um provador de loja'},
+  {tema:'torcida',          base:'uma arquibancada comemorando um gol, com bandeiras erguidas'},
+  {tema:'mãos/oficina',     base:'um relojoeiro consertando um relógio de pulso na bancada'},
+  {tema:'feira',            base:'uma feira livre lotada no fim da manhã, com barracas e placas de preço'},
+  {tema:'mãos/costura',     base:'uma costureira posicionando o tecido na máquina de costura'},
+  {tema:'palco',            base:'uma banda de forró tocando em um palco de festa junina'},
+  {tema:'sala de aula',     base:'uma professora escrevendo no quadro enquanto a turma acompanha'},
+  {tema:'mãos/padaria',     base:'um padeiro modelando pães sobre a bancada enfarinhada'}],
+ 'média':[
+  {tema:'oficina',       base:'um mecânico ajustando o motor de uma moto em uma oficina de bairro'},
+  {tema:'cotidiano/casa',base:'uma senhora regando vasos de plantas na janela de um apartamento'},
+  {tema:'mercado',       base:'um sacolão com caixas de frutas empilhadas e um cliente escolhendo tomates'},
+  {tema:'praia',         base:'uma praia no fim da tarde com guarda-sóis fechados e um pescador'},
+  {tema:'cozinha',       base:'uma cozinha caseira com panela no fogão e vapor subindo'},
+  {tema:'ônibus',        base:'o interior de um ônibus urbano com passageiros sentados'},
+  {tema:'barbearia',     base:'um barbeiro aparando o cabelo de um cliente'},
+  {tema:'cachorro/rua',  base:'um cachorro caramelo deitado na calçada em frente a um portão'},
+  {tema:'picolé/orla',   base:'um vendedor de picolé empurrando o carrinho na orla'},
+  {tema:'quintal',       base:'roupas no varal balançando no quintal de uma casa simples'},
+  {tema:'bicicleta',     base:'um entregador de bicicleta parado no semáforo'},
+  {tema:'pescaria',      base:'um pescador consertando a rede em um trapiche de madeira'},
+  {tema:'horta',         base:'um canteiro de horta comunitária com alface e temperos'},
+  {tema:'lanchonete',    base:'o balcão de uma lanchonete de bairro no fim do dia'},
+  {tema:'estação',       base:'pessoas esperando na plataforma de uma estação de trem'},
+  {tema:'praça',         base:'crianças brincando no balanço de uma praça arborizada'}],
+ 'difícil':[
+  {tema:'café/mesa',      base:'uma xícara de café sobre uma mesa de madeira'},
+  {tema:'comida/prato',   base:'um prato de arroz, feijão e bife visto de cima'},
+  {tema:'gato',           base:'um gato deitado em uma prateleira branca'},
+  {tema:'paisagem/mar',   base:'uma onda quebrando na praia ao entardecer'},
+  {tema:'caderno',        base:'um caderno aberto com uma caneta em cima'},
+  {tema:'laranja',        base:'uma laranja sobre o asfalto de um estacionamento'},
+  {tema:'tênis',          base:'um tênis branco usado sobre o piso'},
+  {tema:'planta',         base:'folhas de costela-de-adão contra uma parede clara'},
+  {tema:'pão',            base:'pães franceses em um cesto de vime'},
+  {tema:'chuva/vidro',    base:'gotas de chuva escorrendo em uma vidraça'},
+  {tema:'livro',          base:'um livro aberto sobre uma cama desarrumada'},
+  {tema:'copo',           base:'um copo de suco de laranja em uma mesa clara'},
+  {tema:'guarda-chuva',   base:'um guarda-chuva encostado em uma parede'},
+  {tema:'gaveta',         base:'chaves e moedas sobre um móvel de madeira'},
+  {tema:'flor',           base:'uma flor amarela em um vaso de barro'},
+  {tema:'toalha',         base:'uma toalha xadrez dobrada sobre a mesa'}]
 };
-function validaChave(prov, valor){
-  const v = limpaChave(valor);
-  if(!v) return {ok:false, msg:'campo vazio'};
-  if(!FORMATOS[prov].re.test(v))
-    return {ok:false, msg:'isso não parece uma chave — '+FORMATOS[prov].dica+'. Se o campo ficou amarelo, o navegador colou uma senha salva: apague e cole a chave de verdade.'};
-  return {ok:true, v};
+const DETALHE = ['com pessoas ao fundo levemente desfocadas','com objetos espalhados pelo ambiente',
+ 'com reflexos e sombras visíveis nas superfícies','com texturas de tecido e madeira aparentes',
+ 'com detalhes pequenos em primeiro plano','com movimento leve nas mãos e no corpo',
+ 'com vários planos de profundidade na cena','com cartazes e letreiros ao fundo',
+ 'com cores variadas e superfícies gastas pelo uso','com pequenos objetos sobre as bancadas'];
+const LUZ = ['luz natural suave','luz quente de fim de tarde','luz da manhã entrando pela janela',
+ 'céu nublado e luz difusa','sombras marcadas de sol forte','iluminação artificial amarelada',
+ 'contraluz suave','luz fria de dia chuvoso','luz lateral realçando as texturas'];
+const CAMERA = ['foto casual de celular','enquadramento espontâneo, sem pose','fotografia documental',
+ 'foto de rede social','close com fundo desfocado','ângulo baixo','enquadramento aberto da cena',
+ 'foto tirada de perto, no meio do movimento'];
+const usadosPrompt = new Set();
+const sorte = a => a[Math.floor(Math.random()*a.length)];
+function compor(dif){
+  const c = sorte(CENAS[dif]);
+  if(dif==='fácil')
+    return {p:`Fotografia realista de ${c.base}, ${sorte(DETALHE)}, ${sorte(LUZ)}, ${sorte(CAMERA)}. Cena cotidiana brasileira, sem texto sobreposto.`, dif, tema:c.tema};
+  if(dif==='média')
+    return {p:`Fotografia realista de ${c.base}, ${sorte(LUZ)}, ${sorte(CAMERA)}.`, dif, tema:c.tema};
+  return {p:`Foto de ${c.base}, ${sorte(LUZ)}.`, dif, tema:c.tema};
+}
+function gerarPromptLocal(dif, evitar){
+  let escolha = null;
+  for(let t=0;t<30;t++){
+    const cand = compor(dif);
+    if(cand.p!==evitar && !usadosPrompt.has(cand.p)){ escolha = cand; break; }
+    if(!escolha && cand.p!==evitar) escolha = cand;
+  }
+  escolha = escolha || compor(dif);
+  usadosPrompt.add(escolha.p);
+  if(usadosPrompt.size > 400) usadosPrompt.clear();
+  return escolha;
+}
+function seqDificuldades(n){
+  const ordem = embaralhar(['fácil','média','difícil']);
+  return Array.from({length:n}, (_,i)=>ordem[i%3]);
 }
 
-// ---------- Chaves (memória + localStorage opcional) ----------
-const CAMPOS = {gemini:'#chaveGemini', openai:'#chaveOpenai', router:'#chaveRouter'};
-function carregarChaves(){
+// ---------- Lista de prompts (passo 2) ----------
+function modoAtual(){ return document.querySelector('input[name=modo]:checked').value; }
+function montarPrompts(){
+  const n = +$('#qtd').value, modo = modoAtual();
+  if(modo==='ia'){
+    prompts = seqDificuldades(n).map(dif => gerarPromptLocal(dif));
+  } else {
+    prompts = Array.from({length:n}, (_,i)=>({p: (prompts[i]&&prompts[i].p&&prompts[i].dif===null)? prompts[i].p : '', dif:null, tema:null}));
+  }
+}
+function renderLista(){
+  const lista = $('#listaPrompts'), modo = modoAtual();
+  lista.className = modo==='escrever' ? 'modo-escrever' : '';
+  if(confirmado) lista.classList.add('travada');
+  lista.innerHTML = '';
+  const CLS = {'fácil':'f','média':'m','difícil':'d'};
+  prompts.forEach((pr, i)=>{
+    const linha = document.createElement('div');
+    linha.className = 'prow';
+    const cls = pr.dif ? CLS[pr.dif] : 'x';
+    const opSeu = modo==='escrever' ? `<option value="" ${!pr.dif?'selected':''}>nível?</option>` : '';
+    linha.innerHTML =
+      `<span class="pnum">${i+1}</span>`+
+      `<select class="pdif ${cls}" aria-label="Dificuldade da imagem ${i+1}" ${confirmado?'disabled':''}>`+
+        opSeu+
+        `<option value="fácil" ${pr.dif==='fácil'?'selected':''}>fácil</option>`+
+        `<option value="média" ${pr.dif==='média'?'selected':''}>média</option>`+
+        `<option value="difícil" ${pr.dif==='difícil'?'selected':''}>difícil</option>`+
+      `</select>`+
+      `<textarea rows="2" aria-label="Prompt da imagem ${i+1}" placeholder="Descreva a foto da imagem ${i+1}…"></textarea>`+
+      `<div class="prow-acoes">`+
+        `<button class="mini btn-edit" type="button" title="editar o texto deste prompt">✏️</button>`+
+        `<button class="mini btn-rgen" type="button" title="gerar outro prompt deste nível">🔄</button>`+
+      `</div>`;
+    const ta = linha.querySelector('textarea');
+    const sel = linha.querySelector('.pdif');
+    ta.value = pr.p;
+    ta.readOnly = confirmado;
+    ta.addEventListener('input', ()=>{ prompts[i].p = ta.value; });
+    sel.addEventListener('change', ()=>{
+      const novo = sel.value || null;
+      if(modo==='ia' && novo){                       // regenerar já no nível escolhido
+        prompts[i] = gerarPromptLocal(novo, ta.value.trim());
+        ta.value = prompts[i].p;
+      } else {                                       // modo escrever: só etiqueta a dificuldade
+        prompts[i].dif = novo; prompts[i].tema = novo ? (prompts[i].tema||'cena própria') : null;
+      }
+      sel.className = 'pdif ' + (novo ? CLS[novo] : 'x');
+    });
+    linha.querySelector('.btn-edit').addEventListener('click', ()=>{
+      if(confirmado) return;
+      ta.focus(); ta.setSelectionRange(ta.value.length, ta.value.length);
+    });
+    linha.querySelector('.btn-rgen').addEventListener('click', ()=>{
+      if(confirmado) return;
+      const nivel = sel.value || seqDificuldades(1)[0];
+      prompts[i] = gerarPromptLocal(nivel, ta.value.trim());
+      ta.value = prompts[i].p;
+      sel.value = prompts[i].dif;
+      sel.className = 'pdif ' + CLS[prompts[i].dif];
+    });
+    lista.appendChild(linha);
+  });
+  $('#btnRefazer').style.display = (modo==='ia' && !confirmado) ? '' : 'none';
+  $('#btnConfirmar').textContent = confirmado ? '✏️ Editar prompts' : 'Confirmar prompts ✔';
+  $('#avisoPrompts').textContent = '';
+}
+function desconfirmar(){
+  confirmado = false;
+  confirmadoReais = false;
+  reais = []; ordemForm = [];
+  $('#secReais').style.display = 'none';
+  $('#secMotores').style.display = 'none';
+  $('#secPrevia').style.display = 'none';
+  $('#qtd').disabled = false;
+  document.querySelectorAll('input[name=modo]').forEach(r=>r.disabled=false);
+}
+// ---------- Configuração padrão (persiste a última usada) ----------
+function salvarCfg(){
+  try{ localStorage.setItem('provia.cfg', JSON.stringify({modo:modoAtual()})); }catch(e){}
+}
+function carregarCfg(){
   try{
-    const salvo = JSON.parse(localStorage.getItem('provia.chaves')||'null');
-    if(salvo){ $('#lembrar').checked = true;
-      for(const k in CAMPOS){ if(salvo[k]) $(CAMPOS[k]).value = salvo[k]; }
-      if(salvo.modeloRouter) $('#modeloRouter').dataset.pref = salvo.modeloRouter;
-    }
+    const c = JSON.parse(localStorage.getItem('provia.cfg')||'null');
+    if(!c) return;
+    const r = document.querySelector(`input[name=modo][value="${c.modo}"]`);
+    if(r) r.checked = true;
   }catch(e){}
 }
-function sincronizarChaves(){
-  if($('#lembrar').checked){
-    const obj = {}; for(const k in CAMPOS){ obj[k] = $(CAMPOS[k]).value.trim(); }
-    obj.modeloRouter = $('#modeloRouter').value;
-    localStorage.setItem('provia.chaves', JSON.stringify(obj));
-  } else localStorage.removeItem('provia.chaves');
-}
-$('#lembrar').addEventListener('change', sincronizarChaves);
-for(const k in CAMPOS){ $(CAMPOS[k]).addEventListener('input', ()=>{ sincronizarChaves(); atualizarDistribuicao(); }); }
 
-// ---------- Testar chave (chamada barata, sem gastar cota de imagem) ----------
-const TESTES = {
-  gemini: v => fetch('https://generativelanguage.googleapis.com/v1beta/models?key='+encodeURIComponent(v)),
-  openai: v => fetch('https://api.openai.com/v1/models', {headers:{'Authorization':'Bearer '+v}}),
-  router: v => fetch('https://openrouter.ai/api/v1/key', {headers:{'Authorization':'Bearer '+v}})
-};
-async function testarChave(prov, campoSel, stSel){
-  const st = $(stSel);
-  st.className = 'chave-status'; st.textContent = 'testando…';
-  const val = validaChave(prov, $(campoSel).value);
-  if(!val.ok){ st.classList.add('ruim'); st.textContent = '✖ ' + val.msg; return; }
-  try{
-    const r = await TESTES[prov](val.v);
-    if(r.ok){ st.classList.add('ok'); st.textContent = '✔ chave válida'; }
-    else { st.classList.add('ruim');
-           st.textContent = '✖ recusada pelo provedor (HTTP '+r.status+') — confira se copiou a chave inteira'; }
-  }catch(e){ st.classList.add('ruim'); st.textContent = '✖ falha de rede ao testar'; }
-}
-$('#testGemini').addEventListener('click', ()=>testarChave('gemini','#chaveGemini','#stGemini'));
-$('#testOpenai').addEventListener('click', ()=>testarChave('openai','#chaveOpenai','#stOpenai'));
-$('#testRouter').addEventListener('click', ()=>testarChave('router','#chaveRouter','#stRouter'));
-
-// ---------- Catálogo de modelos do OpenRouter (lista pública) ----------
-async function carregarModelosRouter(){
-  const sel = $('#modeloRouter');
-  const padrao = 'google/gemini-2.5-flash-image';
-  try{
-    const r = await fetch('https://openrouter.ai/api/v1/models');
-    const j = await r.json();
-    const modelos = (j.data||[])
-      .filter(m => ((m.architecture||{}).output_modalities||[]).includes('image'))
-      .map(m => m.id).filter(id => !id.startsWith('openrouter/'));
-    sel.innerHTML = modelos.map(id => `<option value="${id}">${id}</option>`).join('') ||
-                    `<option value="${padrao}">${padrao}</option>`;
-  }catch(e){
-    sel.innerHTML = `<option value="${padrao}">${padrao}</option>`;
+$('#btnRefazer').addEventListener('click', ()=>{ if(!confirmado){ montarPrompts(); renderLista(); } });
+$('#btnConfirmar').addEventListener('click', ()=>{
+  if(!confirmado){
+    prompts.forEach((pr,i)=>{ pr.p = ($('#listaPrompts').querySelectorAll('textarea')[i].value||'').trim(); });
+    const vazio = prompts.findIndex(pr=>!pr.p);
+    if(vazio>=0){
+      $('#avisoPrompts').textContent = 'Falta escrever o prompt da imagem '+(vazio+1)+'.';
+      const ta = $('#listaPrompts').querySelectorAll('textarea')[vazio];
+      ta.focus(); ta.scrollIntoView({behavior:'smooth', block:'center'});
+      return;
+    }
+    const semNivel = prompts.findIndex(pr=>!pr.dif);
+    if(semNivel>=0){
+      $('#avisoPrompts').textContent = 'Escolha o nível de dificuldade da imagem '+(semNivel+1)+' (fácil, média ou difícil).';
+      const sel = $('#listaPrompts').querySelectorAll('select.pdif')[semNivel];
+      sel.focus(); sel.scrollIntoView({behavior:'smooth', block:'center'});
+      return;
+    }
+    confirmado = true;
+    $('#qtd').disabled = true;
+    document.querySelectorAll('input[name=modo]').forEach(r=>r.disabled=true);
+    renderLista();
+    $('#secMotores').style.display = 'block';
+    atualizarDistribuicao();
+    $('#secMotores').scrollIntoView({behavior:'smooth', block:'start'});
+  } else {
+    desconfirmar();
+    renderLista();
   }
-  sel.value = sel.dataset.pref && [...sel.options].some(o=>o.value===sel.dataset.pref)
-              ? sel.dataset.pref : sel.options[0].value;
-  sel.addEventListener('change', sincronizarChaves);
-}
-
-// ---------- UI: quantidade, modo, distribuição ----------
-$('#qtd').addEventListener('input', ()=>{ $('#qtdValor').textContent = $('#qtd').value; atualizarDistribuicao(); stepperAjustaTotal(); });
-document.querySelectorAll('input[name=modo]').forEach(r => r.addEventListener('change', ()=>{
-  const m = document.querySelector('input[name=modo]:checked').value;
-  $('#stepper').style.display = m==='proprio' ? 'block' : 'none';
-  if(m==='proprio') stepperRender();
-}));
-
-// ---------- Stepper: um prompt por imagem ----------
-let proprios = [];      // textos escritos pelo usuário, um por imagem
-let stpIdx = 0;         // índice da imagem em edição
-function stepperAjustaTotal(){
-  const n = +$('#qtd').value;
-  proprios.length = Math.min(proprios.length, n);
-  if(stpIdx > n-1) stpIdx = n-1;
-  if(document.querySelector('input[name=modo]:checked').value==='proprio') stepperRender();
-}
-function stepperSalvaAtual(){ proprios[stpIdx] = $('#stpTexto').value.trim(); }
-function stepperRender(){
-  const n = +$('#qtd').value;
-  $('#stpTotal').textContent = n;
-  $('#stpAtualN').textContent = stpIdx+1;
-  $('#stpTexto').value = proprios[stpIdx] || '';
-  $('#stpFeitos').textContent = proprios.filter(p=>p && p.length).slice(0,n).length;
-  $('#stpVoltar').disabled = stpIdx===0;
-  $('#stpProximo').textContent = stpIdx===n-1 ? 'salvar (última) ✓' : 'salvar e próximo →';
-  const chips = $('#stpChips'); chips.innerHTML='';
-  for(let i=0;i<n;i++){
-    const b=document.createElement('button'); b.type='button';
-    b.textContent=i+1;
-    if(proprios[i]) b.classList.add('cheio');
-    if(i===stpIdx) b.classList.add('atual');
-    b.addEventListener('click',()=>{ stepperSalvaAtual(); stpIdx=i; stepperRender(); $('#stpTexto').focus(); });
-    chips.appendChild(b);
-  }
-}
-$('#stpProximo').addEventListener('click', ()=>{
-  stepperSalvaAtual();
-  const n=+$('#qtd').value;
-  if(stpIdx<n-1) stpIdx++;
-  stepperRender(); $('#stpTexto').focus();
 });
-$('#stpVoltar').addEventListener('click', ()=>{ stepperSalvaAtual(); if(stpIdx>0) stpIdx--; stepperRender(); $('#stpTexto').focus(); });
-$('#stpTexto').addEventListener('input', ()=>{ proprios[stpIdx]=$('#stpTexto').value.trim(); stepperRender(); });
+document.querySelectorAll('input[name=modo]').forEach(r => r.addEventListener('change', ()=>{
+  desconfirmar(); montarPrompts(); renderLista(); salvarCfg();
+}));
+$('#qtd').addEventListener('input', ()=>{
+  $('#qtdValor').textContent = $('#qtd').value;
+  if(confirmado) desconfirmar();
+  const modo = modoAtual(), n = +$('#qtd').value;
+  if(modo==='ia'){
+    while(prompts.length < n) prompts.push(gerarPromptLocal(seqDificuldades(1)[0]));
+    prompts.length = n;
+  } else { montarPrompts(); }
+  renderLista(); atualizarDistribuicao(); salvarCfg();
+});
 
+
+// ---------- Os 4 aplicativos (modo assistido) ----------
+const APPS = {
+  gemini:  {nome:'Gemini',  link: p => 'https://gemini.google.com/app',                             rot:'abrir Gemini ↗'},
+  gpt:     {nome:'ChatGPT', link: p => 'https://chatgpt.com/?q='+encodeURIComponent('Crie uma imagem: '+p),           rot:'abrir ChatGPT ↗'},
+  copilot: {nome:'Copilot', link: p => 'https://copilot.microsoft.com/?q='+encodeURIComponent('Crie uma imagem: '+p), rot:'abrir Copilot ↗'},
+  meta:    {nome:'Meta AI', link: p => 'https://www.meta.ai/',                                      rot:'abrir Meta AI ↗'}
+};
 function provedoresAtivos(){
   const lista = [];
-  if($('#chaveGemini').value.trim() && $('#usarGemini').checked) lista.push({id:'gemini', nome:'Gemini'});
-  if($('#chaveOpenai').value.trim() && $('#usarOpenai').checked) lista.push({id:'openai', nome:'OpenAI'});
-  if($('#chaveRouter').value.trim() && $('#usarRouter').checked) lista.push({id:'router', nome:'OpenRouter'});
-  if($('#usarMeta').checked)    lista.push({id:'meta',    nome:'Meta AI', assistido:true});
-  if($('#usarCopilot').checked) lista.push({id:'copilot', nome:'Copilot', assistido:true});
+  if($('#usarGemini').checked)  lista.push({id:'gemini',  nome:'Gemini'});
+  if($('#usarGpt').checked)     lista.push({id:'gpt',     nome:'ChatGPT'});
+  if($('#usarCopilot').checked) lista.push({id:'copilot', nome:'Copilot'});
+  if($('#usarMeta').checked)    lista.push({id:'meta',    nome:'Meta AI'});
   return lista;
 }
-['usarGemini','usarOpenai','usarRouter','usarMeta','usarCopilot'].forEach(id =>
+['usarGemini','usarGpt','usarCopilot','usarMeta'].forEach(id =>
   document.getElementById(id).addEventListener('change', atualizarDistribuicao));
 function distribuir(n, provs){
-  // divisão igual; o resto vai, um a um, na ordem dos provedores
   const base = Math.floor(n/provs.length), resto = n % provs.length;
   return provs.map((p,i)=>({...p, qtd: base + (i<resto?1:0)}));
 }
 function atualizarDistribuicao(){
   const provs = provedoresAtivos(), n = +$('#qtd').value, alvo = $('#distribuicao');
-  if(!provs.length){ alvo.textContent = 'ative ao menos um motor no passo 1 (chave colada + “usar neste lote”)'; $('#btnGerar').disabled = true; return; }
-  $('#btnGerar').disabled = gerando;
+  if(!provs.length){ alvo.textContent = 'marque ao menos um aplicativo'; $('#btnGerar').disabled = true; return; }
+  $('#btnGerar').disabled = false;
   alvo.textContent = n + ' imagens → ' + distribuir(n,provs).filter(p=>p.qtd>0).map(p=>`${p.nome} ${p.qtd}`).join(' · ');
 }
 
-// ---------- Sorteio de prompts (equilibrado entre os níveis de dificuldade) ----------
-function embaralhar(a){ a=[...a]; for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; } return a; }
-function sortearPrompts(n){
-  const niveis = {'fácil':[], 'média':[], 'difícil':[]};
-  BANCO.forEach(p => niveis[p.dif].push(p));
-  for(const k in niveis) niveis[k] = embaralhar(niveis[k]);
-  const ordem = embaralhar(Object.keys(niveis));
-  const escolhidos = [];
-  for(let i=0; escolhidos.length<n; i++){
-    const k = ordem[i%3];
-    if(!niveis[k].length) niveis[k] = embaralhar(BANCO.filter(p=>p.dif===k));
-    escolhidos.push(niveis[k].shift());
-  }
-  return embaralhar(escolhidos);
+// ---------- Cartões assistidos ----------
+let alvoColagem = null;   // cartão que recebe o próximo Ctrl+V
+function marcarAlvo(item, el){
+  document.querySelectorAll('.cartao.alvo').forEach(c=>c.classList.remove('alvo'));
+  if(item.status!=='pronta'){ alvoColagem = {item, el}; el.classList.add('alvo'); }
 }
-
-// ---------- Prompts criados por IA na hora (Gemini texto, nível grátis) ----------
-async function gerarPromptsIA(n, chave){
-  const pedido =
-`Gere ${n} prompts em português do Brasil para criar FOTOGRAFIAS realistas de cenas cotidianas brasileiras (estilo foto casual de celular ou fotografia documental).
-Responda SOMENTE com um array JSON, sem comentários e sem crase, no formato:
-[{"dif":"fácil","tema":"2 a 3 palavras","p":"prompt fotográfico detalhado"}]
-Regras: distribua as dificuldades de forma equilibrada entre "fácil", "média" e "difícil".
-"fácil" = cenas com elementos que geradores de imagem costumam errar (mãos em close, textos legíveis, reflexos de espelho, multidões, instrumentos musicais).
-"difícil" = cenas simples que os geradores dominam (objetos parados, comida, animais em repouso, texturas, paisagens).
-"média" = cenas cotidianas intermediárias. Nada de pessoas famosas, marcas ou violência.`;
-  const r = await fetch('https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key='+encodeURIComponent(chave),
-    {method:'POST', headers:{'Content-Type':'application/json'},
-     body:JSON.stringify({contents:[{parts:[{text:pedido}]}]})});
-  const j = await r.json().catch(()=>({}));
-  if(!r.ok) throw new Error(j.error?.message || ('HTTP '+r.status));
-  const texto = (j.candidates?.[0]?.content?.parts||[]).map(p=>p.text||'').join('');
-  const semCerca = texto.replace(/```json|```/g,'').trim();
-  const ini = semCerca.indexOf('['), fim = semCerca.lastIndexOf(']');
-  const arr = JSON.parse(semCerca.slice(ini, fim+1));
-  const ok = arr.filter(o => o && o.p).slice(0, n).map(o => ({
-    dif: ['fácil','média','difícil'].includes(o.dif) ? o.dif : 'média',
-    tema: String(o.tema||'cena cotidiana').slice(0,40),
-    p: String(o.p)
-  }));
-  if(ok.length < n) throw new Error('a IA devolveu menos prompts que o pedido');
-  return ok;
+function aplicarImagem(item, el, src, externa){
+  item.src = src; item.externa = !!externa; item.status = 'pronta';
+  item.modelo = APPS[item.provedor].nome.toLowerCase()+' (assistido)';
+  item.data = new Date().toISOString().slice(0,16).replace('T',' ');
+  const quadro = el.querySelector('.quadro');
+  quadro.innerHTML = `<span class="semaforo s-pronto" title="pronta"></span><img alt="Imagem gerada em modo assistido">`;
+  quadro.querySelector('img').src = src;
+  quadro.addEventListener('click', ()=>abrirModal(item));
+  el.querySelector('.acoes').hidden = false;
+  el.classList.remove('alvo');
+  if(alvoColagem && alvoColagem.item===item) alvoColagem = null;
+  atualizarEtiqueta(el, item); progresso(); checarReais(); checarPrevia();
 }
-
-// ---------- Chamadas às APIs (direto do navegador, chave do usuário) ----------
-async function gerarGemini(chave, prompt){
-  const modelos = ['gemini-2.5-flash-image','gemini-2.5-flash-image-preview'];
-  let ultimoErro = 'falha desconhecida';
-  for(const m of modelos){
-    for(const comConfig of [false,true]){
-      const corpo = {contents:[{parts:[{text:prompt}]}]};
-      if(comConfig) corpo.generationConfig = {responseModalities:['TEXT','IMAGE']};
-      const r = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${m}:generateContent?key=${encodeURIComponent(chave)}`,
-        {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(corpo)});
-      const j = await r.json().catch(()=>({}));
-      if(r.ok){
-        const partes = j.candidates?.[0]?.content?.parts || [];
-        const img = partes.find(p=>p.inlineData);
-        if(img) return {src:`data:${img.inlineData.mimeType||'image/png'};base64,${img.inlineData.data}`, modelo:m};
-        ultimoErro = j.candidates?.[0]?.finishReason==='SAFETY' || j.promptFeedback?.blockReason
-          ? 'bloqueado pelas políticas do modelo' : 'resposta sem imagem';
-        break; // não repetir este modelo
-      }
-      const msg = j.error?.message || `HTTP ${r.status}`;
-      if(r.status===429){ throw {cota:true, msg:'cota atingida'} }
-      if(r.status===404) { ultimoErro = msg; break; }            // tenta próximo modelo
-      if(r.status===400 && /modalit/i.test(msg) && !comConfig) continue; // repete com config
-      ultimoErro = msg; break;
-    }
-  }
-  throw {msg: ultimoErro};
+function lerArquivoNoCartao(f, item, el){
+  if(!f || !/^image\//.test(f.type||'')) return false;
+  const leitor = new FileReader();
+  leitor.onload = ()=>aplicarImagem(item, el, leitor.result, false);
+  leitor.readAsDataURL(f);
+  return true;
 }
-
-async function gerarOpenai(chave, prompt){
-  const r = await fetch('https://api.openai.com/v1/images/generations', {
-    method:'POST',
-    headers:{'Authorization':'Bearer '+chave, 'Content-Type':'application/json'},
-    body: JSON.stringify({model:'gpt-image-1-mini', prompt, size:'1024x1024', quality:'low', n:1})
-  });
-  const j = await r.json().catch(()=>({}));
-  if(r.status===429) throw {cota:true, msg:'limite de requisições'};
-  if(!r.ok) throw {msg: j.error?.message || `HTTP ${r.status}`};
-  const b64 = j.data?.[0]?.b64_json;
-  if(b64) return {src:'data:image/png;base64,'+b64, modelo:'gpt-image-1-mini'};
-  if(j.data?.[0]?.url) return {src:j.data[0].url, modelo:'gpt-image-1-mini', externa:true};
-  throw {msg:'resposta sem imagem'};
-}
-
-async function gerarRouter(chave, prompt){
-  const modelo = $('#modeloRouter').value;
-  const r = await fetch('https://openrouter.ai/api/v1/images/generations', {
-    method:'POST',
-    headers:{'Authorization':'Bearer '+chave, 'Content-Type':'application/json', 'X-Title':'ProVIA'},
-    body: JSON.stringify({model:modelo, prompt})
-  });
-  const j = await r.json().catch(()=>({}));
-  if(r.status===429) throw {cota:true, msg:'limite de requisições'};
-  if(!r.ok) throw {msg: j.error?.message || `HTTP ${r.status}`};
-  const d = j.data?.[0] || {};
-  if(d.b64_json) return {src:'data:image/png;base64,'+d.b64_json, modelo};
-  if(d.url)      return {src:d.url, modelo, externa:true};
-  throw {msg:'resposta em formato inesperado (modelo beta)'};
-}
-
-const MOTORES = {gemini:gerarGemini, openai:gerarOpenai, router:gerarRouter};
-const CHAVE_DE = {gemini:'#chaveGemini', openai:'#chaveOpenai', router:'#chaveRouter'};
-const LINK_ASSISTIDO = {meta:{url:'https://www.meta.ai/', rotulo:'abrir meta.ai ↗'},
-                        copilot:{url:'https://copilot.microsoft.com/', rotulo:'abrir Copilot ↗'}};
-
-// ---------- Cartões e execução ----------
 function criarCartao(item){
   const el = document.createElement('div');
   el.className = 'cartao';
-  if(item.assistido){
-    el.innerHTML = `
-      <div class="quadro"><span class="semaforo s-gerando" title="aguardando você"></span>
-        <span class="aguarde">aguardando você<br>(modo assistido)</span></div>
-      <div class="assist-box">
-        <div class="ptexto">${esc(item.prompt)}</div>
-        <div class="assist-acoes">
-          <button class="mini ac-copiar" type="button">copiar prompt</button>
-          <a class="mini" href="${LINK_ASSISTIDO[item.provedor].url}" target="_blank" rel="noopener">${LINK_ASSISTIDO[item.provedor].rotulo}</a>
-          <label class="mini" style="cursor:pointer">devolver imagem<input type="file" accept="image/*" hidden></label>
-        </div>
-      </div>
-      <div class="etiqueta"></div>
-      <div class="acoes" hidden><button class="mini ac-baixar">baixar</button></div>`;
-    atualizarEtiqueta(el, item);
-    el.querySelector('.ac-copiar').addEventListener('click', async (ev)=>{
-      try{ await navigator.clipboard.writeText(item.prompt); ev.target.textContent='copiado ✓'; }
-      catch(_){ ev.target.textContent='selecione e copie acima'; }
-      setTimeout(()=>ev.target.textContent='copiar prompt', 2200);
-    });
-    el.querySelector('input[type=file]').addEventListener('change', (ev)=>{
-      const f = ev.target.files && ev.target.files[0]; if(!f) return;
-      const leitor = new FileReader();
-      leitor.onload = ()=>{
-        item.src = leitor.result; item.status='pronta';
-        item.modelo = item.provedor==='meta' ? 'meta.ai (assistido)' : 'copilot (assistido)';
-        item.data = new Date().toISOString().slice(0,16).replace('T',' ');
-        const quadro = el.querySelector('.quadro');
-        quadro.innerHTML = `<span class="semaforo s-pronto" title="pronta"></span><img alt="Imagem gerada em modo assistido">`;
-        quadro.querySelector('img').src = item.src;
-        quadro.addEventListener('click', ()=>abrirModal(item));
-        el.querySelector('.acoes').hidden = false;
-        atualizarEtiqueta(el, item); progresso();
-      };
-      leitor.readAsDataURL(f);
-    });
-    el.querySelector('.ac-baixar').addEventListener('click', ()=>baixarItem(item));
-    return el;
-  }
+  const app = APPS[item.provedor];
   el.innerHTML = `
-    <div class="quadro"><span class="semaforo s-fila" title="na fila"></span>
-      <span class="aguarde">na fila…</span></div>
-    <div class="erro-txt" hidden></div>
+    <div class="quadro" tabindex="0" title="toque para escolher este cartão e colar com Ctrl+V">
+      <span class="semaforo s-gerando" title="aguardando você"></span>
+      <span class="aguarde">aguardando você<br>(toque aqui e cole com Ctrl+V)</span></div>
+    <div class="assist-box">
+      <div class="ptexto">${esc(item.prompt)}</div>
+      <div class="assist-acoes">
+        <button class="mini ac-copiar" type="button">copiar prompt</button>
+        <a class="mini" href="${app.link(item.prompt)}" target="_blank" rel="noopener">${app.rot}</a>
+        <button class="mini ac-colar" type="button" title="colar imagem da área de transferência">📋 colar</button>
+        <label class="mini" style="cursor:pointer">enviar arquivo<input type="file" accept="image/*" hidden></label>
+      </div>
+    </div>
     <div class="etiqueta"></div>
     <div class="acoes" hidden>
       <button class="mini ac-baixar">baixar</button>
-      <button class="mini ac-tentar" hidden>tentar de novo</button>
+      <button class="mini ac-remover" title="apagar esta imagem e colar outra">✕ remover</button>
     </div>`;
   atualizarEtiqueta(el, item);
-  el.querySelector('.quadro').addEventListener('click', ()=>{ if(item.src) abrirModal(item); });
+  const quadro = el.querySelector('.quadro');
+  quadro.addEventListener('click', ()=>{ item.src ? abrirModal(item) : marcarAlvo(item, el); });
+  quadro.addEventListener('dragover', e=>{ if(item.status!=='pronta'){ e.preventDefault(); el.classList.add('solta'); } });
+  quadro.addEventListener('dragleave', ()=>el.classList.remove('solta'));
+  quadro.addEventListener('drop', e=>{
+    e.preventDefault(); el.classList.remove('solta');
+    if(item.status==='pronta') return;
+    const f = e.dataTransfer.files && e.dataTransfer.files[0];
+    if(lerArquivoNoCartao(f, item, el)) return;
+    const uri = e.dataTransfer.getData('text/uri-list') || e.dataTransfer.getData('text/plain');
+    if(uri && /^https?:\/\//.test(uri)) aplicarImagem(item, el, uri.split('\n')[0], true);
+  });
+  el.querySelector('.ac-copiar').addEventListener('click', async (ev)=>{
+    try{ await navigator.clipboard.writeText('Crie uma imagem: '+item.prompt); ev.target.textContent='copiado ✓'; }
+    catch(_){ ev.target.textContent='selecione e copie acima'; }
+    setTimeout(()=>ev.target.textContent='copiar prompt', 2200);
+  });
+  el.querySelector('.ac-colar').addEventListener('click', async (ev)=>{
+    marcarAlvo(item, el);
+    try{
+      const pedacos = await navigator.clipboard.read();
+      for(const p of pedacos){
+        const tipo = p.types.find(t=>t.startsWith('image/'));
+        if(tipo){ const blob = await p.getType(tipo);
+          const leitor = new FileReader();
+          leitor.onload = ()=>aplicarImagem(item, el, leitor.result, false);
+          leitor.readAsDataURL(blob); return; }
+      }
+      ev.target.textContent='sem imagem copiada';
+    }catch(_){ ev.target.textContent='use Ctrl+V aqui'; }
+    setTimeout(()=>ev.target.textContent='📋 colar', 2400);
+  });
+  el.querySelector('input[type=file]').addEventListener('change', ev=>{
+    const f = ev.target.files && ev.target.files[0];
+    lerArquivoNoCartao(f, item, el);
+  });
   el.querySelector('.ac-baixar').addEventListener('click', ()=>baixarItem(item));
-  el.querySelector('.ac-tentar').addEventListener('click', ()=>{ executarItem(item, el); });
+  el.querySelector('.ac-remover').addEventListener('click', ()=>removerImagem(item, el));
   return el;
 }
+function removerImagem(item, el){
+  item.src = null; item.externa = false; item.status = 'aguardando';
+  item.modelo = null; item.data = null;
+  const quadro = el.querySelector('.quadro');
+  quadro.innerHTML = `<span class="semaforo s-gerando" title="aguardando você"></span>
+      <span class="aguarde">aguardando você<br>(toque aqui e cole com Ctrl+V)</span>`;
+  quadro.addEventListener('click', ()=>{ item.src ? abrirModal(item) : marcarAlvo(item, el); });
+  el.querySelector('.acoes').hidden = true;
+  ordemForm = [];
+  $('#secPrevia').style.display = 'none';
+  atualizarEtiqueta(el, item); progresso(); marcarAlvo(item, el);
+}
+// Ctrl+V em qualquer lugar da página: cai no cartão escolhido (ou no primeiro pendente)
+document.addEventListener('paste', e=>{
+  if(!itens.length) return;
+  const alvo = alvoColagem || (function(){
+    const i = itens.findIndex(x=>x.status!=='pronta');
+    if(i<0) return null;
+    return {item:itens[i], el:$('#grade').children[i]};
+  })();
+  if(!alvo) return;
+  const arquivos = e.clipboardData && e.clipboardData.items;
+  if(!arquivos) return;
+  for(const it of arquivos){
+    if(it.type && it.type.startsWith('image/')){
+      e.preventDefault();
+      lerArquivoNoCartao(it.getAsFile(), alvo.item, alvo.el);
+      return;
+    }
+  }
+});
 function atualizarEtiqueta(el, it){
   el.querySelector('.etiqueta').innerHTML =
-    `<b>${it.provedorNome.toUpperCase()}</b> · ${it.modelo|| (it.assistido?'assistido':'—')}<br>` +
+    `<b>${it.provedorNome.toUpperCase()}</b> · ${it.modelo||'assistido'}<br>` +
     (it.dif ? `dificuldade: ${it.dif} · ${it.tema}<br>` : `prompt próprio (imagem ${it.n})<br>`) +
     `${it.data||''}`;
 }
-function marcar(el, estado, textoQuadro){
-  const s = el.querySelector('.semaforo');
-  s.className = 'semaforo s-'+estado;
-  s.title = {fila:'na fila',gerando:'gerando',pronto:'pronta',erro:'erro'}[estado];
-  const ag = el.querySelector('.aguarde');
-  if(ag) ag.textContent = textoQuadro || '';
-}
-async function executarItem(item, el){
-  el.querySelector('.erro-txt').hidden = true;
-  el.querySelector('.ac-tentar').hidden = true;
-  marcar(el,'gerando','gerando…');
-  item.status = 'gerando'; progresso();
-  const chave = limpaChave($(CHAVE_DE[item.provedor]).value);
-  for(let tent=0; tent<=2; tent++){
-    try{
-      const res = await MOTORES[item.provedor](chave, item.prompt);
-      item.src = res.src; item.modelo = res.modelo; item.externa = !!res.externa;
-      item.status = 'pronta'; item.data = new Date().toISOString().slice(0,16).replace('T',' ');
-      const quadro = el.querySelector('.quadro');
-      quadro.innerHTML = `<span class="semaforo s-pronto" title="pronta"></span><img alt="Imagem gerada: ${esc(item.tema||'prompt próprio')}">`;
-      quadro.querySelector('img').src = item.src;
-      el.querySelector('.acoes').hidden = false;
-      atualizarEtiqueta(el, item); progresso();
-      return true;
-    }catch(e){
-      if(e && e.cota && tent<2){
-        marcar(el,'gerando',`cota: aguardando ${8*(tent+1)} s…`);
-        await new Promise(res=>setTimeout(res, 8000*(tent+1)));
-        continue;
-      }
-      item.status = 'erro'; item.erro = (e&&(e.msg||e.message))||'falha';
-      marcar(el,'erro','—');
-      const et = el.querySelector('.erro-txt');
-      et.textContent = item.erro.slice(0,160); et.hidden = false;
-      el.querySelector('.acoes').hidden = false;
-      el.querySelector('.ac-tentar').hidden = false;
-      progresso();
-      return false;
-    }
-  }
-}
 
-// ---------- Progresso (global: lido do estado real dos itens) ----------
+// ---------- Progresso ----------
 function progresso(){
-  const c = {fila:0, gerando:0, pronta:0, erro:0, aguardando:0};
-  itens.forEach(i => c[i.status] = (c[i.status]||0)+1);
-  const partes = [];
-  if(c.pronta) partes.push(c.pronta+' pronta(s)');
-  if(c.gerando) partes.push(c.gerando+' gerando');
-  if(c.fila) partes.push(c.fila+' na fila');
-  if(c.erro) partes.push(c.erro+' com erro');
-  if(c.aguardando) partes.push(c.aguardando+' aguardando você (assistidas)');
-  $('#progresso').textContent = itens.length ? partes.join(' · ') : '';
+  const prontas = itens.filter(i=>i.status==='pronta').length;
+  const falta = itens.length - prontas;
+  $('#progresso').textContent = itens.length
+    ? (prontas+' de '+itens.length+' devolvida(s)' + (falta? ' · '+falta+' aguardando você':' · lote completo ✓'))
+    : '';
 }
 
-$('#btnGerar').addEventListener('click', async ()=>{
+// ---------- Criar os cartões do lote ----------
+$('#btnGerar').addEventListener('click', ()=>{
+  if(!confirmado){ $('#progresso').textContent = 'Confirme os prompts no passo 2 antes.'; return; }
   const provs = provedoresAtivos();
-  if(!provs.length || gerando) return;
+  if(!provs.length) return;
   const n = +$('#qtd').value;
-  const modo = document.querySelector('input[name=modo]:checked').value;
-
-  // valida o formato das chaves dos motores automáticos antes de qualquer chamada
-  for(const p of provs.filter(x=>!x.assistido)){
-    const val = validaChave(p.id, $(CHAVE_DE[p.id]).value);
-    if(!val.ok){
-      $('#progresso').textContent = p.nome + ': ' + val.msg;
-      $(CHAVE_DE[p.id]).focus(); return;
-    }
-  }
-
-  // resolve os prompts conforme o modo
-  let listaPrompts;
-  if(modo === 'aleatorio'){
-    listaPrompts = sortearPrompts(n);
-  } else if(modo === 'ia'){
-    const valG = validaChave('gemini', $('#chaveGemini').value);
-    if(!valG.ok){
-      $('#progresso').textContent = 'O modo “criados por IA” usa sua chave do Gemini (texto, grátis) — cole-a no passo 1. ' + valG.msg;
-      $('#chaveGemini').focus(); return;
-    }
-    $('#btnGerar').disabled = true;
-    $('#progresso').textContent = 'Pedindo ao Gemini os '+n+' prompts deste lote…';
-    try{ listaPrompts = await gerarPromptsIA(n, valG.v); }
-    catch(e){
-      listaPrompts = sortearPrompts(n);
-      $('#progresso').textContent = 'A IA de prompts falhou ('+(e.message||'erro')+') — usando o banco ProVIA neste lote.';
-    }
-    $('#btnGerar').disabled = false;
-  } else { // proprio: um prompt por imagem
-    stepperSalvaAtual();
-    const faltando = [];
-    for(let i=0;i<n;i++) if(!proprios[i]) faltando.push(i);
-    if(faltando.length){
-      stpIdx = faltando[0]; stepperRender();
-      $('#progresso').textContent = 'Falta escrever o prompt da imagem '+(faltando[0]+1)+' (e de mais '+(faltando.length-1)+').';
-      $('#stpTexto').focus(); return;
-    }
-    listaPrompts = proprios.slice(0,n).map(p => ({p, dif:null, tema:null}));
-  }
-
-  // monta a fila (distribuição igual entre os motores escolhidos)
-  itens = [];
+  itens = []; alvoColagem = null; ordemForm = []; $('#secPrevia').style.display = 'none';
   const dist = distribuir(n, provs).filter(p=>p.qtd>0);
   let idx = 0;
   for(const p of dist){
     for(let i=0;i<p.qtd;i++){
-      const base = listaPrompts[idx];
-      itens.push({n:idx+1, provedor:p.id, provedorNome:p.nome, assistido:!!p.assistido,
-                  prompt:base.p, dif:base.dif, tema:base.tema, modo,
-                  status: p.assistido ? 'aguardando' : 'fila',
-                  modelo:null, src:null, data:null});
+      const base = prompts[idx];
+      itens.push({n:idx+1, provedor:p.id, provedorNome:p.nome, assistido:true,
+                  prompt:base.p, dif:base.dif, tema:base.tema, modo:modoAtual(),
+                  status:'aguardando', modelo:null, src:null, data:null});
       idx++;
     }
   }
-
-  // desenha os cartões
   const grade = $('#grade'); grade.innerHTML = '';
   $('#secResultados').style.display = 'block';
-  const mapa = itens.map(it => { const el = criarCartao(it); grade.appendChild(el); return [it, el]; });
+  itens.forEach(it => grade.appendChild(criarCartao(it)));
   $('#secResultados').scrollIntoView({behavior:'smooth', block:'start'});
   progresso();
-
-  // executa os automáticos: um "trabalhador" por motor, sequencial dentro de cada um
-  gerando = true; $('#btnGerar').disabled = true;
-  const porProvedor = {};
-  mapa.filter(par => !par[0].assistido)
-      .forEach(par => { (porProvedor[par[0].provedor] ||= []).push(par); });
-  await Promise.all(Object.values(porProvedor).map(async fila => {
-    for(const [it, el] of fila){
-      await executarItem(it, el);
-      await new Promise(r=>setTimeout(r, 1300)); // respeita limites por minuto
-    }
-  }));
-  gerando = false; atualizarDistribuicao();
-  const prontas = itens.filter(i=>i.status==='pronta').length;
-  const erros = itens.filter(i=>i.status==='erro').length;
-  const aguard = itens.filter(i=>i.status==='aguardando').length;
-  const houveAuto = Object.keys(porProvedor).length > 0;
-  $('#progresso').textContent =
-    (houveAuto ? `Motores automáticos concluídos: ${prontas} pronta(s), ${erros} erro(s).` : '') +
-    (erros ? ' Use “tentar de novo” nos cartões com erro.' : '') +
-    (aguard ? ` ${aguard} cartão(ões) assistido(s) aguardando você: copiar → gerar na plataforma → devolver imagem.` : '');
 });
 
 // ---------- Modal, download, manifesto ----------
@@ -857,7 +811,7 @@ $('#btnManifesto').addEventListener('click', ()=>{
   const manifesto = {
     ferramenta:'ProVIA · Laboratório de Imagens · Módulo 1',
     gerado_em: new Date().toISOString(),
-    observacao:'Imagens sintéticas geradas com as chaves do próprio usuário; nenhum dado foi coletado pelo site.',
+    observacao:'Imagens sintéticas geradas pelo próprio usuário nos aplicativos indicados (modo assistido) e devolvidas ao site; nenhum dado foi coletado.',
     itens: itens.map(({src, ...resto})=>resto)
   };
   const blob = new Blob([JSON.stringify(manifesto,null,2)], {type:'application/json'});
@@ -866,9 +820,354 @@ $('#btnManifesto').addEventListener('click', ()=>{
   URL.revokeObjectURL(a.href);
 });
 
+
+// =========================================================
+// PASSO 3 · IMAGENS REAIS (COCO val2017 + Agência Brasil)
+// =========================================================
+const COCO_URL = id => 'https://s3.amazonaws.com/images.cocodataset.org/val2017/' + String(id).padStart(12,'0') + '.jpg';
+const CATALOGO_REAIS = {
+  coco: [
+    {id:50679,  desc:'Uma laranja na beira de uma via asfaltada.'},
+    {id:285,    desc:'Um grande urso-pardo, com grama ao fundo.'},
+    {id:145591, desc:'Relógio ornamental exposto em uma via da cidade.'},
+    {id:74058,  desc:'Calçada ao lado da área externa de um restaurante.'},
+    {id:200152, desc:'Placa de rua em uma esquina, com prédio ao fundo.'},
+    {id:139684, desc:'Sala de estar mobiliada, com TV de tela plana.'},
+    {id:469652, desc:'Close da cabeça de uma girafa, parede de madeira ao fundo.'},
+    {id:33638,  desc:'Mulher observando algo no fogão da cozinha.'},
+    {id:312237, desc:'Pessoas se divertindo em uma praia lotada.'},
+    {id:802,    desc:'Cozinha com geladeira, fogão, forno e armários.'},
+    {id:514979, desc:'Elefante adulto ao lado de um filhote.'},
+    {id:123321, desc:'Tigela de brócolis com molho por cima.'},
+    {id:497568, desc:'Avião comercial sendo preparado por dois funcionários.'},
+    {id:189806, desc:'Gato e cachorro brincando no chão, perto de sapatos.'},
+    {id:189078, desc:'Travessa com bananas, laranjas e maçãs.'},
+    {id:315450, desc:'Dois ônibus grandes em uma rua movimentada.'},
+    {id:424162, desc:'Duas mulheres passeando com um cachorro na coleira.'},
+    {id:117908, desc:'Homem olhando dentro da geladeira, com um gato ao lado.'}
+  ].map(e => ({url:COCO_URL(e.id), desc:e.desc, fonte:'COCO val2017',
+               credito:'Fotos do Flickr reunidas no dataset COCO (licenças Creative Commons diversas)',
+               legenda:'legenda oficial do dataset, traduzida', link:'https://cocodataset.org'})),
+  ab: [
+    {url:'reais/toms9960.jpg',
+     desc:'Pedestres atravessam na faixa em Copacabana, no Rio de Janeiro, com prédios da orla ao fundo.',
+     fonte:'Agência Brasil (EBC)', credito:'Foto: Tomaz Silva/Agência Brasil · CC BY 3.0 BR',
+     legenda:'descrição do catálogo ProVIA', link:'https://agenciabrasil.ebc.com.br'},
+    {url:'reais/rbr9264.jpg',
+     desc:'Mãos folheiam um livro com fotografias históricas da família imperial brasileira.',
+     fonte:'Agência Brasil (EBC)', credito:'Foto: Rovena Rosa/Agência Brasil · CC BY 3.0 BR',
+     legenda:'descrição do catálogo ProVIA', link:'https://agenciabrasil.ebc.com.br'},
+    {url:'https://imagens.ebc.com.br/jslEtDUqPx_N94tNMiGI3viwuAY=/1600x800/https://agenciabrasil.ebc.com.br/sites/default/files/thumbnails/image/2026/08/05/_int1688.jpg?itok=mTNNAzwV',
+     desc:'Passageiros na plataforma durante paralisação dos trens da CPTM, em São Paulo.',
+     fonte:'Agência Brasil (EBC)', credito:'Foto: Rafa Neddermeyer/Agência Brasil · CC BY 3.0 BR',
+     legenda:'legenda da reportagem original', link:'https://agenciabrasil.ebc.com.br/geral/noticia/2026-08/usuarios-de-trens-mudam-rotina-por-causa-de-greve-da-cptm'}
+  ]
+};
+// Bancos externos (dados/*.json). Sem eles, valem as listas embutidas abaixo.
+
+async function carregarBancosReais(){
+  const marca = $('#bancoStatus');
+  try{
+    const r = await fetch('dados/agencia_brasil.json', {cache:'no-store'});
+    if(r.ok){
+      const lista = await r.json();
+      CATALOGO_REAIS.ab = lista.map(e=>({url:e.url, desc:e.desc, fonte:e.fonte||'Agência Brasil (EBC)',
+        credito:e.credito, legenda:e.legenda||'título da reportagem de origem', link:e.link}));
+    }
+  }catch(e){}
+  try{
+    const r = await fetch('dados/coco_val2017.json', {cache:'no-store'});
+    if(r.ok){
+      const lista = await r.json();
+      CATALOGO_REAIS.coco = lista.map(([id, cap, pt])=>({
+        url: COCO_URL(id), desc: cap, fonte:'COCO val2017',
+        credito:'Fotos do Flickr reunidas no dataset COCO (licenças Creative Commons diversas)',
+        legenda: pt ? 'legenda oficial do dataset, traduzida' : 'legenda oficial do dataset (em inglês)',
+        link:'https://cocodataset.org'}));
+    }
+  }catch(e){}
+  if(marca) marca.textContent = 'banco de imagens reais: ' + CATALOGO_REAIS.coco.length
+    + ' do COCO val2017 · ' + CATALOGO_REAIS.ab.length + ' da Agência Brasil';
+}
+
+let reais = [];              // seleção atual, mesmo tamanho do lote sintético
+let confirmadoReais = false;
+const urlsQuebradas = new Set();   // imagens que falharam ao carregar nesta sessão
+let ultimoSorteio = new Set();     // evita repetir o sorteio anterior quando o pool permite
+let historicoReais = (()=>{ try{ return new Set(JSON.parse(localStorage.getItem('provia.reaisRecentes')||'[]')); }catch(e){ return new Set(); } })();
+function lembrarUsadas(){
+  reais.forEach(r=>historicoReais.add(r.url));
+  const arr = [...historicoReais].slice(-200);
+  historicoReais = new Set(arr);
+  try{ localStorage.setItem('provia.reaisRecentes', JSON.stringify(arr)); }catch(e){}
+}
+
+const vivas = lista => lista.filter(e => !urlsQuebradas.has(e.url));
+function amostraSemRepetir(pool, n, evitar){
+  const frescas = pool.filter(e => !evitar.has(e.url));
+  const escolha = embaralhar(frescas.length >= n ? frescas : pool);
+  return escolha.slice(0, n);
+}
+function sortearReais(n){
+  const nAb   = Math.min(Math.ceil(n/2), vivas(CATALOGO_REAIS.ab).length);
+  const nCoco = n - nAb;
+  const evitar = new Set([...ultimoSorteio, ...historicoReais]);
+  const coco = amostraSemRepetir(vivas(CATALOGO_REAIS.coco), nCoco, evitar);
+  const ab   = amostraSemRepetir(vivas(CATALOGO_REAIS.ab),   nAb,   evitar);
+  reais = [];
+  let i = 0, j = 0;
+  const comecaCoco = Math.random() < .5;
+  for(let k = 0; k < n; k++){
+    const vezCoco = comecaCoco ? k%2===0 : k%2===1;
+    if((vezCoco && i < coco.length) || j >= ab.length) reais.push(coco[i++]);
+    else reais.push(ab[j++]);
+  }
+  ultimoSorteio = new Set(reais.map(r=>r.url));
+  lembrarUsadas();
+}
+function trocarReal(i, botao){
+  const usadas = new Set(reais.map(r=>r.url));
+  const ehCoco = reais[i].fonte.startsWith('COCO');
+  const mesma = vivas(ehCoco ? CATALOGO_REAIS.coco : CATALOGO_REAIS.ab).filter(e=>!usadas.has(e.url));
+  const outra = vivas(ehCoco ? CATALOGO_REAIS.ab : CATALOGO_REAIS.coco).filter(e=>!usadas.has(e.url));
+  const opcoes = mesma.length ? mesma : outra;
+  if(!opcoes.length){
+    if(botao){ botao.textContent = 'sem outra disponível'; setTimeout(()=>botao.textContent='🔄 trocar', 1800); }
+    return;
+  }
+  reais[i] = opcoes[Math.floor(Math.random()*opcoes.length)];
+  ultimoSorteio = new Set(reais.map(r=>r.url));
+  renderReais();
+}
+function renderReais(){
+  const grade = $('#reaisGrade'); grade.innerHTML = '';
+  reais.forEach((r,i)=>{
+    const el = document.createElement('div');
+    el.className = 'cartao';
+    el.innerHTML = `
+      <div class="quadro"><span class="semaforo s-pronto" title="imagem real"></span>
+        <img loading="lazy" alt="${esc(r.desc)}"></div>
+      <div class="assist-box">
+        <div class="rdesc">${esc(r.desc)}</div>
+        <div class="rfonte"><b>${esc(r.fonte)}</b> · ${esc(r.legenda)}<br>${esc(r.credito)}
+          · <a href="${r.link}" target="_blank" rel="noopener">fonte ↗</a></div>
+        ${confirmadoReais ? '' : '<div class="assist-acoes"><button class="mini rg" type="button" title="sortear outra imagem real">🔄 trocar</button></div>'}
+      </div>`;
+    const img = el.querySelector('img');
+    img.addEventListener('error', ()=>{
+      urlsQuebradas.add(r.url);
+      if(!confirmadoReais){ trocarReal(i); }
+      else {
+        el.querySelector('.quadro').innerHTML =
+          '<span class="semaforo s-erro" title="erro"></span><span class="aguarde">imagem indisponível —<br>use ✏️ Editar imagens reais</span>';
+      }
+    });
+    img.src = r.url;
+    const rg = el.querySelector('.rg');
+    if(rg) rg.addEventListener('click', ()=>trocarReal(i, rg));
+    grade.appendChild(el);
+  });
+  $('#btnConfirmarReais').textContent = confirmadoReais ? '✏️ Editar imagens reais' : 'Confirmar imagens reais ✔';
+  $('#btnSortearReais').style.display = confirmadoReais ? 'none' : '';
+}
+function checarReais(){
+  if(!confirmado || !itens.length) return;
+  if(!itens.every(i=>i.status==='pronta')) return;
+  if($('#secReais').style.display === 'block') return;
+  if(!reais.length) sortearReais(+$('#qtd').value);
+  renderReais();
+  $('#secReais').style.display = 'block';
+  $('#secReais').scrollIntoView({behavior:'smooth', block:'start'});
+}
+$('#btnSortearReais').addEventListener('click', ()=>{ if(!confirmadoReais){ sortearReais(+$('#qtd').value); renderReais(); } });
+$('#btnConfirmarReais').addEventListener('click', ()=>{
+  if(!confirmadoReais){
+    confirmadoReais = true; renderReais();
+    checarPrevia();
+    $('#secPrevia').scrollIntoView({behavior:'smooth', block:'start'});
+  } else {
+    confirmadoReais = false;
+    $('#secPrevia').style.display = 'none';
+    renderReais();
+  }
+});
+
+// =========================================================
+// PASSO 5 · PRÉVIA E GERAÇÃO DO FORMULÁRIO
+// =========================================================
+let ordemForm = [];          // ex.: ['s0','r2',...]  s=sintética r=real
+let opcoesForm = {};         // id -> {indicios:bool, justificativa:bool}
+const INDICIOS_PADRAO = [
+  'Luz e sombras parecem combinar com a cena.',
+  'Alguns detalhes podem parecer artificiais à primeira vista.',
+  'Expressões, poses e movimento parecem realistas.',
+  'A cena muito cheia pode esconder pequenos erros.',
+  'Objetos, roupas e texturas parecem naturais e variados.',
+  'Certos elementos parecem detalhados demais ou "limpos" demais.'
+];
+function nomeArquivoDe(it){
+  const ext = ((String(it.src||'').match(/^data:image\/(\w+)/)||[])[1]||'png').replace('jpeg','jpg');
+  return `provia_${it.provedor}_${String(it.n).padStart(2,'0')}.${ext}`;
+}
+function itemPrevia(idc){
+  if(idc[0]==='s'){ const it = itens[+idc.slice(1)];
+    return {tipo:'sintetica', src:it.src, rotulo:'SINTÉTICA · '+it.provedorNome,
+            sub:(it.dif?('dificuldade: '+it.dif):'prompt próprio'), gab:'ia', ref:it}; }
+  const r = reais[+idc.slice(1)];
+  return {tipo:'real', src:r.url, rotulo:'REAL · '+r.fonte, sub:r.desc, gab:'real', ref:r};
+}
+function checarPrevia(){
+  if(!confirmadoReais || !itens.length) return;
+  if(!itens.every(i=>i.status==='pronta')) return;
+  if(!ordemForm.length){
+    ordemForm = embaralhar([...itens.map((_,i)=>'s'+i), ...reais.map((_,i)=>'r'+i)]);
+    opcoesForm = {};
+    ordemForm.forEach(id=>opcoesForm[id]={indicios:false, justificativa:false});
+    const ultimo = ordemForm[ordemForm.length-1];
+    opcoesForm[ultimo] = {indicios:true, justificativa:true};
+  }
+  renderPrevia();
+  $('#secPrevia').style.display = 'block';
+}
+function moverForm(i, delta){
+  const j = i + delta;
+  if(j<0 || j>=ordemForm.length) return;
+  [ordemForm[i], ordemForm[j]] = [ordemForm[j], ordemForm[i]];
+  renderPrevia();
+}
+function renderPrevia(){
+  const alvo = $('#previaLista'); alvo.innerHTML = '';
+  ordemForm.forEach((idc, i)=>{
+    const p = itemPrevia(idc), op = opcoesForm[idc];
+    const el = document.createElement('div');
+    el.className = 'previa-item';
+    el.innerHTML = `
+      <div class="pv-ordem">
+        <button class="mini pv-sobe" title="subir" ${i===0?'disabled':''}>↑</button>
+        <span class="pv-n">${i+1}</span>
+        <button class="mini pv-desce" title="descer" ${i===ordemForm.length-1?'disabled':''}>↓</button>
+      </div>
+      <img class="pv-thumb" alt="">
+      <div class="pv-info">
+        <b class="${p.tipo==='real'?'pv-real':'pv-sint'}">${esc(p.rotulo)}</b>
+        <small>${esc(p.sub)}</small>
+        <small class="pv-fixas">perguntas fixas: real ou IA? + nível de confiança</small>
+        <label><input type="checkbox" class="pv-ind" ${op.indicios?'checked':''}> pergunta de indícios (marque até 2)</label>
+        <label><input type="checkbox" class="pv-jus" ${op.justificativa?'checked':''}> justificativa em uma frase</label>
+      </div>`;
+    el.querySelector('.pv-thumb').src = p.src;
+    el.querySelector('.pv-sobe').addEventListener('click', ()=>moverForm(i,-1));
+    el.querySelector('.pv-desce').addEventListener('click', ()=>moverForm(i, 1));
+    el.querySelector('.pv-ind').addEventListener('change', e=>opcoesForm[idc].indicios = e.target.checked);
+    el.querySelector('.pv-jus').addEventListener('change', e=>opcoesForm[idc].justificativa = e.target.checked);
+    alvo.appendChild(el);
+  });
+}
+$('#btnEmbaralharForm').addEventListener('click', ()=>{ ordemForm = embaralhar(ordemForm); renderPrevia(); });
+$('#btnBaixarTodas').addEventListener('click', async ()=>{
+  for(const it of itens){ if(it.status==='pronta' && !it.externa){ baixarItem(it); await new Promise(r=>setTimeout(r,400)); } }
+});
+
+function configuracaoForm(){
+  return {
+    ferramenta:'ProVIA · gerador de formulário', gerado_em:new Date().toISOString(),
+    titulo:'Análise de Conteúdos em Redes Sociais',
+    pastaDrive:'ProVIA',
+    itens: ordemForm.map(idc=>{
+      const p = itemPrevia(idc), op = opcoesForm[idc];
+      const base = {tipo:p.tipo, gabarito:p.gab, indicios:op.indicios, justificativa:op.justificativa};
+      if(p.tipo==='sintetica'){
+        base.arquivo = nomeArquivoDe(p.ref);
+        base.app = p.ref.provedorNome; base.prompt = p.ref.prompt; base.dificuldade = p.ref.dif||'própria';
+        if(p.ref.externa) base.urlExterna = p.ref.src;
+      } else {
+        base.url = p.src.startsWith('http') ? p.src : null;
+        base.arquivo = p.src.startsWith('http') ? null : p.src.split('/').pop();
+        base.descricao = p.ref.desc; base.fonte = p.ref.fonte; base.credito = p.ref.credito;
+      }
+      return base;
+    }),
+    indiciosPadrao: INDICIOS_PADRAO
+  };
+}
+function gerarScriptForms(cfg){
+  return `/**  ProVIA — gerador de Google Forms (cole em script.google.com)
+ *  COMO USAR (5 minutos):
+ *  1) No site do ProVIA, use "baixar todas (sintéticas)".
+ *  2) No seu Google Drive, crie uma pasta chamada:  ${cfg.pastaDrive}
+ *     e envie para ela os arquivos baixados (e as imagens reais locais, se houver).
+ *  3) Abra script.google.com → Novo projeto → apague tudo e cole ESTE arquivo inteiro.
+ *  4) Aperte ▶ Executar (função criarFormulario) e autorize com a sua conta.
+ *  5) O link do formulário aparece no registro de execução (Ctrl+Enter).
+ */
+const CONFIG = ${JSON.stringify(cfg, null, 2)};
+
+function criarFormulario(){
+  const form = FormApp.create(CONFIG.titulo);
+  form.setIsQuiz(true).setDescription('Observe atentamente cada conteúdo antes de responder.');
+  form.addTextItem().setTitle('[Código]').setHelpText('Preenchido pelo pesquisador. Não altere.').setRequired(true);
+  const pasta = obterPasta_(CONFIG.pastaDrive);
+  CONFIG.itens.forEach(function(item, i){
+    const blob = blobDe_(item, pasta);
+    if(blob) form.addImageItem().setImage(blob).setTitle('Imagem ' + (i+1));
+    const mc = form.addMultipleChoiceItem();
+    mc.setTitle('Observe a imagem acima. Este conteúdo parece ser:').setRequired(true).setPoints(1);
+    mc.setChoices([
+      mc.createChoice('Provavelmente real.', item.gabarito === 'real'),
+      mc.createChoice('Provavelmente criada por IA.', item.gabarito === 'ia')
+    ]);
+    form.addMultipleChoiceItem().setTitle('Qual é o seu nível de confiança nessa resposta?')
+        .setChoiceValues(['🔴 Baixa','🟡 Média','🟢 Alta']).setRequired(true);
+    if(item.indicios){
+      const cb = form.addCheckboxItem();
+      cb.setTitle('O que mais influenciou sua resposta? Marque até 2 indícios.').setRequired(true);
+      cb.setChoiceValues(CONFIG.indiciosPadrao);
+      cb.setValidation(FormApp.createCheckboxValidation().requireSelectAtMost(2).build());
+    }
+    if(item.justificativa){
+      form.addParagraphTextItem().setTitle('Explique em uma frase o principal motivo da sua escolha.').setRequired(true);
+    }
+  });
+  Logger.log('Formulário criado!');
+  Logger.log('Responder: ' + form.getPublishedUrl());
+  Logger.log('Editar:    ' + form.getEditUrl());
+}
+function obterPasta_(nome){
+  const it = DriveApp.getFoldersByName(nome);
+  return it.hasNext() ? it.next() : null;
+}
+function blobDe_(item, pasta){
+  try{
+    if(item.url) return UrlFetchApp.fetch(item.url).getBlob();
+    if(item.urlExterna) return UrlFetchApp.fetch(item.urlExterna).getBlob();
+    if(item.arquivo && pasta){
+      const f = pasta.getFilesByName(item.arquivo);
+      if(f.hasNext()) return f.next().getBlob();
+    }
+  }catch(e){ Logger.log('Sem imagem para um item: ' + e); }
+  Logger.log('AVISO: imagem não encontrada (' + (item.arquivo||item.url||'?') + ') — o item entra sem imagem.');
+  return null;
+}
+`;
+}
+function baixarTexto(nome, texto, mime){
+  const blob = new Blob([texto], {type:mime||'text/plain'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob); a.download = nome; a.click();
+  URL.revokeObjectURL(a.href);
+}
+$('#btnGerarForm').addEventListener('click', ()=>{
+  const cfg = configuracaoForm();
+  baixarTexto('provia_form.gs', gerarScriptForms(cfg), 'text/plain');
+  setTimeout(()=>baixarTexto('provia_form_config.json', JSON.stringify(cfg,null,2), 'application/json'), 500);
+  $('#avisoGerarForm').textContent = 'Dois arquivos baixados. Siga os 5 passos escritos no topo do provia_form.gs — em 5 minutos o formulário nasce na sua conta Google.';
+});
+
 // ---------- início ----------
-carregarChaves();
-carregarModelosRouter();
+carregarCfg();
+carregarBancosReais();
+montarPrompts();
+renderLista();
 atualizarDistribuicao();
 </script>
 </body>
