@@ -266,9 +266,169 @@
     *,*::before,*::after{animation-duration:.001ms !important;animation-iteration-count:1 !important;transition-duration:.001ms !important}
   }
 
+
+  /* ================= ABAS LATERAIS ================= */
+  .trilho{position:fixed;left:0;top:50%;transform:translateY(-50%);z-index:60;
+    display:flex;flex-direction:column;gap:10px;padding-left:10px}
+  .trilho button{
+    writing-mode:vertical-rl;transform:rotate(180deg);
+    background:var(--card);color:var(--ink);border:1px solid var(--line);
+    border-radius:12px;padding:20px 11px;font-family:'Archivo',sans-serif;font-weight:700;
+    font-size:14px;letter-spacing:.02em;cursor:pointer;
+    box-shadow:0 3px 14px rgba(20,30,50,.09);
+    transition:transform .18s ease, box-shadow .18s ease, border-color .18s ease, color .18s ease;
+  }
+  .trilho button:hover{transform:rotate(180deg) translateY(4px);border-color:var(--acao);color:var(--acao);
+    box-shadow:0 6px 20px rgba(29,79,216,.16)}
+  .trilho button .ico{writing-mode:horizontal-tb;display:block;font-size:17px;margin-bottom:8px;transform:rotate(180deg)}
+  .trilho button.ativa{border-color:var(--acao);color:var(--acao);box-shadow:0 0 0 2px rgba(29,79,216,.16)}
+
+  .veu{position:fixed;inset:0;background:rgba(16,24,40,.42);backdrop-filter:blur(2px);
+    opacity:0;pointer-events:none;transition:opacity .3s ease;z-index:70}
+  .veu.aberto{opacity:1;pointer-events:auto}
+
+  .painel{position:fixed;top:0;left:0;height:100%;width:min(880px,94vw);z-index:80;
+    background:var(--paper);box-shadow:14px 0 44px rgba(16,24,40,.20);
+    transform:translateX(-102%);transition:transform .38s cubic-bezier(.22,.9,.25,1);
+    display:flex;flex-direction:column}
+  .painel.aberto{transform:none}
+  .painel-topo{display:flex;align-items:center;justify-content:space-between;gap:14px;
+    padding:22px 30px;border-bottom:1px solid var(--line);background:var(--card)}
+  .painel-topo h2{font-family:'Archivo',sans-serif;font-size:24px;font-weight:800;letter-spacing:-.02em}
+  .painel-topo .sub{font-size:13.5px;color:var(--muted);margin-top:3px}
+  .fechar{border:1px solid var(--line);background:var(--paper);border-radius:50%;
+    width:40px;height:40px;font-size:19px;cursor:pointer;color:var(--ink);flex:none;
+    transition:background .18s ease, transform .18s ease}
+  .fechar:hover{background:#EDEFF2;transform:rotate(90deg)}
+  .painel-corpo{overflow-y:auto;padding:30px;scroll-behavior:smooth}
+  .painel-corpo > *{animation:surgir .45s ease both}
+  .painel-corpo h3{font-family:'Archivo',sans-serif;font-size:19px;font-weight:700;margin:30px 0 12px}
+  .painel-corpo h3:first-child{margin-top:0}
+  .painel-corpo p{font-size:16px;line-height:1.7;color:var(--ink);margin-bottom:14px}
+  .painel-corpo .fonte-nota{font-size:13px;color:var(--muted);margin-top:22px;border-top:1px solid var(--line);padding-top:14px}
+
+  /* critérios */
+  .criterio{display:flex;gap:16px;background:var(--card);border:1px solid var(--line);
+    border-radius:12px;padding:16px 18px;margin-bottom:12px;transition:border-color .2s, transform .2s, box-shadow .2s}
+  .criterio:hover{border-color:var(--acao);transform:translateX(3px);box-shadow:0 4px 16px rgba(20,30,50,.07)}
+  .criterio .num{font-family:'Archivo',sans-serif;font-weight:800;font-size:22px;color:var(--acao);
+    min-width:34px;height:34px;display:grid;place-items:center;background:#EAF0FE;border-radius:9px;flex:none}
+  .criterio b{display:block;font-family:'Archivo',sans-serif;font-size:16.5px;margin-bottom:4px}
+  .criterio span{font-size:15px;line-height:1.6;color:var(--muted)}
+
+  /* escala de leitura */
+  .escala{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:16px 0 8px}
+  .faixa{border-radius:12px;padding:16px;border:1px solid var(--line);background:var(--card);text-align:center}
+  .faixa .n{font-family:'Archivo',sans-serif;font-weight:800;font-size:26px;line-height:1}
+  .faixa .r{font-size:14px;margin-top:6px;line-height:1.45}
+  .faixa.baixa{border-color:#BFE3D2;background:#EFF9F4} .faixa.baixa .n{color:#1E7A53}
+  .faixa.meia{border-color:#E6D9B8;background:#FCF8EE} .faixa.meia .n{color:#8A6D1C}
+  .faixa.alta{border-color:#EFC7BA;background:#FDF1EC} .faixa.alta .n{color:#B4452F}
+
+  /* tabela da rubrica */
+  .rubrica{width:100%;border-collapse:separate;border-spacing:0;margin-top:6px;
+    background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+  .rubrica th{background:#F0F3F7;font-family:'Archivo',sans-serif;font-size:13.5px;text-align:left;padding:12px 16px;color:var(--ink)}
+  .rubrica td{padding:14px 16px;font-size:15px;line-height:1.6;border-top:1px solid var(--line);vertical-align:top}
+  .rubrica td:first-child{font-family:var(--mono);font-weight:600;white-space:nowrap;font-size:13.5px}
+  .rubrica .nv{font-family:'Archivo',sans-serif;font-weight:700;white-space:nowrap}
+  .rubrica tr:hover td{background:#FAFBFC}
+
+  /* material do artigo */
+  .grupo-tit{display:flex;align-items:baseline;gap:10px;margin:30px 0 14px}
+  .grupo-tit h3{margin:0}
+  .grupo-tit .cont{font-family:var(--mono);font-size:12px;color:var(--muted)}
+  .ficha{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin-bottom:12px;
+    transition:border-color .2s, box-shadow .2s}
+  .ficha:hover{border-color:var(--acao);box-shadow:0 4px 16px rgba(20,30,50,.07)}
+  .ficha-cab{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:10px}
+  .ficha-cab .item{font-family:'Archivo',sans-serif;font-weight:700;font-size:15.5px;margin-right:auto}
+  .tag{font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;padding:4px 9px;border-radius:999px;border:1px solid var(--line);white-space:nowrap}
+  .tag.ia{background:#F3EDFD;border-color:#DCCDF7;color:#6B33C6}
+  .tag.real{background:#EFF9F4;border-color:#BFE3D2;color:#1E7A53}
+  .tag.f{background:#EFF9F4;border-color:#BFE3D2;color:#1E7A53}
+  .tag.m{background:#FCF8EE;border-color:#E6D9B8;color:#8A6D1C}
+  .tag.d{background:#FDF1EC;border-color:#EFC7BA;color:#B4452F}
+  .tag.app{background:#EAF0FE;border-color:#CBDBFB;color:var(--acao-escuro)}
+  .prompt-box{position:relative;background:#F7F8FA;border:1px solid var(--line);border-left:3px solid var(--acao);
+    border-radius:8px;padding:13px 46px 13px 15px;font-size:14.5px;line-height:1.65;color:var(--ink)}
+  .copiar-p{position:absolute;top:9px;right:9px;border:1px solid var(--line);background:var(--card);
+    border-radius:7px;padding:5px 8px;font-size:12px;cursor:pointer;color:var(--muted);transition:all .18s}
+  .copiar-p:hover{border-color:var(--acao);color:var(--acao)}
+  .credito-box{font-size:14px;line-height:1.65;color:var(--muted)}
+  .credito-box a{color:var(--acao);word-break:break-all}
+  .resumo{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin:6px 0 4px}
+  .bloco-num{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px;text-align:center}
+  .bloco-num .v{font-family:'Archivo',sans-serif;font-weight:800;font-size:28px;color:var(--acao);line-height:1}
+  .bloco-num .l{font-size:13px;color:var(--muted);margin-top:6px;line-height:1.4}
+  .lista-ind{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:8px 8px 8px 0;margin-top:6px}
+  .lista-ind li{font-size:15px;line-height:1.6;margin:8px 0 8px 34px;color:var(--ink)}
+
+  @media(max-width:900px){
+    .trilho{position:static;transform:none;flex-direction:row;gap:8px;padding:14px 16px 0;justify-content:center}
+    .trilho button{writing-mode:horizontal-tb;transform:none;padding:11px 15px;font-size:13.5px}
+    .trilho button:hover{transform:translateY(-2px)}
+    .trilho button .ico{display:inline;transform:none;margin:0 6px 0 0;font-size:15px}
+    .painel{width:100%}
+    .painel-topo,.painel-corpo{padding:18px}
+    .escala{grid-template-columns:1fr}
+  }
+
 </style>
 </head>
 <body>
+
+<nav class="trilho" aria-label="Painéis do projeto">
+  <button id="abaCriterios" aria-controls="painel"><span class="ico">🔍</span>Critérios do ProVIA</button>
+  <button id="abaMaterial" aria-controls="painel"><span class="ico">📄</span>Material do artigo</button>
+</nav>
+<div class="veu" id="veu"></div>
+<aside class="painel" id="painel" role="dialog" aria-modal="true" aria-labelledby="painelTit">
+  <div class="painel-topo">
+    <div><h2 id="painelTit">Critérios do ProVIA</h2><div class="sub" id="painelSub">Protocolo de Verificação de Imagens geradas por IA</div></div>
+    <button class="fechar" id="painelFechar" aria-label="Fechar painel">✕</button>
+  </div>
+  <div class="painel-corpo" id="painelCorpo"></div>
+</aside>
+
+<template id="tplCriterios">
+  <p>O ProVIA é um protocolo de leitura visual: em vez de decidir pela intuição, o estudante percorre seis critérios objetivos e conta quantos sinais de artificialidade encontra na imagem.</p>
+  <h3>Os seis critérios</h3>
+  <div class="criterio"><div class="num">1</div><div><b>Iluminação e sombras</b><span>As sombras não combinam com a direção da luz, ou a luz parece uniforme demais.</span></div></div><div class="criterio"><div class="num">2</div><div><b>Expressões, poses e movimento</b><span>Rostos certos demais dos dois lados, poses duras ou um movimento que parece travado com um jeito estranho.</span></div></div><div class="criterio"><div class="num">3</div><div><b>Objetos, roupas e texturas</b><span>Roupas sem dobras de verdade, superfícies lisas demais ou desenhos que se repetem sempre iguais.</span></div></div><div class="criterio"><div class="num">4</div><div><b>Elementos artificiais ou repetidos</b><span>Objetos repetidos na cena, ou coisas com um formato meio torto ou até impossível.</span></div></div><div class="criterio"><div class="num">5</div><div><b>Detalhes excessivamente perfeitos</b><span>Tudo detalhado e limpo demais, sem as pequenas falhas que uma foto de verdade costuma ter.</span></div></div><div class="criterio"><div class="num">6</div><div><b>Coerência contextual da cena</b><span>Algo que não combina com o lugar ou a época; uma cena muito cheia também pode esconder pequenos erros.</span></div></div>
+  <h3>Como ler o resultado</h3>
+  <p>Quanto mais critérios de artificialidade o estudante identifica, maiores são as chances de a imagem ter sido gerada por inteligência artificial.</p>
+  <div class="escala">
+    <div class="faixa baixa"><div class="n">0–1</div><div class="r">critério<br><b>provavelmente real</b></div></div>
+    <div class="faixa meia"><div class="n">2–3</div><div class="r">critérios<br><b>sem certeza</b></div></div>
+    <div class="faixa alta"><div class="n">4–6</div><div class="r">critérios<br><b>provavelmente gerada por IA</b></div></div>
+  </div>
+  <h3>Leitura das justificativas escritas</h3>
+  <p>A justificativa curta da última imagem vale até 2 pontos e é avaliada por uma escala de três níveis — ela mede a qualidade do raciocínio, não apenas o acerto.</p>
+  <table class="rubrica">
+    <tr><th>Pontuação</th><th>Nível</th><th>Critério</th></tr>
+    <tr><td>0 ponto</td><td class="nv">Ausente</td><td>Resposta vazia, sem sentido ou sem relação com a imagem analisada.</td></tr>
+    <tr><td>1 ponto</td><td class="nv">Parcial</td><td>Justificativa com argumento ruim, sem dizer ao certo o seu ponto e com bastante confusão.</td></tr>
+    <tr><td>2 pontos</td><td class="nv">Completo</td><td>Justificativa com argumento bom, uso de critérios visuais claro e pensamento crítico perceptível.</td></tr>
+  </table>
+  <p class="fonte-nota">Quadros 1 e 5 do artigo ProVIA (EEB José Arantes, Camboriú-SC, 2026). A escala de três níveis segue a orientação de Stufflebeam (2000) sobre checklists avaliativos, e os critérios visuais partem dos estudos empíricos de detecção humana de imagens sintéticas.</p>
+</template>
+
+<template id="tplMaterial">
+  <p>Todo o material que compõe os instrumentos da pesquisa: os prompts exatos usados para gerar as imagens sintéticas, com ferramenta e função de cada uma, e os créditos das imagens reais.</p>
+  <div class="resumo">
+    <div class="bloco-num"><div class="v">16</div><div class="l">imagens no total</div></div>
+    <div class="bloco-num"><div class="v">8</div><div class="l">geradas por IA</div></div>
+    <div class="bloco-num"><div class="v">8</div><div class="l">reais</div></div>
+    <div class="bloco-num"><div class="v">4</div><div class="l">ferramentas de IA</div></div>
+  </div>
+  <p>Cada teste tem seis imagens — três reais e três de IA — em três níveis de dificuldade. A pontuação máxima é de <b>8 pontos</b>: 6 pelas classificações corretas e até 2 pela justificativa escrita.</p>
+  <div class="grupo-tit"><h3>Pré-teste</h3><span class="cont">6 imagens · 3 de IA · 3 reais</span></div><div class="ficha"><div class="ficha-cab"><span class="item">1. Violinista no metrô</span><span class="tag ia">IA</span><span class="tag m">média</span><span class="tag app">Meta AI</span></div><div class="prompt-box"><button class="copiar-p" type="button">copiar</button>Fotografia em preto e branco, estilo foto-documental, de um jovem violinista tocando em uma plataforma de metrô enquanto algumas pessoas passam ao fundo. A imagem deve parecer fotorreal, com contraste natural, granulação leve e enquadramento espontâneo.</div></div><div class="ficha"><div class="ficha-cab"><span class="item">2. Relógio de rua</span><span class="tag real">Real</span><span class="tag ">comparação</span></div><div class="credito-box">Crédito: Juan Sebastian / SebasIMartinez · MS COCO val2017 (ID 145591) · Licença CC BY 4.0 · cocodataset.org</div></div><div class="ficha"><div class="ficha-cab"><span class="item">3. Sorveteria self-service</span><span class="tag ia">IA</span><span class="tag f">fácil</span><span class="tag app">ChatGPT</span></div><div class="prompt-box"><button class="copiar-p" type="button">copiar</button>Fotografia realista de uma sorveteria self-service, com adolescentes escolhendo sorvete e coberturas em ambiente interno iluminado. A cena deve parecer fotorreal, com iluminação de interior natural.</div></div><div class="ficha"><div class="ficha-cab"><span class="item">4. Oficina mecânica de bairro</span><span class="tag ia">IA</span><span class="tag d">difícil</span><span class="tag app">Gemini</span></div><div class="prompt-box"><button class="copiar-p" type="button">copiar</button>Fotografia hiper-realista de uma pequena oficina mecânica de bairro, com um mecânico consertando uma motocicleta e ferramentas dispostas ao fundo. Estilo fotojornalístico.</div></div><div class="ficha"><div class="ficha-cab"><span class="item">5. Livro do fotógrafo de Dom Pedro II</span><span class="tag real">Real</span><span class="tag ">justificativa</span></div><div class="credito-box">Crédito: Tânia Rêgo / Agência Brasil · Uso educacional · agenciabrasil.ebc.com.br</div></div><div class="ficha"><div class="ficha-cab"><span class="item">6. Bloco Calango Careta</span><span class="tag real">Real</span><span class="tag ">seleção de indícios</span></div><div class="credito-box">Crédito: Joédson Alves / Agência Brasil · Uso educacional · agenciabrasil.ebc.com.br</div></div><div class="grupo-tit"><h3>Pós-teste</h3><span class="cont">6 imagens · 3 de IA · 3 reais</span></div><div class="ficha"><div class="ficha-cab"><span class="item">1. Gato para adoção</span><span class="tag real">Real</span><span class="tag ">comparação</span></div><div class="credito-box">Crédito: Paulo Pinto / Agência Brasil · Uso educacional · agenciabrasil.ebc.com.br</div></div><div class="ficha"><div class="ficha-cab"><span class="item">2. Mesa de café da manhã</span><span class="tag ia">IA</span><span class="tag d">difícil</span><span class="tag app">Meta AI</span></div><div class="prompt-box"><button class="copiar-p" type="button">copiar</button>Fotografia hiper-realista de uma mesa de café da manhã próxima a uma janela, com xícara de café, pão com manteiga, copo de suco de laranja e jornal sobre mesa de madeira. Luz natural da janela.</div></div><div class="ficha"><div class="ficha-cab"><span class="item">3. Palco em Copacabana</span><span class="tag real">Real</span><span class="tag ">comparação</span></div><div class="credito-box">Crédito: Tomaz Silva / Agência Brasil · Uso educacional · agenciabrasil.ebc.com.br</div></div><div class="ficha"><div class="ficha-cab"><span class="item">4. Laranja no estacionamento</span><span class="tag real">Real</span><span class="tag ">comparação</span></div><div class="credito-box">Crédito: jblooom / MS COCO val2017 (ID 50679) · Licença CC BY-NC-SA 2.0 · cocodataset.org</div></div><div class="ficha"><div class="ficha-cab"><span class="item">5. Salão de beleza</span><span class="tag ia">IA</span><span class="tag ">seleção de indícios</span><span class="tag app">Microsoft Copilot</span></div><div class="prompt-box"><button class="copiar-p" type="button">copiar</button>Fotografia realista de um salão de beleza, com uma cliente sentada em frente ao espelho e uma cabeleireira arrumando o cabelo. Ambiente contemporâneo com produtos na bancada.</div></div><div class="ficha"><div class="ficha-cab"><span class="item">6. Senhora regando plantas</span><span class="tag ia">IA</span><span class="tag ">justificativa</span><span class="tag app">ChatGPT</span></div><div class="prompt-box"><button class="copiar-p" type="button">copiar</button>Fotografia realista de uma senhora regando plantas na janela de um apartamento simples, com vasos, folhas e jarra de água. Luz natural suave.</div></div><div class="grupo-tit"><h3>Oficina</h3><span class="cont">4 imagens · 2 de IA · 2 reais</span></div><div class="ficha"><div class="ficha-cab"><span class="item">1. Barraca de pastel e caldo de cana</span><span class="tag ia">IA</span><span class="tag f">análise guiada · fácil</span><span class="tag app">Gemini</span></div><div class="prompt-box"><button class="copiar-p" type="button">copiar</button>Barraca de pastel e caldo de cana em rua movimentada à noite no Brasil, com vendedor e clientes. Fotografia realista de cena urbana brasileira.</div></div><div class="ficha"><div class="ficha-cab"><span class="item">2. Ponto de ônibus em dia chuvoso</span><span class="tag ia">IA</span><span class="tag d">análise guiada · difícil</span><span class="tag app">Microsoft Copilot</span></div><div class="prompt-box"><button class="copiar-p" type="button">copiar</button>Ponto de ônibus urbano em dia chuvoso, com pessoas esperando, segurando guarda-chuvas, rua molhada e ônibus ao fundo. Estilo fotojornalístico realista.</div></div><div class="ficha"><div class="ficha-cab"><span class="item">3. Ato do Dia Internacional da Mulher</span><span class="tag real">Real</span><span class="tag ">comparação</span></div><div class="credito-box">Crédito: Tomaz Silva / Agência Brasil · Uso educacional · agenciabrasil.ebc.com.br</div></div><div class="ficha"><div class="ficha-cab"><span class="item">4. Urso-pardo</span><span class="tag real">Real</span><span class="tag ">comparação</span></div><div class="credito-box">Crédito: MS COCO val2017 (ID 285) · Licença CC BY 2.0 · cocodataset.org</div></div>
+  <h3>Opções de indícios do formulário</h3>
+  <p>Na penúltima imagem de cada teste, o estudante marca até dois indícios que mais influenciaram sua decisão:</p>
+  <ol class="lista-ind"><li>Luz e sombras parecem combinar com a cena.</li><li>Alguns detalhes podem parecer artificiais de primeira vista.</li><li>Expressões, poses e movimento parecem ser realistas.</li><li>A cena muito cheia pode esconder pequenos erros.</li><li>Objetos, roupas e texturas parecem naturais e variados.</li><li>Certos elementos parecem detalhados demais ou “limpos” demais.</li></ol>
+  <p class="fonte-nota">Tabelas 1, 2 e 3 do artigo ProVIA. Imagens reais: Agência Brasil (uso educacional com crédito obrigatório) e MS COCO val2017 (Creative Commons). Imagens sintéticas geradas pelo autor em 06/05/2026, exclusivamente para fins educacionais e avaliativos, sem reuso comercial — todas identificadas como conteúdo gerado por IA.</p>
+</template>
+
 <div class="wrap">
 
   <header>
@@ -1321,6 +1481,46 @@ $('#btnGerarForm').addEventListener('click', ()=>{
   marcarOk($('#btnGerarForm'));
   $('#avisoGerarForm').textContent = 'Dois arquivos baixados. Siga os 5 passos escritos no topo do provia_form.gs — em 5 minutos o formulário nasce na sua conta Google.';
 });
+
+
+// ---------- Abas laterais (critérios e material) ----------
+(function(){
+  const painel=$('#painel'), veu=$('#veu'), corpo=$('#painelCorpo');
+  const bts={criterios:$('#abaCriterios'), material:$('#abaMaterial')};
+  const conf={criterios:{tpl:'#tplCriterios', tit:'Critérios do ProVIA', sub:'Protocolo de Verificação de Imagens geradas por IA'},
+              material:{tpl:'#tplMaterial', tit:'Material do artigo', sub:'Prompts, fontes e composição dos instrumentos'}};
+  let atual=null;
+  function abrir(qual){
+    if(atual===qual){ fechar(); return; }
+    atual=qual;
+    const c=conf[qual];
+    $('#painelTit').textContent=c.tit; $('#painelSub').textContent=c.sub;
+    corpo.innerHTML=''; corpo.appendChild(document.querySelector(c.tpl).content.cloneNode(true));
+    corpo.scrollTop=0;
+    cascata(corpo, 30);
+    painel.classList.add('aberto'); veu.classList.add('aberto');
+    document.body.style.overflow='hidden';
+    Object.keys(bts).forEach(k=>bts[k].classList.toggle('ativa', k===qual));
+    corpo.querySelectorAll('.copiar-p').forEach(b=>b.addEventListener('click', async ev=>{
+      const txt=ev.target.parentElement.textContent.replace(/^copiar/,'').trim();
+      try{ await navigator.clipboard.writeText(txt); ev.target.textContent='copiado ✓'; }
+      catch(_){ ev.target.textContent='selecione e copie'; }
+      setTimeout(()=>ev.target.textContent='copiar', 2000);
+    }));
+    $('#painelFechar').focus();
+  }
+  function fechar(){
+    atual=null;
+    painel.classList.remove('aberto'); veu.classList.remove('aberto');
+    document.body.style.overflow='';
+    Object.keys(bts).forEach(k=>bts[k].classList.remove('ativa'));
+  }
+  bts.criterios.addEventListener('click', ()=>abrir('criterios'));
+  bts.material.addEventListener('click', ()=>abrir('material'));
+  veu.addEventListener('click', fechar);
+  $('#painelFechar').addEventListener('click', fechar);
+  document.addEventListener('keydown', e=>{ if(e.key==='Escape' && atual) fechar(); });
+})();
 
 // ---------- início ----------
 carregarCfg();
