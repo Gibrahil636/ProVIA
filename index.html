@@ -192,6 +192,72 @@
 
 
 
+
+  /* ---- análise ---- */
+  .slots{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:14px 0}
+  @media(max-width:720px){.slots{grid-template-columns:1fr}}
+  .slot{border:2px dashed var(--line);border-radius:14px;padding:18px;background:var(--card);
+    text-align:center;transition:border-color .2s, background .2s}
+  .slot.cheio{border-style:solid;border-color:var(--pronto);background:#F3FAF6;text-align:left}
+  .slot.arrasta{border-color:var(--acao);background:#F2F7FF}
+  .slot .fase{font-family:'Archivo',sans-serif;font-weight:800;font-size:15px;letter-spacing:.02em}
+  .slot .dica2{font-size:13px;color:var(--muted);margin:8px 0 12px;line-height:1.5}
+  .slot .arq{font-family:var(--mono);font-size:12.5px;color:var(--ink);word-break:break-all}
+  .slot .resumo2{font-size:13.5px;color:var(--muted);margin-top:6px}
+  .slot .acoes2{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:10px}
+  .slot.cheio .acoes2{justify-content:flex-start}
+  .colar{width:100%;min-height:70px;border:1px solid var(--line);border-radius:9px;padding:9px;
+    font-family:var(--mono);font-size:12px;margin-top:9px;background:#fff;color:var(--ink);display:none}
+  .colar.visivel{display:block}
+  .cartoes-n{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:11px;margin:14px 0}
+  .res-bloco{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px;margin-bottom:14px}
+  .res-bloco h4{font-family:'Archivo',sans-serif;font-size:17px;margin-bottom:4px}
+  .res-bloco .sub2{font-size:13px;color:var(--muted);margin-bottom:12px}
+  .grade-est{display:grid;grid-template-columns:repeat(auto-fit,minmax(104px,1fr));gap:10px;margin-bottom:12px}
+  .est{background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:11px;text-align:center}
+  .est .v2{font-family:'Archivo',sans-serif;font-weight:800;font-size:19px;color:var(--ink)}
+  .est .l2{font-size:11.5px;color:var(--muted);margin-top:3px;line-height:1.35}
+  .veredito{border-radius:10px;padding:13px 15px;font-size:14.5px;line-height:1.6}
+  .veredito.sig{background:#EFF9F4;border:1px solid #BFE3D2;color:#14603F}
+  .veredito.nao{background:#F7F8FA;border:1px solid var(--line);color:var(--ink)}
+  .just-linha{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px;margin-bottom:10px}
+  .just-cab{display:flex;align-items:center;gap:9px;flex-wrap:wrap;margin-bottom:9px}
+  .just-cab .cod{font-family:var(--mono);font-size:12px;background:var(--paper);border:1px solid var(--line);
+    border-radius:6px;padding:3px 8px}
+  .just-par{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  @media(max-width:720px){.just-par{grid-template-columns:1fr}}
+  .just-cx{border:1px solid var(--line);border-radius:9px;padding:10px;background:#FBFCFD}
+  .just-cx .fase2{font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;color:var(--muted);margin-bottom:5px}
+  .just-cx .txt{font-size:14.5px;line-height:1.55;margin-bottom:9px;min-height:20px}
+  .notas{display:flex;gap:6px}
+  .notas button{flex:1;border:1px solid var(--line);background:#fff;border-radius:7px;padding:6px 0;
+    font-family:var(--mono);font-size:12px;cursor:pointer;color:var(--muted);transition:all .16s}
+  .notas button:hover{border-color:var(--acao);color:var(--acao)}
+  .notas button.sel{background:var(--acao);border-color:var(--acao);color:#fff;font-weight:600}
+  .barra-prog{height:7px;background:var(--line);border-radius:99px;overflow:hidden;margin:10px 0 4px}
+  .barra-prog i{display:block;height:100%;background:var(--pronto);transition:width .35s ease}
+
+  /* ---- boas-vindas ---- */
+  .bv-capa{background:linear-gradient(135deg,#1D4FD8 0%,#4285F4 100%);color:#fff;border-radius:16px;
+    padding:28px;margin-bottom:22px}
+  .bv-capa h3{color:#fff;font-size:26px;margin:0 0 10px;font-family:'Archivo',sans-serif;font-weight:800}
+  .bv-capa p{color:rgba(255,255,255,.94);font-size:16px;margin:0;line-height:1.65}
+  .bv-passos{counter-reset:bv}
+  .bv-passo{display:flex;gap:15px;background:var(--card);border:1px solid var(--line);border-radius:12px;
+    padding:16px 18px;margin-bottom:11px}
+  .bv-passo .bn{counter-increment:bv;flex:none;width:32px;height:32px;border-radius:9px;background:#EAF0FE;
+    color:var(--acao);display:grid;place-items:center;font-family:'Archivo',sans-serif;font-weight:800}
+  .bv-passo .bn::before{content:counter(bv)}
+  .bv-passo b{display:block;font-family:'Archivo',sans-serif;font-size:16px;margin-bottom:3px}
+  .bv-passo span{font-size:14.5px;color:var(--muted);line-height:1.6}
+  .bv-abas{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:11px;margin:6px 0 4px}
+  .bv-aba{border:1px solid var(--line);border-radius:11px;padding:14px;background:var(--card)}
+  .bv-aba b{display:block;font-family:'Archivo',sans-serif;font-size:14.5px;margin-bottom:4px}
+  .bv-aba span{font-size:13px;color:var(--muted);line-height:1.5}
+  .bv-fim{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-top:22px;padding-top:18px;border-top:1px solid var(--line)}
+  .bv-fim label{display:flex;align-items:center;gap:8px;font-size:13.5px;color:var(--muted);cursor:pointer}
+  .bv-fim input{width:16px;height:16px;accent-color:var(--acao)}
+
   /* ponte: gerar direto do ProVIA */
   .ponte{border:1px solid var(--acao);border-radius:14px;padding:18px;margin:18px 0 8px;
     background:linear-gradient(180deg,#F5F9FF 0%,var(--card) 100%)}
@@ -493,6 +559,16 @@
     <span class="desc">Os seis critérios de análise visual, a escala de leitura e a rubrica das justificativas escritas.</span>
     <span class="abrir">abrir painel →</span>
   </button>
+  <button id="abaAnalise" aria-controls="painel">
+    <span class="ico">📊</span><span class="tit">Análise dos resultados</span>
+    <span class="desc">Pareia os dois formulários pelo código e aplica o teste de Wilcoxon.</span>
+    <span class="abrir">abrir painel →</span>
+  </button>
+  <button id="abaBoasVindas" aria-controls="painel">
+    <span class="ico">👋</span><span class="tit">Como usar o ProVIA</span>
+    <span class="desc">O que é esta ferramenta, para que serve e como navegar por ela.</span>
+    <span class="abrir">abrir painel →</span>
+  </button>
   <button id="abaMaterial" aria-controls="painel">
     <span class="ico">📄</span><span class="tit">Material do artigo</span>
     <span class="desc">Os oito prompts originais, os créditos das imagens reais e a composição dos instrumentos.</span>
@@ -510,6 +586,64 @@
   </div>
   <div class="painel-corpo" id="painelCorpo"></div>
 </aside>
+
+<template id="tplAnalise">
+  <p>Cole ou envie as duas planilhas de respostas exportadas do Google Forms. O ProVIA pareia os participantes pelo <b>[Código]</b>, calcula o desempenho e aplica o <b>teste de Wilcoxon pareado</b> — tudo no seu navegador, sem enviar nada para lugar nenhum.</p>
+  <div class="slots">
+    <div class="slot" id="slotPre" data-fase="pre">
+      <div class="fase">PRÉ-TESTE</div>
+      <div class="dica2">Arraste o arquivo aqui, escolha no computador ou cole a planilha copiada.</div>
+      <div class="acoes2">
+        <label class="mini" style="cursor:pointer">escolher arquivo<input type="file" accept=".csv,.tsv,.xlsx,.xls" hidden></label>
+        <button class="mini abrir-colar" type="button">colar dados</button>
+      </div>
+      <textarea class="colar" placeholder="Cole aqui (Ctrl+V) a planilha copiada, com a linha de cabeçalho."></textarea>
+    </div>
+    <div class="slot" id="slotPos" data-fase="pos">
+      <div class="fase">PÓS-TESTE</div>
+      <div class="dica2">Arraste o arquivo aqui, escolha no computador ou cole a planilha copiada.</div>
+      <div class="acoes2">
+        <label class="mini" style="cursor:pointer">escolher arquivo<input type="file" accept=".csv,.tsv,.xlsx,.xls" hidden></label>
+        <button class="mini abrir-colar" type="button">colar dados</button>
+      </div>
+      <textarea class="colar" placeholder="Cole aqui (Ctrl+V) a planilha copiada, com a linha de cabeçalho."></textarea>
+    </div>
+  </div>
+  <div id="analiseErro" style="color:var(--erro);font-size:14px;min-height:18px"></div>
+  <div id="analiseSaida"></div>
+  <p class="fonte-nota">O teste de Wilcoxon dos postos sinalizados compara duas medidas do mesmo grupo sem exigir distribuição normal — é o teste indicado para pontuações de 0 a 8 com poucos participantes. Diferenças iguais a zero são descartadas, empates recebem posto médio e o cálculo usa valor exato quando há poucos pares sem empates, ou aproximação normal com correção de continuidade nos demais casos.</p>
+</template>
+
+<template id="tplBoasVindas">
+  <div class="bv-capa">
+    <h3>Bem-vindo ao ProVIA</h3>
+    <p>Esta é uma ferramenta aberta e gratuita para <b>montar, aplicar e analisar</b> testes de identificação de imagens geradas por inteligência artificial. Ela nasceu como parte de uma pesquisa de Ensino Médio na EEB José Arantes, em Camboriú-SC, e foi publicada para que <b>qualquer escola possa replicar o estudo</b>.</p>
+  </div>
+  <h3>O que ela faz</h3>
+  <p>Você cria os prompts, gera as imagens nos aplicativos de IA que já usa, o ProVIA sorteia imagens reais de bancos públicos, monta o formulário no seu Google Forms e, depois da coleta, faz a análise estatística. Tudo acontece no seu navegador: <b>não há servidor, cadastro ou coleta de dados</b>.</p>
+  <h3>Como usar, em cinco passos</h3>
+  <div class="bv-passos">
+    <div class="bv-passo"><span class="bn"></span><div><b>Escolha quantas imagens</b><span>De 3 a 6 imagens sintéticas — a mesma quantidade de imagens reais entra automaticamente depois.</span></div></div>
+    <div class="bv-passo"><span class="bn"></span><div><b>Defina os prompts</b><span>O gerador interno escreve um prompt por imagem, com nível de dificuldade que você pode trocar — ou escreva os seus.</span></div></div>
+    <div class="bv-passo"><span class="bn"></span><div><b>Gere nas IAs e devolva</b><span>Copie o prompt, gere no Gemini, ChatGPT, Copilot ou Meta AI, e cole a imagem de volta no cartão com Ctrl+V.</span></div></div>
+    <div class="bv-passo"><span class="bn"></span><div><b>Confirme as imagens reais</b><span>Sorteadas do MS COCO val2017 e da Agência Brasil, com crédito e licença registrados em cada cartão.</span></div></div>
+    <div class="bv-passo"><span class="bn"></span><div><b>Gere o formulário</b><span>Ajuste a ordem e as perguntas na prévia e crie o Google Forms — direto daqui, se você publicar a ponte.</span></div></div>
+  </div>
+  <h3>Os painéis laterais</h3>
+  <div class="bv-abas">
+    <div class="bv-aba"><b>🔍 Critérios do ProVIA</b><span>Os seis critérios de análise visual, a escala de leitura e a rubrica das justificativas. Dá para imprimir e levar para a oficina.</span></div>
+    <div class="bv-aba"><b>📊 Análise dos resultados</b><span>Depois da coleta, pareia os dois formulários pelo código e aplica o teste de Wilcoxon.</span></div>
+    <div class="bv-aba"><b>📄 Material do artigo</b><span>Os prompts originais da pesquisa, os créditos das imagens e a composição dos instrumentos.</span></div>
+  </div>
+  <h3>Antes de aplicar em uma turma</h3>
+  <p>Use um código anônimo por estudante — o mesmo no pré e no pós-teste — para permitir o pareamento sem identificar ninguém. Peça autorização à direção da escola e aos responsáveis, e mantenha o formulário sem coleta de e-mail.</p>
+  <div class="bv-fim">
+    <button class="btn" id="bvComecar" type="button">Começar</button>
+    <label><input type="checkbox" id="bvNaoMostrar"> não abrir esta apresentação automaticamente</label>
+  </div>
+  <p class="fonte-nota">ProVIA · Protocolo de Verificação de Imagens geradas por IA · Projeto de pesquisa do 32.º Prêmio Jovem Cientista (2026) · Código aberto sob licença MIT.</p>
+</template>
+
 
 <template id="tplCriterios">
   <p>O ProVIA é um protocolo de leitura visual: em vez de decidir pela intuição, o estudante percorre seis critérios objetivos e conta quantos sinais de artificialidade encontra na imagem.</p>
@@ -1818,11 +1952,363 @@ $('#btnGerarForm').addEventListener('click', ()=>{
 });
 
 
+
+// =========================================================
+// ANÁLISE: pareamento por código + teste de Wilcoxon
+// =========================================================
+const analise = {pre:null, pos:null, notas:{}, gabarito:{pre:null, pos:null}};
+try{ analise.notas = JSON.parse(localStorage.getItem('provia.notas')||'{}'); }catch(e){ analise.notas = {}; }
+function salvarNotas(){ try{ localStorage.setItem('provia.notas', JSON.stringify(analise.notas)); }catch(e){} }
+
+const semAcento = s => String(s||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').trim();
+
+// ---------- leitura de tabela ----------
+function lerDelimitado(texto){
+  const delim = (texto.split('\n')[0].match(/\t/g)||[]).length >
+                (texto.split('\n')[0].match(/,/g)||[]).length ? '\t' : ',';
+  const linhas = []; let campo = '', linha = [], aspas = false;
+  for(let i=0;i<texto.length;i++){
+    const c = texto[i];
+    if(aspas){
+      if(c === '"'){ if(texto[i+1] === '"'){ campo += '"'; i++; } else aspas = false; }
+      else campo += c;
+    } else {
+      if(c === '"') aspas = true;
+      else if(c === delim){ linha.push(campo); campo = ''; }
+      else if(c === '\n'){ linha.push(campo); linhas.push(linha); linha = []; campo = ''; }
+      else if(c !== '\r') campo += c;
+    }
+  }
+  if(campo.length || linha.length){ linha.push(campo); linhas.push(linha); }
+  return linhas.filter(l => l.some(c => String(c).trim() !== ''));
+}
+async function lerArquivoTabela(arquivo){
+  const nome = arquivo.name || 'colado';
+  if(/\.xlsx?$/i.test(nome)){
+    if(!window.XLSX){
+      await new Promise((ok, falha)=>{
+        const s = document.createElement('script');
+        s.src = 'https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js';
+        s.onload = ok; s.onerror = ()=>falha(new Error('não consegui carregar o leitor de planilhas'));
+        document.head.appendChild(s);
+      });
+    }
+    const buf = await arquivo.arrayBuffer();
+    const wb = XLSX.read(buf, {type:'array'});
+    const ws = wb.Sheets[wb.SheetNames[0]];
+    return {nome, linhas: XLSX.utils.sheet_to_json(ws, {header:1, raw:false, defval:''})
+                       .filter(l => l.some(c => String(c).trim() !== ''))};
+  }
+  return {nome, linhas: lerDelimitado(await arquivo.text())};
+}
+
+// ---------- interpretação das colunas do Google Forms ----------
+function interpretar(linhas, nome){
+  if(!linhas.length) throw new Error('planilha vazia');
+  const cab = linhas[0].map(c => String(c));
+  const acha = re => cab.findIndex(c => re.test(semAcento(c)));
+  const todos = re => cab.map((c,i)=>[semAcento(c),i]).filter(([t])=>re.test(t)).map(([,i])=>i);
+  const iCod = acha(/codigo/);
+  if(iCod < 0) throw new Error('não achei a coluna [Código] nesta planilha');
+  const iScore = acha(/^score$|pontuacao|^nota$/);
+  const iJust  = acha(/explique/);
+  const iInd   = acha(/indicio/);
+  const cClass = todos(/parece ser/);
+  const cConf  = todos(/confianca/);
+  const registros = [];
+  for(let i=1;i<linhas.length;i++){
+    const l = linhas[i];
+    const codigo = String(l[iCod]||'').trim().toUpperCase();
+    if(!codigo) continue;
+    const bruto = iScore >= 0 ? String(l[iScore]||'') : '';
+    const m = bruto.match(/-?\d+([.,]\d+)?/);
+    registros.push({
+      codigo,
+      acertos: m ? parseFloat(m[0].replace(',','.')) : null,
+      classificacoes: cClass.map(k => String(l[k]||'').trim()),
+      confiancas: cConf.map(k => String(l[k]||'').replace(/[^\wÀ-ú ]/g,'').trim()),
+      indicios: iInd >= 0 ? String(l[iInd]||'').trim() : '',
+      justificativa: iJust >= 0 ? String(l[iJust]||'').trim() : ''
+    });
+  }
+  // duplicados: fica a última resposta de cada código
+  const mapa = new Map();
+  registros.forEach(r => mapa.set(r.codigo, r));
+  return {nome, linhas: registros.length, registros: [...mapa.values()],
+          duplicados: registros.length - mapa.size,
+          temScore: iScore >= 0, nQuestoes: cClass.length};
+}
+
+// ---------- estatística ----------
+function normalCdf(z){
+  const t = 1/(1+0.2316419*Math.abs(z));
+  const d = 0.3989422804014327*Math.exp(-z*z/2);
+  let p = d*t*(0.319381530 + t*(-0.356563782 + t*(1.781477937 + t*(-1.821255978 + t*1.330274429))));
+  return z > 0 ? 1-p : p;
+}
+function pExatoWilcoxon(n, W){
+  // distribuição de W+ sob a hipótese nula: contagem de subconjuntos de {1..n} por soma
+  const total = n*(n+1)/2;
+  let dist = new Float64Array(total+1); dist[0] = 1;
+  for(let k=1;k<=n;k++){
+    const nova = new Float64Array(total+1);
+    for(let s=0;s<=total;s++){
+      if(!dist[s]) continue;
+      nova[s] += dist[s];
+      if(s+k <= total) nova[s+k] += dist[s];
+    }
+    dist = nova;
+  }
+  let acumulado = 0;
+  for(let s=0;s<=W;s++) acumulado += dist[s];
+  const p = 2*acumulado/Math.pow(2,n);
+  return Math.min(1, p);
+}
+function wilcoxon(pares){
+  const dif = pares.map(([a,b]) => b-a);
+  const naoNulos = dif.filter(v => v !== 0);
+  const n = naoNulos.length;
+  const base = {nPares: pares.length, nZeros: dif.length-n, n};
+  if(n === 0) return Object.assign(base, {erro:'todas as diferenças foram zero'});
+  const abs = naoNulos.map(Math.abs);
+  const ordem = abs.map((v,i)=>[v,i]).sort((x,y)=>x[0]-y[0]);
+  const posto = new Array(n); const empates = [];
+  let i = 0;
+  while(i < ordem.length){
+    let j = i;
+    while(j+1 < ordem.length && ordem[j+1][0] === ordem[i][0]) j++;
+    const media = (i+1 + j+1)/2;
+    for(let k=i;k<=j;k++) posto[ordem[k][1]] = media;
+    empates.push(j-i+1);
+    i = j+1;
+  }
+  let wMais = 0, wMenos = 0;
+  naoNulos.forEach((v,k)=>{ if(v > 0) wMais += posto[k]; else wMenos += posto[k]; });
+  const W = Math.min(wMais, wMenos);
+  const esperado = n*(n+1)/4;
+  const correcao = empates.reduce((s,t)=>s+(t*t*t-t), 0)/48;
+  const desvio = Math.sqrt(n*(n+1)*(2*n+1)/24 - correcao);
+  const bruto = wMais - esperado;
+  const z = desvio ? (bruto - Math.sign(bruto)*0.5)/desvio : 0;
+  const semEmpate = empates.every(t => t === 1);
+  const exato = n <= 22 && semEmpate;
+  const p = exato ? pExatoWilcoxon(n, W) : Math.min(1, 2*(1-normalCdf(Math.abs(z))));
+  const positivas = naoNulos.filter(v=>v>0).length;
+  return Object.assign(base, {
+    wMais, wMenos, W, z, p, exato,
+    r: Math.abs(z)/Math.sqrt(n),
+    positivas, negativas: n-positivas,
+    medianaDif: mediana(dif)
+  });
+}
+function mediana(v){
+  if(!v.length) return null;
+  const s = [...v].sort((a,b)=>a-b), m = Math.floor(s.length/2);
+  return s.length%2 ? s[m] : (s[m-1]+s[m])/2;
+}
+const media = v => v.length ? v.reduce((a,b)=>a+b,0)/v.length : null;
+const num = (x,c=2) => x===null||x===undefined||Number.isNaN(x) ? '—' : Number(x).toFixed(c).replace('.',',');
+const pTexto = p => p < 0.001 ? 'p < 0,001' : 'p = ' + num(p,3);
+
+// ---------- pareamento ----------
+function parear(){
+  if(!analise.pre || !analise.pos) return null;
+  const pos = new Map(analise.pos.registros.map(r=>[r.codigo, r]));
+  const pares = [];
+  analise.pre.registros.forEach(a => { const b = pos.get(a.codigo); if(b) pares.push({codigo:a.codigo, pre:a, pos:b}); });
+  return pares;
+}
+function notaDe(codigo, fase){
+  const v = analise.notas[fase+':'+codigo];
+  return (v === 0 || v === 1 || v === 2) ? v : null;
+}
+
+// ---------- interface da análise ----------
+function montarAnalise(){
+  ['pre','pos'].forEach(fase=>{
+    const slot = $('#slot' + (fase==='pre'?'Pre':'Pos'));
+    if(!slot) return;
+    const campo = slot.querySelector('input[type=file]');
+    const colar = slot.querySelector('.colar');
+    campo.addEventListener('change', async ev=>{
+      const f = ev.target.files && ev.target.files[0];
+      if(f) await carregarTabela(f, fase);
+    });
+    slot.querySelector('.abrir-colar').addEventListener('click', ()=>{
+      colar.classList.toggle('visivel'); if(colar.classList.contains('visivel')) colar.focus();
+    });
+    colar.addEventListener('paste', ()=>setTimeout(async ()=>{
+      const t = colar.value.trim();
+      if(t.length > 20) await carregarTabela({name:'colado', text: async()=>t}, fase);
+    }, 60));
+    slot.addEventListener('dragover', e=>{ e.preventDefault(); slot.classList.add('arrasta'); });
+    slot.addEventListener('dragleave', ()=>slot.classList.remove('arrasta'));
+    slot.addEventListener('drop', async e=>{
+      e.preventDefault(); slot.classList.remove('arrasta');
+      const f = e.dataTransfer.files && e.dataTransfer.files[0];
+      if(f) await carregarTabela(f, fase);
+    });
+  });
+  desenharSlots(); desenharAnalise();
+}
+async function carregarTabela(arquivo, fase){
+  const erro = $('#analiseErro'); erro.textContent = '';
+  try{
+    const {nome, linhas} = await lerArquivoTabela(arquivo);
+    analise[fase] = interpretar(linhas, nome);
+    desenharSlots(); desenharAnalise();
+  }catch(e){
+    erro.textContent = 'Não consegui ler esta planilha: ' + (e.message||e) +
+      '. Exporte do Google Forms em CSV ou copie a planilha inteira, com o cabeçalho.';
+  }
+}
+function desenharSlots(){
+  ['pre','pos'].forEach(fase=>{
+    const slot = $('#slot' + (fase==='pre'?'Pre':'Pos'));
+    if(!slot) return;
+    const d = analise[fase];
+    slot.classList.toggle('cheio', !!d);
+    const alvo = slot.querySelector('.dica2');
+    const acoes = slot.querySelector('.acoes2');
+    if(d){
+      alvo.innerHTML = `<div class="arq">${esc(d.nome)}</div>` +
+        `<div class="resumo2">${d.registros.length} respostas · ${d.nQuestoes} imagens` +
+        (d.duplicados ? ` · ${d.duplicados} código(s) repetido(s): ficou a última resposta` : '') +
+        (d.temScore ? '' : ' · <b>sem coluna de pontuação</b>') + `</div>`;
+      acoes.innerHTML = '<button class="mini remover-tab" type="button">✕ remover</button>';
+      acoes.querySelector('.remover-tab').addEventListener('click', ()=>{
+        analise[fase] = null; desenharSlots(); desenharAnalise();
+      });
+    }
+  });
+}
+function blocoResultado(titulo, sub, pares, unidade){
+  const a = pares.map(p=>p[0]), b = pares.map(p=>p[1]);
+  const r = wilcoxon(pares);
+  const sig = r.p !== undefined && r.p < 0.05;
+  const dir = (media(b)||0) > (media(a)||0) ? 'aumento' : 'redução';
+  return `<div class="res-bloco">
+    <h4>${esc(titulo)}</h4><div class="sub2">${esc(sub)}</div>
+    <div class="grade-est">
+      <div class="est"><div class="v2">${num(media(a))}</div><div class="l2">média pré</div></div>
+      <div class="est"><div class="v2">${num(media(b))}</div><div class="l2">média pós</div></div>
+      <div class="est"><div class="v2">${num(mediana(a),1)}</div><div class="l2">mediana pré</div></div>
+      <div class="est"><div class="v2">${num(mediana(b),1)}</div><div class="l2">mediana pós</div></div>
+      <div class="est"><div class="v2">${r.positivas??'—'}</div><div class="l2">subiram</div></div>
+      <div class="est"><div class="v2">${r.negativas??'—'}</div><div class="l2">caíram</div></div>
+      <div class="est"><div class="v2">${r.nZeros??'—'}</div><div class="l2">empataram</div></div>
+    </div>
+    <div class="grade-est">
+      <div class="est"><div class="v2">${r.W!==undefined?num(r.W,1):'—'}</div><div class="l2">W (Wilcoxon)</div></div>
+      <div class="est"><div class="v2">${r.z!==undefined?num(r.z):'—'}</div><div class="l2">Z</div></div>
+      <div class="est"><div class="v2">${r.p!==undefined?pTexto(r.p).replace('p = ','').replace('p < ','&lt;'):'—'}</div><div class="l2">valor de p</div></div>
+      <div class="est"><div class="v2">${r.r!==undefined?num(r.r):'—'}</div><div class="l2">tamanho do efeito r</div></div>
+      <div class="est"><div class="v2">${r.n??'—'}</div><div class="l2">pares usados</div></div>
+    </div>
+    <div class="veredito ${sig?'sig':'nao'}">${
+      r.erro ? 'Todos os participantes tiveram exatamente a mesma pontuação nas duas etapas — o teste não se aplica.'
+      : (sig
+        ? `Diferença <b>estatisticamente significativa</b> (${pTexto(r.p)}): houve ${dir} de ${num(Math.abs((media(b)-media(a))))} ${unidade} em média entre o pré e o pós-teste. Tamanho do efeito r = ${num(r.r)}.`
+        : `Diferença <b>não significativa</b> (${pTexto(r.p)}): os dados não permitem afirmar que houve mudança real entre o pré e o pós-teste. Variação média de ${num(media(b)-media(a))} ${unidade}.`)
+    }${r.exato ? ' <i>(valor de p exato)</i>' : (r.p!==undefined ? ' <i>(aproximação normal com correção de continuidade)</i>' : '')}</div>
+  </div>`;
+}
+function desenharAnalise(){
+  const saida = $('#analiseSaida'); if(!saida) return;
+  if(!analise.pre || !analise.pos){
+    saida.innerHTML = '<p style="color:var(--muted);font-size:14.5px">Assim que as duas planilhas estiverem carregadas, os resultados aparecem aqui.</p>';
+    return;
+  }
+  const pares = parear();
+  const soPre = analise.pre.registros.length - pares.length;
+  const soPos = analise.pos.registros.length - pares.length;
+  let html = `<div class="cartoes-n">
+    <div class="bloco-num"><div class="v">${analise.pre.registros.length}</div><div class="l">respostas no pré</div></div>
+    <div class="bloco-num"><div class="v">${analise.pos.registros.length}</div><div class="l">respostas no pós</div></div>
+    <div class="bloco-num"><div class="v">${pares.length}</div><div class="l">participantes pareados</div></div>
+    <div class="bloco-num"><div class="v">${soPre + soPos}</div><div class="l">sem par (descartados)</div></div>
+  </div>`;
+  if(!pares.length){
+    saida.innerHTML = html + '<p style="color:var(--erro)">Nenhum código apareceu nas duas planilhas — confira se a coluna [Código] foi preenchida igual nos dois testes.</p>';
+    return;
+  }
+  const comAcerto = pares.filter(p => p.pre.acertos !== null && p.pos.acertos !== null);
+  if(comAcerto.length){
+    html += blocoResultado('Pontos de acerto', `Classificação correta das imagens · ${comAcerto.length} pares com pontuação registrada`,
+      comAcerto.map(p=>[p.pre.acertos, p.pos.acertos]), 'ponto(s)');
+  } else {
+    html += '<div class="res-bloco"><h4>Pontos de acerto</h4><div class="sub2">As planilhas não têm coluna de pontuação. Ative o modo teste (quiz) no Google Forms para que a pontuação seja exportada.</div></div>';
+  }
+  // justificativas
+  const notasPre = pares.map(p=>notaDe(p.codigo,'pre'));
+  const notasPos = pares.map(p=>notaDe(p.codigo,'pos'));
+  const paresJust = pares.map((p,i)=>[notasPre[i], notasPos[i]]).filter(([a,b])=>a!==null && b!==null);
+  const avaliadas = notasPre.filter(v=>v!==null).length + notasPos.filter(v=>v!==null).length;
+  const totalJust = pares.length*2;
+  if(paresJust.length >= 2){
+    html += blocoResultado('Justificativas escritas', `Rubrica de 0 a 2 pontos · ${paresJust.length} pares avaliados nas duas etapas`,
+      paresJust, 'ponto(s)');
+    const paresTotal = pares.map((p,i)=>{
+      if(p.pre.acertos===null||p.pos.acertos===null||notasPre[i]===null||notasPos[i]===null) return null;
+      return [p.pre.acertos+notasPre[i], p.pos.acertos+notasPos[i]];
+    }).filter(Boolean);
+    if(paresTotal.length >= 2){
+      html += blocoResultado('Pontuação total (0 a 8)', `Acertos + justificativa · ${paresTotal.length} pares completos`,
+        paresTotal, 'ponto(s)');
+    }
+  }
+  html += `<h3>Justificativas escritas</h3>
+    <p>Avalie cada resposta com a rubrica de três níveis: <b>0</b> ausente · <b>1</b> parcial · <b>2</b> completa. As notas ficam salvas neste navegador e alimentam o teste acima.</p>
+    <div class="barra-prog"><i style="width:${Math.round(100*avaliadas/Math.max(1,totalJust))}%"></i></div>
+    <div style="font-family:var(--mono);font-size:12px;color:var(--muted);margin-bottom:12px">${avaliadas} de ${totalJust} justificativas avaliadas</div>`;
+  pares.forEach(p=>{
+    html += `<div class="just-linha" data-cod="${esc(p.codigo)}">
+      <div class="just-cab"><span class="cod">${esc(p.codigo)}</span>
+        <span style="font-size:13px;color:var(--muted)">acertos: ${p.pre.acertos ?? '—'} → ${p.pos.acertos ?? '—'}</span></div>
+      <div class="just-par">
+        ${['pre','pos'].map(f=>{
+          const reg = f==='pre'?p.pre:p.pos, nota = notaDe(p.codigo,f);
+          return `<div class="just-cx">
+            <div class="fase2">${f==='pre'?'PRÉ-TESTE':'PÓS-TESTE'}</div>
+            <div class="txt">${reg.justificativa ? esc(reg.justificativa) : '<i style="color:var(--muted)">sem resposta</i>'}</div>
+            <div class="notas" data-fase="${f}">
+              ${[0,1,2].map(v=>`<button type="button" data-v="${v}" class="${nota===v?'sel':''}">${v}</button>`).join('')}
+            </div></div>`;
+        }).join('')}
+      </div></div>`;
+  });
+  html += `<div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:14px">
+    <button class="mini" id="exportarAnalise" type="button">⬇ baixar resultados (CSV)</button>
+    <button class="mini" id="limparNotas" type="button">limpar todas as notas</button></div>`;
+  saida.innerHTML = html;
+  saida.querySelectorAll('.notas button').forEach(b=>b.addEventListener('click', ev=>{
+    const cx = ev.target.closest('.notas'), cod = ev.target.closest('.just-linha').dataset.cod;
+    analise.notas[cx.dataset.fase + ':' + cod] = +ev.target.dataset.v;
+    salvarNotas(); desenharAnalise();
+  }));
+  const exp = $('#exportarAnalise');
+  if(exp) exp.addEventListener('click', ()=>{
+    const linhas = [['codigo','acertos_pre','acertos_pos','justificativa_pre','justificativa_pos','total_pre','total_pos','texto_pre','texto_pos']];
+    pares.forEach(p=>{
+      const jp = notaDe(p.codigo,'pre'), js = notaDe(p.codigo,'pos');
+      linhas.push([p.codigo, p.pre.acertos ?? '', p.pos.acertos ?? '', jp ?? '', js ?? '',
+        (p.pre.acertos!==null&&jp!==null)?p.pre.acertos+jp:'', (p.pos.acertos!==null&&js!==null)?p.pos.acertos+js:'',
+        '"'+String(p.pre.justificativa).replace(/"/g,'""')+'"', '"'+String(p.pos.justificativa).replace(/"/g,'""')+'"']);
+    });
+    baixarTexto('provia_analise.csv', linhas.map(l=>l.join(',')).join('\n'), 'text/csv');
+  });
+  const lim = $('#limparNotas');
+  if(lim) lim.addEventListener('click', ()=>{ analise.notas = {}; salvarNotas(); desenharAnalise(); });
+}
+
 // ---------- Abas laterais (critérios e material) ----------
 (function(){
   const painel=$('#painel'), veu=$('#veu'), corpo=$('#painelCorpo');
-  const bts={criterios:$('#abaCriterios'), material:$('#abaMaterial')};
+  const bts={criterios:$('#abaCriterios'), analise:$('#abaAnalise'),
+             boasvindas:$('#abaBoasVindas'), material:$('#abaMaterial')};
   const conf={criterios:{tpl:'#tplCriterios', tit:'Critérios do ProVIA', sub:'Protocolo de Verificação de Imagens geradas por IA'},
+              analise:{tpl:'#tplAnalise', tit:'Análise dos resultados', sub:'Pareamento por código e teste de Wilcoxon'},
+              boasvindas:{tpl:'#tplBoasVindas', tit:'Como usar o ProVIA', sub:'Apresentação da ferramenta'},
               material:{tpl:'#tplMaterial', tit:'Material do artigo', sub:'Prompts, fontes e composição dos instrumentos'}};
   let atual=null;
   function abrir(qual){
@@ -1836,6 +2322,17 @@ $('#btnGerarForm').addEventListener('click', ()=>{
     painel.classList.add('aberto'); veu.classList.add('aberto');
     document.body.style.overflow='hidden';
     Object.keys(bts).forEach(k=>bts[k].classList.toggle('ativa', k===qual));
+    if(qual==='analise') montarAnalise();
+    if(qual==='boasvindas'){
+      const bt = $('#bvComecar'), cx = $('#bvNaoMostrar');
+      if(bt) bt.addEventListener('click', fechar);
+      if(cx){
+        cx.checked = localStorage.getItem('provia.bv') === 'nao';
+        cx.addEventListener('change', ()=>{
+          try{ localStorage.setItem('provia.bv', cx.checked ? 'nao' : 'sim'); }catch(e){}
+        });
+      }
+    }
     corpo.querySelectorAll('.copiar-p').forEach(b=>b.addEventListener('click', async ev=>{
       const txt=ev.target.parentElement.textContent.replace(/^copiar/,'').trim();
       try{ await navigator.clipboard.writeText(txt); ev.target.textContent='copiado ✓'; }
@@ -1850,8 +2347,11 @@ $('#btnGerarForm').addEventListener('click', ()=>{
     document.body.style.overflow='';
     Object.keys(bts).forEach(k=>bts[k].classList.remove('ativa'));
   }
-  bts.criterios.addEventListener('click', ()=>abrir('criterios'));
-  bts.material.addEventListener('click', ()=>abrir('material'));
+  Object.keys(bts).forEach(k=>bts[k].addEventListener('click', ()=>abrir(k)));
+  // apresentação abre sozinha a cada visita (a pessoa pode desligar)
+  try{
+    if(localStorage.getItem('provia.bv') !== 'nao') setTimeout(()=>abrir('boasvindas'), 450);
+  }catch(e){}
   veu.addEventListener('click', fechar);
   $('#painelFechar').addEventListener('click', fechar);
   $('#painelImprimir').addEventListener('click', ()=>window.print());
