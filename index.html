@@ -167,6 +167,26 @@
   .pv-ordem .mini{width:30px;padding:3px 0}
   @media (prefers-reduced-motion: reduce){ .pv-destacado{animation:none} }
 
+
+  /* editor de indícios */
+  .ind-editor{margin-top:10px;border:1px solid var(--line);border-left:3px solid var(--acao);
+    border-radius:9px;padding:12px;background:#F7F9FC}
+  .ind-editor .cab{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:9px}
+  .ind-editor .cab b{font-size:13.5px;font-family:'Archivo',sans-serif}
+  .ind-editor .cont-ind{font-family:var(--mono);font-size:11.5px;color:var(--muted);margin-right:auto}
+  .ind-linha{display:flex;gap:7px;align-items:center;margin-bottom:7px;animation:surgir .25s ease both}
+  .ind-linha .n{font-family:var(--mono);font-size:11px;color:var(--muted);width:14px;flex:none}
+  .ind-linha input{flex:1;border:1px solid var(--line);border-radius:7px;padding:8px 10px;
+    font-family:'Atkinson Hyperlegible',sans-serif;font-size:14px;background:#fff;color:var(--ink)}
+  .ind-linha input:focus{outline:2px solid var(--acao);outline-offset:1px}
+  .ind-linha input.faltando{border-color:var(--erro);background:#FEF6F6}
+  .ind-linha .rem{border:1px solid var(--line);background:#fff;border-radius:7px;width:30px;height:32px;
+    cursor:pointer;color:var(--muted);flex:none;transition:all .16s}
+  .ind-linha .rem:hover:not(:disabled){border-color:var(--erro);color:var(--erro)}
+  .ind-linha .rem:disabled{opacity:.35;cursor:not-allowed}
+  .ind-acoes{display:flex;gap:8px;flex-wrap:wrap;margin-top:4px}
+  .ind-aviso{font-size:12.5px;color:var(--erro);margin-top:7px;min-height:16px}
+
   /* ---------- gerar ---------- */
   .barra-gerar{display:flex;align-items:center;gap:16px;flex-wrap:wrap;margin-top:4px}
   .btn{font-family:'Archivo',sans-serif;font-weight:600;font-size:17px;color:#fff;background:var(--acao);
@@ -268,20 +288,38 @@
 
 
   /* ================= ABAS LATERAIS ================= */
-  .trilho{position:fixed;left:0;top:50%;transform:translateY(-50%);z-index:60;
-    display:flex;flex-direction:column;gap:10px;padding-left:10px}
+  .trilho{position:fixed;left:14px;top:50%;transform:translateY(-50%);z-index:60;
+    display:flex;flex-direction:column;gap:14px;width:186px}
   .trilho button{
-    writing-mode:vertical-rl;transform:rotate(180deg);
-    background:var(--card);color:var(--ink);border:1px solid var(--line);
-    border-radius:12px;padding:20px 11px;font-family:'Archivo',sans-serif;font-weight:700;
-    font-size:14px;letter-spacing:.02em;cursor:pointer;
-    box-shadow:0 3px 14px rgba(20,30,50,.09);
-    transition:transform .18s ease, box-shadow .18s ease, border-color .18s ease, color .18s ease;
+    width:100%;text-align:left;background:var(--card);color:var(--ink);
+    border:1px solid var(--line);border-radius:14px;padding:18px 16px;cursor:pointer;
+    box-shadow:0 3px 16px rgba(20,30,50,.08);
+    transition:transform .18s ease, box-shadow .18s ease, border-color .18s ease;
   }
-  .trilho button:hover{transform:rotate(180deg) translateY(4px);border-color:var(--acao);color:var(--acao);
-    box-shadow:0 6px 20px rgba(29,79,216,.16)}
-  .trilho button .ico{writing-mode:horizontal-tb;display:block;font-size:17px;margin-bottom:8px;transform:rotate(180deg)}
-  .trilho button.ativa{border-color:var(--acao);color:var(--acao);box-shadow:0 0 0 2px rgba(29,79,216,.16)}
+  .trilho button:hover{transform:translateX(4px);border-color:var(--acao);
+    box-shadow:0 8px 24px rgba(29,79,216,.16)}
+  .trilho button .ico{display:block;font-size:23px;margin-bottom:9px;line-height:1}
+  .trilho button .tit{display:block;font-family:'Archivo',sans-serif;font-weight:700;font-size:15px;
+    letter-spacing:-.01em;line-height:1.25}
+  .trilho button .desc{display:block;font-size:12.5px;color:var(--muted);margin-top:6px;line-height:1.45}
+  .trilho button.ativa{border-color:var(--acao);box-shadow:0 0 0 2px rgba(29,79,216,.18)}
+  .trilho button.ativa .tit{color:var(--acao)}
+  .imprimir{border:1px solid var(--line);background:var(--paper);border-radius:9px;
+    padding:9px 14px;font-size:13.5px;cursor:pointer;color:var(--ink);white-space:nowrap;
+    transition:border-color .18s, color .18s, background .18s}
+  .imprimir:hover{border-color:var(--acao);color:var(--acao);background:#F3F7FF}
+  .painel-acoes{display:flex;align-items:center;gap:10px;flex:none}
+  @media print{
+    body > *:not(.painel){display:none !important}
+    .painel{position:static !important;transform:none !important;width:100% !important;
+      height:auto !important;box-shadow:none !important;background:#fff !important}
+    .painel-corpo{overflow:visible !important;padding:0 !important}
+    .painel-corpo > *{animation:none !important}
+    .painel-topo{border:none;padding:0 0 14px}
+    .fechar,.imprimir,.copiar-p{display:none !important}
+    .criterio,.ficha,.faixa,.bloco-num,.rubrica,.prompt-box,.lista-ind{break-inside:avoid;box-shadow:none}
+    .painel-corpo h3{break-after:avoid}
+  }
 
   .veu{position:fixed;inset:0;background:rgba(16,24,40,.42);backdrop-filter:blur(2px);
     opacity:0;pointer-events:none;transition:opacity .3s ease;z-index:70}
@@ -364,11 +402,14 @@
   .lista-ind{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:8px 8px 8px 0;margin-top:6px}
   .lista-ind li{font-size:15px;line-height:1.6;margin:8px 0 8px 34px;color:var(--ink)}
 
-  @media(max-width:900px){
-    .trilho{position:static;transform:none;flex-direction:row;gap:8px;padding:14px 16px 0;justify-content:center}
-    .trilho button{writing-mode:horizontal-tb;transform:none;padding:11px 15px;font-size:13.5px}
+  @media(max-width:1240px){
+    .trilho{position:static;transform:none;flex-direction:row;gap:10px;width:auto;
+      padding:14px 16px 0;justify-content:center;flex-wrap:wrap}
+    .trilho button{width:auto;padding:11px 16px;display:flex;align-items:center;gap:9px}
     .trilho button:hover{transform:translateY(-2px)}
-    .trilho button .ico{display:inline;transform:none;margin:0 6px 0 0;font-size:15px}
+    .trilho button .ico{display:inline;font-size:16px;margin:0}
+    .trilho button .tit{font-size:14px}
+    .trilho button .desc{display:none}
     .painel{width:100%}
     .painel-topo,.painel-corpo{padding:18px}
     .escala{grid-template-columns:1fr}
@@ -379,14 +420,23 @@
 <body>
 
 <nav class="trilho" aria-label="Painéis do projeto">
-  <button id="abaCriterios" aria-controls="painel"><span class="ico">🔍</span>Critérios do ProVIA</button>
-  <button id="abaMaterial" aria-controls="painel"><span class="ico">📄</span>Material do artigo</button>
+  <button id="abaCriterios" aria-controls="painel">
+    <span class="ico">🔍</span><span class="tit">Critérios do ProVIA</span>
+    <span class="desc">Os seis critérios, a escala de leitura e a rubrica das justificativas.</span>
+  </button>
+  <button id="abaMaterial" aria-controls="painel">
+    <span class="ico">📄</span><span class="tit">Material do artigo</span>
+    <span class="desc">Os oito prompts originais, fontes e composição dos instrumentos.</span>
+  </button>
 </nav>
 <div class="veu" id="veu"></div>
 <aside class="painel" id="painel" role="dialog" aria-modal="true" aria-labelledby="painelTit">
   <div class="painel-topo">
     <div><h2 id="painelTit">Critérios do ProVIA</h2><div class="sub" id="painelSub">Protocolo de Verificação de Imagens geradas por IA</div></div>
-    <button class="fechar" id="painelFechar" aria-label="Fechar painel">✕</button>
+    <div class="painel-acoes">
+      <button class="imprimir" id="painelImprimir" type="button">🖨 imprimir</button>
+      <button class="fechar" id="painelFechar" aria-label="Fechar painel">✕</button>
+    </div>
   </div>
   <div class="painel-corpo" id="painelCorpo"></div>
 </aside>
@@ -1295,9 +1345,11 @@ function checarPrevia(){
   if(!ordemForm.length){
     ordemForm = embaralhar([...itens.map((_,i)=>'s'+i), ...reais.map((_,i)=>'r'+i)]);
     opcoesForm = {};
-    ordemForm.forEach(id=>opcoesForm[id]={indicios:false, justificativa:false});
+    ordemForm.forEach(id=>opcoesForm[id]={indicios:false, justificativa:false, lista:[]});
     const ultimo = ordemForm[ordemForm.length-1];
-    opcoesForm[ultimo] = {indicios:true, justificativa:true};
+    const penultimo = ordemForm[ordemForm.length-2] || ultimo;
+    opcoesForm[penultimo] = {indicios:true, justificativa:false, lista:[...INDICIOS_PADRAO]};
+    opcoesForm[ultimo] = Object.assign({}, opcoesForm[ultimo], {justificativa:true});
   }
   renderPrevia();
   $('#secPrevia').style.display = 'block';
@@ -1363,14 +1415,66 @@ function renderPrevia(){
         <b class="${p.tipo==='real'?'pv-real':'pv-sint'}">${esc(p.rotulo)}</b>
         <small>${esc(p.sub)}</small>
         <small class="pv-fixas">perguntas fixas: real ou IA? + nível de confiança</small>
-        <label><input type="checkbox" class="pv-ind" ${op.indicios?'checked':''}> pergunta de indícios (marque até 2)</label>
+        <label><input type="checkbox" class="pv-ind" ${op.indicios?'checked':''}> pergunta de indícios (o estudante marca até 2)</label>
+        <div class="ind-editor" hidden></div>
         <label><input type="checkbox" class="pv-jus" ${op.justificativa?'checked':''}> justificativa em uma frase</label>
       </div>`;
     el.querySelector('.pv-thumb').src = p.src;
     el.querySelector('.pv-sobe').addEventListener('click', ()=>moverForm(i,-1));
     el.querySelector('.pv-desce').addEventListener('click', ()=>moverForm(i, 1));
     el.querySelector('.pv-um').addEventListener('click', ()=>embaralharUm(i));
-    el.querySelector('.pv-ind').addEventListener('change', e=>opcoesForm[idc].indicios = e.target.checked);
+    const cxInd = el.querySelector('.pv-ind');
+    const editor = el.querySelector('.ind-editor');
+    function desenhaEditor(){
+      const op2 = opcoesForm[idc];
+      editor.hidden = !op2.indicios;
+      if(!op2.indicios){ editor.innerHTML=''; return; }
+      if(!op2.lista || op2.lista.length < 2) op2.lista = (op2.lista||[]).concat(['','']).slice(0, Math.max(2,(op2.lista||[]).length));
+      editor.innerHTML =
+        `<div class="cab"><b>Indícios desta imagem</b>`+
+        `<span class="cont-ind">${op2.lista.filter(t=>t.trim()).length} escritos · mínimo 2</span></div>`+
+        op2.lista.map((t,k)=>
+          `<div class="ind-linha"><span class="n">${k+1}</span>`+
+          `<input type="text" value="${esc(t)}" placeholder="Escreva o indício ${k+1}…" aria-label="Indício ${k+1}">`+
+          `<button class="rem" type="button" title="remover" ${op2.lista.length<=2?'disabled':''}>✕</button></div>`).join('')+
+        `<div class="ind-acoes">`+
+          `<button class="mini add-ind" type="button">+ adicionar indício</button>`+
+          `<button class="mini usar-padrao" type="button">usar os 6 do ProVIA</button>`+
+          `<button class="mini cancelar-ind" type="button">cancelar tudo</button>`+
+        `</div><div class="ind-aviso"></div>`;
+      editor.querySelectorAll('.ind-linha input').forEach((inp,k)=>{
+        inp.addEventListener('input', ()=>{
+          opcoesForm[idc].lista[k] = inp.value;
+          inp.classList.remove('faltando');
+          editor.querySelector('.cont-ind').textContent =
+            `${opcoesForm[idc].lista.filter(t=>t.trim()).length} escritos · mínimo 2`;
+        });
+      });
+      editor.querySelectorAll('.rem').forEach((b,k)=>b.addEventListener('click', ()=>{
+        if(opcoesForm[idc].lista.length<=2) return;
+        opcoesForm[idc].lista.splice(k,1); desenhaEditor();
+      }));
+      editor.querySelector('.add-ind').addEventListener('click', ()=>{
+        opcoesForm[idc].lista.push(''); desenhaEditor();
+        const campos = editor.querySelectorAll('.ind-linha input');
+        campos[campos.length-1].focus();
+      });
+      editor.querySelector('.usar-padrao').addEventListener('click', ()=>{
+        opcoesForm[idc].lista = [...INDICIOS_PADRAO]; desenhaEditor();
+      });
+      editor.querySelector('.cancelar-ind').addEventListener('click', ()=>{
+        opcoesForm[idc].indicios = false; opcoesForm[idc].lista = [];
+        cxInd.checked = false; desenhaEditor();
+      });
+    }
+    cxInd.addEventListener('change', e=>{
+      opcoesForm[idc].indicios = e.target.checked;
+      if(e.target.checked && (!opcoesForm[idc].lista || !opcoesForm[idc].lista.length))
+        opcoesForm[idc].lista = ['',''];
+      desenhaEditor();
+      if(e.target.checked){ const c = editor.querySelector('input'); if(c) c.focus(); }
+    });
+    desenhaEditor();
     el.querySelector('.pv-jus').addEventListener('change', e=>opcoesForm[idc].justificativa = e.target.checked);
     alvo.appendChild(el);
   });
@@ -1393,7 +1497,8 @@ function configuracaoForm(){
     pastaDrive:'ProVIA',
     itens: ordemForm.map(idc=>{
       const p = itemPrevia(idc), op = opcoesForm[idc];
-      const base = {tipo:p.tipo, gabarito:p.gab, indicios:op.indicios, justificativa:op.justificativa};
+      const base = {tipo:p.tipo, gabarito:p.gab, indicios:op.indicios, justificativa:op.justificativa,
+                    indiciosLista: op.indicios ? (op.lista||[]).map(t=>t.trim()).filter(Boolean) : []};
       if(p.tipo==='sintetica'){
         base.arquivo = nomeArquivoDe(p.ref);
         base.app = p.ref.provedorNome; base.prompt = p.ref.prompt; base.dificuldade = p.ref.dif||'própria';
@@ -1439,7 +1544,7 @@ function criarFormulario(){
     if(item.indicios){
       const cb = form.addCheckboxItem();
       cb.setTitle('O que mais influenciou sua resposta? Marque até 2 indícios.').setRequired(true);
-      cb.setChoiceValues(CONFIG.indiciosPadrao);
+      cb.setChoiceValues((item.indiciosLista && item.indiciosLista.length) ? item.indiciosLista : CONFIG.indiciosPadrao);
       cb.setValidation(FormApp.createCheckboxValidation().requireSelectAtMost(2).build());
     }
     if(item.justificativa){
@@ -1475,6 +1580,21 @@ function baixarTexto(nome, texto, mime){
   URL.revokeObjectURL(a.href);
 }
 $('#btnGerarForm').addEventListener('click', ()=>{
+  // toda imagem com pergunta de indícios precisa de ao menos 2 indícios escritos
+  const falha = ordemForm.findIndex(id => opcoesForm[id].indicios &&
+                (opcoesForm[id].lista||[]).filter(t=>t.trim()).length < 2);
+  if(falha >= 0){
+    const item = $('#previaLista').children[falha];
+    $('#avisoGerarForm').textContent = '';
+    const aviso = item.querySelector('.ind-aviso');
+    if(aviso) aviso.textContent = 'Escreva pelo menos 2 indícios para esta imagem (ou use “cancelar tudo”).';
+    item.querySelectorAll('.ind-linha input').forEach(i=>{ if(!i.value.trim()) i.classList.add('faltando'); });
+    tremer($('#btnGerarForm'));
+    item.scrollIntoView({behavior:'smooth', block:'center'});
+    const vazio = [...item.querySelectorAll('.ind-linha input')].find(i=>!i.value.trim());
+    if(vazio) vazio.focus();
+    return;
+  }
   const cfg = configuracaoForm();
   baixarTexto('provia_form.gs', gerarScriptForms(cfg), 'text/plain');
   setTimeout(()=>baixarTexto('provia_form_config.json', JSON.stringify(cfg,null,2), 'application/json'), 500);
@@ -1519,6 +1639,7 @@ $('#btnGerarForm').addEventListener('click', ()=>{
   bts.material.addEventListener('click', ()=>abrir('material'));
   veu.addEventListener('click', fechar);
   $('#painelFechar').addEventListener('click', fechar);
+  $('#painelImprimir').addEventListener('click', ()=>window.print());
   document.addEventListener('keydown', e=>{ if(e.key==='Escape' && atual) fechar(); });
 })();
 
