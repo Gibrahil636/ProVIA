@@ -190,6 +190,42 @@
   #modeloId{width:100%;border:1px solid var(--line);border-radius:8px;padding:9px 11px;margin-top:10px;
     font-family:var(--mono);font-size:13px;background:#fff;color:var(--ink)}
 
+
+
+  /* ponte: gerar direto do ProVIA */
+  .ponte{border:1px solid var(--acao);border-radius:14px;padding:18px;margin:18px 0 8px;
+    background:linear-gradient(180deg,#F5F9FF 0%,var(--card) 100%)}
+  .ponte .cab{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:8px}
+  .ponte .cab b{font-family:'Archivo',sans-serif;font-size:16.5px}
+  .ponte .selo{font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;padding:4px 9px;
+    border-radius:999px;background:#E4EDFE;color:var(--acao-escuro);border:1px solid #CBDBFB}
+  .ponte p{font-size:14.5px;color:var(--muted);line-height:1.6;margin-bottom:12px}
+  .ponte-passos{margin:10px 0 14px}
+  .ponte-passos summary{cursor:pointer;font-size:14px;color:var(--acao);font-weight:700}
+  .ponte-passos ol{margin:10px 0 0 20px}
+  .ponte-passos li{font-size:14.5px;line-height:1.65;margin-bottom:7px;color:var(--ink)}
+  .ponte-linha{display:flex;gap:9px;flex-wrap:wrap;align-items:center}
+  #ponteUrl{flex:1;min-width:260px;border:1px solid var(--line);border-radius:9px;padding:11px 13px;
+    font-family:var(--mono);font-size:13px;color:var(--ink)}
+  #ponteUrl:focus{outline:2px solid var(--acao);outline-offset:1px}
+  .ponte-status{font-size:14px;margin-top:12px;min-height:20px;line-height:1.6}
+  .ponte-status.ok{color:var(--pronto)} .ponte-status.ruim{color:var(--erro)}
+  .ponte-links{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px}
+  .ponte-links a{font-family:'Archivo',sans-serif;font-weight:700;font-size:14px;text-decoration:none;
+    border:1px solid var(--acao);color:var(--acao);border-radius:9px;padding:10px 15px;transition:all .18s}
+  .ponte-links a:hover{background:var(--acao);color:#fff}
+  .alternativa{font-size:13.5px;color:var(--muted);margin-top:16px;padding-top:14px;border-top:1px dashed var(--line)}
+
+  /* onde dá para escrever fica claro; onde não dá, não aparece cursor de texto */
+  textarea[readonly], input[readonly], input:disabled, textarea:disabled,
+  select:disabled{caret-color:transparent;cursor:default;user-select:text}
+  textarea[readonly]:focus, input[readonly]:focus{outline:none;border-color:var(--line)}
+  .prow textarea:not([readonly]), #nomeForm, .ind-linha input, #modeloId, #ponteUrl{
+    background:#fff;box-shadow:inset 0 1px 2px rgba(16,24,40,.04)}
+  .prow textarea:not([readonly]):hover, .ind-linha input:hover{border-color:#B9C4CF}
+  .ptexto, .rdesc, .rfonte, .prompt-box, .etiqueta, .criterio span, .pv-info small{cursor:default}
+  .pv-info label, .usar, .lembrar, .radio-op, .tipo-op, .modelo-cx label{cursor:pointer}
+
   /* editor de indícios */
   .ind-editor{margin-top:10px;border:1px solid var(--line);border-left:3px solid var(--acao);
     border-radius:9px;padding:12px;background:#F7F9FC}
@@ -208,6 +244,13 @@
   .ind-linha .rem:disabled{opacity:.35;cursor:not-allowed}
   .ind-acoes{display:flex;gap:8px;flex-wrap:wrap;margin-top:4px}
   .ind-aviso{font-size:12.5px;color:var(--erro);margin-top:7px;min-height:16px}
+  .ind-resumo{display:flex;align-items:center;gap:9px;margin-top:10px;padding:10px 12px;
+    border:1px solid #BFE3D2;background:#F1FAF5;border-radius:9px;font-size:13.5px;color:#1E7A53;
+    cursor:pointer;transition:border-color .18s, background .18s}
+  .ind-resumo:hover{border-color:var(--pronto);background:#E8F6EF}
+  .ind-resumo b{font-family:'Archivo',sans-serif}
+  .ind-resumo .ed{margin-left:auto;font-family:var(--mono);font-size:11.5px;color:var(--acao)}
+  .ind-editor .recolher{margin-left:auto}
 
   /* ---------- gerar ---------- */
   .barra-gerar{display:flex;align-items:center;gap:16px;flex-wrap:wrap;margin-top:4px}
@@ -310,25 +353,22 @@
 
 
   /* ================= ABAS LATERAIS ================= */
-  .trilho{position:fixed;left:22px;top:50%;transform:translateY(-50%);z-index:60;
-    display:flex;flex-direction:column;gap:18px;width:clamp(210px,17vw,268px)}
+  .trilho{position:fixed;left:16px;top:50%;transform:translateY(-50%);z-index:60;
+    display:flex;flex-direction:column;gap:14px;width:196px}
   .trilho button{
-    width:100%;min-height:clamp(200px,26vh,268px);text-align:left;
-    display:flex;flex-direction:column;justify-content:flex-start;
-    background:var(--card);color:var(--ink);border:1px solid var(--line);
-    border-radius:18px;padding:26px 22px;cursor:pointer;
-    box-shadow:0 4px 20px rgba(20,30,50,.08);
-    transition:transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+    width:100%;text-align:left;background:var(--card);color:var(--ink);
+    border:1px solid var(--line);border-radius:14px;padding:18px 16px;cursor:pointer;
+    box-shadow:0 3px 16px rgba(20,30,50,.08);
+    transition:transform .18s ease, box-shadow .18s ease, border-color .18s ease;
   }
-  .trilho button:hover{transform:translateX(5px) translateY(-2px);border-color:var(--acao);
-    box-shadow:0 12px 30px rgba(29,79,216,.18)}
-  .trilho button .ico{display:block;font-size:34px;margin-bottom:14px;line-height:1}
-  .trilho button .tit{display:block;font-family:'Archivo',sans-serif;font-weight:800;font-size:19px;
-    letter-spacing:-.02em;line-height:1.2}
-  .trilho button .desc{display:block;font-size:13.5px;color:var(--muted);margin-top:10px;line-height:1.5}
-  .trilho button .abrir{margin-top:auto;padding-top:14px;font-family:var(--mono);font-size:11.5px;
-    letter-spacing:.08em;color:var(--acao);opacity:.75}
-  .trilho button:hover .abrir{opacity:1}
+  .trilho button:hover{transform:translateX(4px);border-color:var(--acao);
+    box-shadow:0 8px 24px rgba(29,79,216,.16)}
+  .trilho button .ico{display:block;font-size:24px;margin-bottom:9px;line-height:1}
+  .trilho button .tit{display:block;font-family:'Archivo',sans-serif;font-weight:700;font-size:15.5px;
+    letter-spacing:-.01em;line-height:1.25}
+  .trilho button .desc{display:block;font-size:12.5px;color:var(--muted);margin-top:6px;line-height:1.45}
+  .trilho button .abrir{display:block;margin-top:10px;font-family:var(--mono);font-size:11px;
+    letter-spacing:.06em;color:var(--acao);opacity:.8}
   .trilho button.ativa{border-color:var(--acao);box-shadow:0 0 0 2px rgba(29,79,216,.18)}
   .trilho button.ativa .tit{color:var(--acao)}
   .imprimir{border:1px solid var(--line);background:var(--paper);border-radius:9px;
@@ -429,7 +469,7 @@
   .lista-ind{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:8px 8px 8px 0;margin-top:6px}
   .lista-ind li{font-size:15px;line-height:1.6;margin:8px 0 8px 34px;color:var(--ink)}
 
-  @media(max-width:1400px){
+  @media(max-width:1260px){
     .trilho{position:static;transform:none;flex-direction:row;gap:10px;width:auto;
       padding:14px 16px 0;justify-content:center;flex-wrap:wrap}
     .trilho button{width:auto;min-height:0;padding:11px 16px;flex-direction:row;align-items:center;gap:9px}
@@ -637,9 +677,33 @@
         <small>O Google não deixa nenhum programa definir cores e banner de um formulário novo. Mas dá para <b>copiar um formulário seu</b> e trocar só as perguntas — assim o tema, o banner e as configurações vêm junto, idênticos.</small></span></label>
       <input type="text" id="modeloId" placeholder="Cole aqui o link do seu formulário modelo (ou só o ID)" hidden>
     </div>
-    <div class="previa-acoes">
-      <button class="btn" id="btnGerarForm" type="button">Gerar formulário (baixa o script)</button>
-      <span id="avisoGerarForm" aria-live="polite"></span>
+    <div class="ponte">
+      <div class="cab"><b>Gerar o formulário direto daqui</b><span class="selo">configuração única</span></div>
+      <p>O Google não deixa um site criar formulários na sua conta sem a sua autorização. A ponte resolve isso: você publica um pequeno programa <b>dentro da sua própria conta</b>, uma única vez, e cola o endereço dele abaixo. A partir daí, o ProVIA envia tudo — imagens inclusive — e o formulário nasce pronto, com o link aparecendo aqui na tela.</p>
+      <details class="ponte-passos">
+        <summary>como publicar a ponte (uma vez só, ~3 minutos)</summary>
+        <ol>
+          <li>Baixe o programa no botão <b>“baixar o script da ponte”</b> abaixo.</li>
+          <li>Abra <b>script.google.com</b> → <b>Novo projeto</b>.</li>
+          <li>Apague o que estiver escrito e cole o conteúdo do arquivo baixado.</li>
+          <li>Clique em <b>Implantar → Nova implantação</b> → engrenagem → <b>App da Web</b>.</li>
+          <li>Em “Executar como”, escolha <b>Eu</b>. Em “Quem pode acessar”, escolha <b>Qualquer pessoa</b>. Clique em <b>Implantar</b> e autorize.</li>
+          <li>Copie o endereço que termina em <b>/exec</b> e cole no campo abaixo. Pronto — nunca mais precisa repetir.</li>
+        </ol>
+      </details>
+      <div class="ponte-linha">
+        <button class="mini" id="btnPonteScript" type="button">⬇ baixar o script da ponte</button>
+        <input type="text" id="ponteUrl" placeholder="Cole aqui o endereço da ponte (termina em /exec)" aria-label="Endereço da ponte">
+      </div>
+      <div class="previa-acoes" style="margin-top:14px">
+        <button class="btn" id="btnGerarAgora" type="button">✨ Gerar formulário agora</button>
+      </div>
+      <div class="ponte-status" id="ponteStatus" aria-live="polite"></div>
+      <div class="ponte-links" id="ponteLinks" hidden></div>
+      <div class="alternativa">Sem a ponte, dá para seguir pelo caminho manual:
+        <button class="mini" id="btnGerarForm" type="button">baixar o script do formulário</button>
+        <span id="avisoGerarForm"></span>
+      </div>
     </div>
   </section>
 
@@ -1465,6 +1529,7 @@ function renderPrevia(){
         <small>${esc(p.sub)}</small>
         <small class="pv-fixas">perguntas fixas: real ou IA? + nível de confiança</small>
         <label><input type="checkbox" class="pv-ind" ${op.indicios?'checked':''}> pergunta de indícios (o estudante marca até 2)</label>
+        <div class="ind-resumo" hidden></div>
         <div class="ind-editor" hidden></div>
         <label><input type="checkbox" class="pv-jus" ${op.justificativa?'checked':''}> justificativa em uma frase</label>
       </div>`;
@@ -1474,14 +1539,32 @@ function renderPrevia(){
     el.querySelector('.pv-um').addEventListener('click', ()=>embaralharUm(i));
     const cxInd = el.querySelector('.pv-ind');
     const editor = el.querySelector('.ind-editor');
+    const resumo = el.querySelector('.ind-resumo');
+    opcoesForm[idc].recolhido = opcoesForm[idc].recolhido ?? false;
+    function validos(){ return (opcoesForm[idc].lista||[]).filter(t=>t.trim()); }
+    function desenhaResumo(){
+      const op3 = opcoesForm[idc], n = validos().length;
+      const podeRecolher = op3.indicios && n>=2;
+      resumo.hidden = !(podeRecolher && op3.recolhido);
+      if(!resumo.hidden){
+        resumo.innerHTML = `✓ <b>${n} indícios definidos</b> — ${esc(validos()[0].slice(0,42))}…<span class="ed">abrir para editar</span>`;
+      }
+    }
+    resumo.addEventListener('click', ()=>{ opcoesForm[idc].recolhido=false; desenhaEditor(); });
     function desenhaEditor(){
       const op2 = opcoesForm[idc];
-      editor.hidden = !op2.indicios;
+      const recolher = op2.indicios && op2.recolhido && validos().length>=2;
+      editor.hidden = !op2.indicios || recolher;
+      desenhaResumo();
       if(!op2.indicios){ editor.innerHTML=''; return; }
+      if(recolher){ editor.innerHTML=''; return; }
       if(!op2.lista || op2.lista.length < 2) op2.lista = (op2.lista||[]).concat(['','']).slice(0, Math.max(2,(op2.lista||[]).length));
+      const okAgora = op2.lista.filter(t=>t.trim()).length >= 2;
       editor.innerHTML =
         `<div class="cab"><b>Indícios desta imagem</b>`+
-        `<span class="cont-ind">${op2.lista.filter(t=>t.trim()).length} escritos · mínimo 2</span></div>`+
+        `<span class="cont-ind">${op2.lista.filter(t=>t.trim()).length} escritos · mínimo 2</span>`+
+        (okAgora ? `<button class="mini recolher" type="button">✓ está ok · recolher</button>` : '')+
+        `</div>`+
         op2.lista.map((t,k)=>
           `<div class="ind-linha"><span class="n">${k+1}</span>`+
           `<input type="text" value="${esc(t)}" placeholder="Escreva o indício ${k+1}…" aria-label="Indício ${k+1}">`+
@@ -1511,8 +1594,10 @@ function renderPrevia(){
       editor.querySelector('.usar-padrao').addEventListener('click', ()=>{
         opcoesForm[idc].lista = [...INDICIOS_PADRAO]; desenhaEditor();
       });
+      const btnRec = editor.querySelector('.recolher');
+      if(btnRec) btnRec.addEventListener('click', ()=>{ opcoesForm[idc].recolhido=true; desenhaEditor(); });
       editor.querySelector('.cancelar-ind').addEventListener('click', ()=>{
-        opcoesForm[idc].indicios = false; opcoesForm[idc].lista = [];
+        opcoesForm[idc].indicios = false; opcoesForm[idc].lista = []; opcoesForm[idc].recolhido = false;
         cxInd.checked = false; desenhaEditor();
       });
     }
@@ -1710,6 +1795,7 @@ $('#btnGerarForm').addEventListener('click', ()=>{
   const falha = ordemForm.findIndex(id => opcoesForm[id].indicios &&
                 (opcoesForm[id].lista||[]).filter(t=>t.trim()).length < 2);
   if(falha >= 0){
+    opcoesForm[ordemForm[falha]].recolhido = false; renderPrevia();
     const item = $('#previaLista').children[falha];
     $('#avisoGerarForm').textContent = '';
     const aviso = item.querySelector('.ind-aviso');
@@ -1771,6 +1857,174 @@ $('#btnGerarForm').addEventListener('click', ()=>{
   $('#painelImprimir').addEventListener('click', ()=>window.print());
   document.addEventListener('keydown', e=>{ if(e.key==='Escape' && atual) fechar(); });
 })();
+
+
+// ---------- Ponte: cria o formulário direto na conta do usuário ----------
+function scriptDaPonte(){
+  return `/**  ProVIA - PONTE (publique uma vez como App da Web)
+ *  1) script.google.com -> Novo projeto -> cole este arquivo inteiro
+ *  2) Implantar -> Nova implantacao -> App da Web
+ *     Executar como: Eu    |    Quem pode acessar: Qualquer pessoa
+ *  3) Copie o endereco que termina em /exec e cole no ProVIA.
+ *  Nada e armazenado por este programa: ele so monta o formulario e devolve o link.
+ */
+function doGet(){
+  return ContentService.createTextOutput(JSON.stringify({ok:true, ponte:'ProVIA', versao:1}))
+    .setMimeType(ContentService.MimeType.JSON);
+}
+function doPost(e){
+  try{
+    var cfg = JSON.parse(e.postData.contents);
+    var r = montar_(cfg);
+    return ContentService.createTextOutput(JSON.stringify({ok:true, publicado:r.pub, editar:r.edit, avisos:r.avisos}))
+      .setMimeType(ContentService.MimeType.JSON);
+  }catch(err){
+    return ContentService.createTextOutput(JSON.stringify({ok:false, erro:String(err)}))
+      .setMimeType(ContentService.MimeType.JSON);
+  }
+}
+var ASSENTIMENTO =
+  'Voce esta sendo convidado(a) a participar de uma pesquisa cientifica sobre analise de imagens ' +
+  'em redes sociais. Voce vai observar algumas imagens e responder perguntas sobre elas. Sua ' +
+  'participacao e voluntaria e completamente anonima - nenhum nome, e-mail ou dado pessoal sera ' +
+  'coletado. Voce pode desistir a qualquer momento sem nenhuma consequencia. Os resultados serao ' +
+  'usados apenas para fins cientificos e educacionais.';
+
+function montar_(cfg){
+  var avisos = [];
+  var form;
+  if(cfg.modeloId){
+    var copia = DriveApp.getFileById(cfg.modeloId).makeCopy(cfg.titulo);
+    form = FormApp.openById(copia.getId());
+    var antigos = form.getItems();
+    for(var k = antigos.length - 1; k >= 0; k--) form.deleteItem(antigos[k]);
+  } else {
+    form = FormApp.create(cfg.titulo);
+  }
+  form.setTitle(cfg.titulo);
+  form.setIsQuiz(true);
+  form.setDescription('Observe atentamente cada conteudo antes de responder.');
+  form.setCollectEmail(false);
+  form.setProgressBar(true);
+
+  form.addSectionHeaderItem()
+      .setTitle('Termo de Assentimento Livre e Esclarecido')
+      .setHelpText(cfg.assentimento || ASSENTIMENTO);
+  var consent = form.addMultipleChoiceItem();
+  consent.setTitle('Voce concorda em participar desta pesquisa?').setRequired(true);
+  consent.setChoiceValues(['Sim, concordo em participar','Nao concordo - prefiro nao participar']);
+  form.addTextItem().setTitle('[Codigo]')
+      .setHelpText('Preenchido pelo pesquisador. Nao altere.').setRequired(true);
+  form.addPageBreakItem().setTitle('Analise de Conteudos em Redes Sociais')
+      .setHelpText('Observe atentamente o conteudo abaixo antes de responder.');
+
+  cfg.itens.forEach(function(item, i){
+    var blob = blob_(item);
+    if(blob){ form.addImageItem().setImage(blob).setTitle('Imagem ' + (i+1)); }
+    else { avisos.push('imagem ' + (i+1) + ' nao pode ser carregada'); }
+    var mc = form.addMultipleChoiceItem();
+    mc.setTitle('Observe a imagem acima. Este conteudo parece ser:').setRequired(true).setPoints(1);
+    mc.setChoices([
+      mc.createChoice('Provavelmente real.', item.gabarito === 'real'),
+      mc.createChoice('Provavelmente criada por IA.', item.gabarito === 'ia')
+    ]);
+    form.addMultipleChoiceItem().setTitle('Qual e o seu nivel de confianca nessa resposta?')
+        .setChoiceValues(['Baixa','Media','Alta']).setRequired(true);
+    if(item.indicios && item.indiciosLista && item.indiciosLista.length){
+      var cb = form.addCheckboxItem();
+      cb.setTitle('O que mais influenciou sua resposta? Marque ate 2 indicios.').setRequired(true);
+      cb.setChoiceValues(item.indiciosLista);
+      cb.setValidation(FormApp.createCheckboxValidation().requireSelectAtMost(2).build());
+    }
+    if(item.justificativa){
+      form.addParagraphTextItem()
+          .setTitle('Explique em uma frase o principal motivo da sua escolha.').setRequired(true);
+    }
+  });
+  return {pub: form.getPublishedUrl(), edit: form.getEditUrl(), avisos: avisos};
+}
+function blob_(item){
+  try{
+    if(item.dados){
+      return Utilities.newBlob(Utilities.base64Decode(item.dados), item.mime || 'image/png', 'provia.png');
+    }
+    if(item.url){ return UrlFetchApp.fetch(item.url).getBlob(); }
+  }catch(e){}
+  return null;
+}
+`;
+}
+
+// endereço da ponte guardado no aparelho
+(function(){
+  const campo = $('#ponteUrl');
+  try{ const s = localStorage.getItem('provia.ponte'); if(s) campo.value = s; }catch(e){}
+  campo.addEventListener('input', ()=>{ try{ localStorage.setItem('provia.ponte', campo.value.trim()); }catch(e){} });
+})();
+$('#btnPonteScript').addEventListener('click', (ev)=>{
+  baixarTexto('provia_ponte.gs', scriptDaPonte(), 'text/plain');
+  marcarOk(ev.currentTarget);
+  $('#ponteStatus').className='ponte-status';
+  $('#ponteStatus').textContent = 'Script baixado. Siga os 6 passos acima e cole aqui o endereço terminado em /exec.';
+});
+
+// prepara o pacote: imagens sintéticas viram base64; reais viram endereço absoluto
+function pacoteParaPonte(cfg){
+  const pacote = JSON.parse(JSON.stringify(cfg));
+  pacote.itens = ordemForm.map((idc, i)=>{
+    const p = itemPrevia(idc);
+    const base = pacote.itens[i];
+    if(String(p.src||'').startsWith('data:')){
+      const m = p.src.match(/^data:([^;]+);base64,(.*)$/);
+      if(m){ base.mime = m[1]; base.dados = m[2]; }
+    } else if(p.src){
+      base.url = new URL(p.src, location.href).href;
+    }
+    delete base.arquivo; delete base.urlExterna;
+    return base;
+  });
+  return pacote;
+}
+
+$('#btnGerarAgora').addEventListener('click', async (ev)=>{
+  const st = $('#ponteStatus'), links = $('#ponteLinks');
+  links.hidden = true; st.className = 'ponte-status';
+  const url = $('#ponteUrl').value.trim();
+  if(!/^https:\/\/script\.google\.com\/.+\/exec/.test(url)){
+    st.classList.add('ruim');
+    st.textContent = 'Cole primeiro o endereço da ponte — ele começa com https://script.google.com e termina em /exec.';
+    tremer(ev.currentTarget); $('#ponteUrl').focus(); return;
+  }
+  const falha = ordemForm.findIndex(id => opcoesForm[id].indicios &&
+                (opcoesForm[id].lista||[]).filter(t=>t.trim()).length < 2);
+  if(falha >= 0){ $('#btnGerarForm').click(); return; }
+  if(location.protocol === 'file:'){
+    st.classList.add('ruim');
+    st.textContent = 'Abra o ProVIA pelo endereço publicado (GitHub Pages) — em arquivo local as imagens reais não têm endereço público para o Google buscar.';
+    return;
+  }
+  const btn = ev.currentTarget;
+  btn.disabled = true; const rotulo = btn.textContent; btn.textContent = 'criando o formulário…';
+  st.textContent = 'Enviando as imagens e montando o formulário na sua conta… isso leva de 20 a 60 segundos.';
+  try{
+    const pacote = pacoteParaPonte(configuracaoForm());
+    const r = await fetch(url, {method:'POST', body: JSON.stringify(pacote)}); // texto simples: sem bloqueio de origem
+    const j = await r.json();
+    if(!j.ok) throw new Error(j.erro || 'a ponte respondeu com erro');
+    st.className = 'ponte-status ok';
+    st.textContent = 'Formulário criado na sua conta do Google!' +
+      (j.avisos && j.avisos.length ? ' Atenção: ' + j.avisos.join('; ') + '.' : '');
+    links.innerHTML = `<a href="${j.editar}" target="_blank" rel="noopener">abrir para editar ↗</a>` +
+                      `<a href="${j.publicado}" target="_blank" rel="noopener">ver como o aluno vê ↗</a>`;
+    links.hidden = false;
+    marcarOk(btn);
+  }catch(e){
+    st.className = 'ponte-status ruim';
+    st.textContent = 'Não consegui falar com a ponte: ' + (e.message||e) +
+      '. Confira se a implantação está como “Qualquer pessoa” e se o endereço termina em /exec.';
+  }
+  btn.disabled = false; btn.textContent = rotulo;
+});
 
 // ---------- início ----------
 carregarCfg();
