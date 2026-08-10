@@ -168,6 +168,28 @@
   @media (prefers-reduced-motion: reduce){ .pv-destacado{animation:none} }
 
 
+
+  /* tipo do formulário */
+  .tipos{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:6px 0 12px}
+  @media(max-width:640px){.tipos{grid-template-columns:1fr}}
+  .tipo-op{border:1px solid var(--line);border-radius:11px;padding:14px;cursor:pointer;background:var(--card);
+    display:block;transition:border-color .18s, box-shadow .18s, transform .18s}
+  .tipo-op:hover{transform:translateY(-2px)}
+  .tipo-op input{position:absolute;opacity:0;pointer-events:none}
+  .tipo-op b{display:block;font-family:'Archivo',sans-serif;font-size:15px}
+  .tipo-op small{display:block;color:var(--muted);font-size:12.5px;margin-top:4px;line-height:1.45}
+  .tipo-op .cor{display:inline-block;width:11px;height:11px;border-radius:50%;margin-right:7px;vertical-align:0}
+  .tipo-op.marcado{border-color:var(--acao);box-shadow:0 0 0 2px rgba(29,79,216,.16)}
+  #nomeForm{width:100%;border:1px solid var(--line);border-radius:9px;padding:10px 12px;
+    font-family:'Atkinson Hyperlegible',sans-serif;font-size:15px;background:#fff;color:var(--ink);margin-bottom:6px}
+  #nomeForm:focus{outline:2px solid var(--acao);outline-offset:1px}
+  .modelo-cx{border:1px solid var(--line);border-radius:11px;padding:14px;background:#F7F9FC;margin:6px 0 14px}
+  .modelo-cx label{display:flex;gap:8px;align-items:flex-start;font-size:14.5px;cursor:pointer}
+  .modelo-cx input[type=checkbox]{width:16px;height:16px;accent-color:var(--acao);margin-top:3px}
+  .modelo-cx small{display:block;color:var(--muted);font-size:13px;line-height:1.55;margin-top:4px}
+  #modeloId{width:100%;border:1px solid var(--line);border-radius:8px;padding:9px 11px;margin-top:10px;
+    font-family:var(--mono);font-size:13px;background:#fff;color:var(--ink)}
+
   /* editor de indícios */
   .ind-editor{margin-top:10px;border:1px solid var(--line);border-left:3px solid var(--acao);
     border-radius:9px;padding:12px;background:#F7F9FC}
@@ -288,20 +310,25 @@
 
 
   /* ================= ABAS LATERAIS ================= */
-  .trilho{position:fixed;left:14px;top:50%;transform:translateY(-50%);z-index:60;
-    display:flex;flex-direction:column;gap:14px;width:186px}
+  .trilho{position:fixed;left:22px;top:50%;transform:translateY(-50%);z-index:60;
+    display:flex;flex-direction:column;gap:18px;width:clamp(210px,17vw,268px)}
   .trilho button{
-    width:100%;text-align:left;background:var(--card);color:var(--ink);
-    border:1px solid var(--line);border-radius:14px;padding:18px 16px;cursor:pointer;
-    box-shadow:0 3px 16px rgba(20,30,50,.08);
-    transition:transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+    width:100%;min-height:clamp(200px,26vh,268px);text-align:left;
+    display:flex;flex-direction:column;justify-content:flex-start;
+    background:var(--card);color:var(--ink);border:1px solid var(--line);
+    border-radius:18px;padding:26px 22px;cursor:pointer;
+    box-shadow:0 4px 20px rgba(20,30,50,.08);
+    transition:transform .2s ease, box-shadow .2s ease, border-color .2s ease;
   }
-  .trilho button:hover{transform:translateX(4px);border-color:var(--acao);
-    box-shadow:0 8px 24px rgba(29,79,216,.16)}
-  .trilho button .ico{display:block;font-size:23px;margin-bottom:9px;line-height:1}
-  .trilho button .tit{display:block;font-family:'Archivo',sans-serif;font-weight:700;font-size:15px;
-    letter-spacing:-.01em;line-height:1.25}
-  .trilho button .desc{display:block;font-size:12.5px;color:var(--muted);margin-top:6px;line-height:1.45}
+  .trilho button:hover{transform:translateX(5px) translateY(-2px);border-color:var(--acao);
+    box-shadow:0 12px 30px rgba(29,79,216,.18)}
+  .trilho button .ico{display:block;font-size:34px;margin-bottom:14px;line-height:1}
+  .trilho button .tit{display:block;font-family:'Archivo',sans-serif;font-weight:800;font-size:19px;
+    letter-spacing:-.02em;line-height:1.2}
+  .trilho button .desc{display:block;font-size:13.5px;color:var(--muted);margin-top:10px;line-height:1.5}
+  .trilho button .abrir{margin-top:auto;padding-top:14px;font-family:var(--mono);font-size:11.5px;
+    letter-spacing:.08em;color:var(--acao);opacity:.75}
+  .trilho button:hover .abrir{opacity:1}
   .trilho button.ativa{border-color:var(--acao);box-shadow:0 0 0 2px rgba(29,79,216,.18)}
   .trilho button.ativa .tit{color:var(--acao)}
   .imprimir{border:1px solid var(--line);background:var(--paper);border-radius:9px;
@@ -402,10 +429,11 @@
   .lista-ind{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:8px 8px 8px 0;margin-top:6px}
   .lista-ind li{font-size:15px;line-height:1.6;margin:8px 0 8px 34px;color:var(--ink)}
 
-  @media(max-width:1240px){
+  @media(max-width:1400px){
     .trilho{position:static;transform:none;flex-direction:row;gap:10px;width:auto;
       padding:14px 16px 0;justify-content:center;flex-wrap:wrap}
-    .trilho button{width:auto;padding:11px 16px;display:flex;align-items:center;gap:9px}
+    .trilho button{width:auto;min-height:0;padding:11px 16px;flex-direction:row;align-items:center;gap:9px}
+    .trilho button .abrir{display:none}
     .trilho button:hover{transform:translateY(-2px)}
     .trilho button .ico{display:inline;font-size:16px;margin:0}
     .trilho button .tit{font-size:14px}
@@ -422,11 +450,13 @@
 <nav class="trilho" aria-label="Painéis do projeto">
   <button id="abaCriterios" aria-controls="painel">
     <span class="ico">🔍</span><span class="tit">Critérios do ProVIA</span>
-    <span class="desc">Os seis critérios, a escala de leitura e a rubrica das justificativas.</span>
+    <span class="desc">Os seis critérios de análise visual, a escala de leitura e a rubrica das justificativas escritas.</span>
+    <span class="abrir">abrir painel →</span>
   </button>
   <button id="abaMaterial" aria-controls="painel">
     <span class="ico">📄</span><span class="tit">Material do artigo</span>
-    <span class="desc">Os oito prompts originais, fontes e composição dos instrumentos.</span>
+    <span class="desc">Os oito prompts originais, os créditos das imagens reais e a composição dos instrumentos.</span>
+    <span class="abrir">abrir painel →</span>
   </button>
 </nav>
 <div class="veu" id="veu"></div>
@@ -588,6 +618,25 @@
       <button class="mini" id="btnBaixarTodas" type="button">⬇ baixar todas (sintéticas)</button>
     </div>
     <div id="previaLista"></div>
+    <h3 style="font-family:'Archivo',sans-serif;font-size:17px;margin:26px 0 8px">Qual formulário é este?</h3>
+    <div class="tipos" role="radiogroup" aria-label="Tipo do formulário">
+      <label class="tipo-op marcado"><input type="radio" name="tipoForm" value="pre" checked>
+        <b><span class="cor" style="background:#4285F4"></span>Pré-teste</b>
+        <small>Tema azul do Google Forms, igual ao seu pré-teste atual.</small></label>
+      <label class="tipo-op"><input type="radio" name="tipoForm" value="pos">
+        <b><span class="cor" style="background:#F29900"></span>Pós-teste</b>
+        <small>Tema laranja do Google Forms, igual ao seu pós-teste atual.</small></label>
+      <label class="tipo-op"><input type="radio" name="tipoForm" value="livre">
+        <b><span class="cor" style="background:#5B6672"></span>Nome personalizado</b>
+        <small>Você escolhe o título e o tema depois, no Forms.</small></label>
+    </div>
+    <input type="text" id="nomeForm" value="Análise de Conteúdos em Redes Sociais — Pré-teste" aria-label="Título do formulário">
+    <div class="modelo-cx">
+      <label><input type="checkbox" id="usarModelo">
+        <span><b>Copiar o visual de um formulário que já tenho</b>
+        <small>O Google não deixa nenhum programa definir cores e banner de um formulário novo. Mas dá para <b>copiar um formulário seu</b> e trocar só as perguntas — assim o tema, o banner e as configurações vêm junto, idênticos.</small></span></label>
+      <input type="text" id="modeloId" placeholder="Cole aqui o link do seu formulário modelo (ou só o ID)" hidden>
+    </div>
     <div class="previa-acoes">
       <button class="btn" id="btnGerarForm" type="button">Gerar formulário (baixa o script)</button>
       <span id="avisoGerarForm" aria-live="polite"></span>
@@ -1490,10 +1539,35 @@ $('#btnBaixarTodas').addEventListener('click', async ()=>{
   for(const it of itens){ if(it.status==='pronta' && !it.externa){ baixarItem(it); await new Promise(r=>setTimeout(r,400)); } }
 });
 
+const TEMAS = {pre:{cor:'azul (#4285F4)', nome:'Pré-teste'}, pos:{cor:'laranja (#F29900)', nome:'Pós-teste'}, livre:{cor:'à sua escolha', nome:'personalizado'}};
+function tipoForm(){ return (document.querySelector('input[name=tipoForm]:checked')||{value:'pre'}).value; }
+document.querySelectorAll('input[name=tipoForm]').forEach(r=>r.addEventListener('change', ()=>{
+  document.querySelectorAll('.tipo-op').forEach(o=>o.classList.toggle('marcado', o.contains(r) && r.checked));
+  const t = tipoForm();
+  const padrao = {pre:'Análise de Conteúdos em Redes Sociais — Pré-teste',
+                  pos:'Análise de Conteúdos em Redes Sociais — Pós-teste',
+                  livre:'Análise de Conteúdos em Redes Sociais'};
+  $('#nomeForm').value = padrao[t];
+  if(t==='livre') $('#nomeForm').focus();
+}));
+$('#usarModelo').addEventListener('change', e=>{
+  $('#modeloId').hidden = !e.target.checked;
+  if(e.target.checked) $('#modeloId').focus();
+});
+function idDoModelo(){
+  if(!$('#usarModelo').checked) return '';
+  const v = $('#modeloId').value.trim();
+  const m = v.match(/\/d\/([a-zA-Z0-9_-]{20,})/);
+  return m ? m[1] : v;
+}
+
 function configuracaoForm(){
   return {
     ferramenta:'ProVIA · gerador de formulário', gerado_em:new Date().toISOString(),
-    titulo:'Análise de Conteúdos em Redes Sociais',
+    titulo: ($('#nomeForm').value.trim() || 'Análise de Conteúdos em Redes Sociais'),
+    tipo: tipoForm(),
+    tema: TEMAS[tipoForm()].cor,
+    modeloId: idDoModelo(),
     pastaDrive:'ProVIA',
     itens: ordemForm.map(idc=>{
       const p = itemPrevia(idc), op = opcoesForm[idc];
@@ -1514,49 +1588,102 @@ function configuracaoForm(){
   };
 }
 function gerarScriptForms(cfg){
-  return `/**  ProVIA — gerador de Google Forms (cole em script.google.com)
+  const usaModelo = !!cfg.modeloId;
+  return `/**  ProVIA - gerador de Google Forms
+ *  Formulario: ${cfg.titulo}
+ *  Tema previsto: ${cfg.tema}
+ *
  *  COMO USAR (5 minutos):
- *  1) No site do ProVIA, use "baixar todas (sintéticas)".
+ *  1) No site do ProVIA, use "baixar todas (sinteticas)".
  *  2) No seu Google Drive, crie uma pasta chamada:  ${cfg.pastaDrive}
- *     e envie para ela os arquivos baixados (e as imagens reais locais, se houver).
- *  3) Abra script.google.com → Novo projeto → apague tudo e cole ESTE arquivo inteiro.
- *  4) Aperte ▶ Executar (função criarFormulario) e autorize com a sua conta.
- *  5) O link do formulário aparece no registro de execução (Ctrl+Enter).
+ *     e envie para ela os arquivos baixados.
+ *  3) Abra script.google.com -> Novo projeto -> apague tudo e cole ESTE arquivo.
+ *  4) Aperte Executar (funcao criarFormulario) e autorize com a sua conta.
+ *  5) O link do formulario aparece no registro de execucao (Ctrl+Enter).
+ *${usaModelo
+  ? `  OBS: este script vai COPIAR o formulario modelo indicado, entao o tema,
+ *  o banner e as configuracoes visuais vem junto, identicos ao original.`
+  : `  OBS: o Google nao permite que scripts definam cor e banner. Depois de criar,
+ *  abra o formulario, toque na paleta e escolha o tema ${cfg.tema}.`}
  */
 const CONFIG = ${JSON.stringify(cfg, null, 2)};
 
+// Texto do termo de assentimento. Edite os nomes se voce for replicar em outra escola.
+const ASSENTIMENTO =
+  'Voce esta sendo convidado(a) a participar de uma pesquisa cientifica sobre analise de imagens ' +
+  'em redes sociais, realizada pelo estudante Gibrahil Kanj, do 2.o ano do Ensino Medio da EEB Jose ' +
+  'Arantes, orientado pelo professor Cristiano Rodrigues Mariot. A pesquisa faz parte do 32.o Premio ' +
+  'Jovem Cientista (CNPq / Fundacao Roberto Marinho), edicao 2026. Voce vai observar algumas imagens ' +
+  'e responder perguntas sobre elas. Sua participacao e voluntaria e completamente anonima - nenhum ' +
+  'nome, e-mail ou dado pessoal sera coletado. Voce pode desistir a qualquer momento sem nenhuma ' +
+  'consequencia. Os resultados serao usados apenas para fins cientificos e educacionais.';
+
 function criarFormulario(){
-  const form = FormApp.create(CONFIG.titulo);
-  form.setIsQuiz(true).setDescription('Observe atentamente cada conteúdo antes de responder.');
-  form.addTextItem().setTitle('[Código]').setHelpText('Preenchido pelo pesquisador. Não altere.').setRequired(true);
-  const pasta = obterPasta_(CONFIG.pastaDrive);
+  var form;
+  if(CONFIG.modeloId){
+    var copia = DriveApp.getFileById(CONFIG.modeloId).makeCopy(CONFIG.titulo);
+    form = FormApp.openById(copia.getId());
+    var antigos = form.getItems();
+    for(var k = antigos.length - 1; k >= 0; k--) form.deleteItem(antigos[k]);
+    Logger.log('Modelo copiado: tema e banner preservados.');
+  } else {
+    form = FormApp.create(CONFIG.titulo);
+  }
+  form.setTitle(CONFIG.titulo);
+  form.setIsQuiz(true);
+  form.setDescription('Observe atentamente cada conteudo antes de responder.');
+  form.setCollectEmail(false);
+  form.setProgressBar(true);
+
+  // --- Secao 1: assentimento e codigo ---
+  form.addSectionHeaderItem()
+      .setTitle('Termo de Assentimento Livre e Esclarecido')
+      .setHelpText(ASSENTIMENTO);
+  var consent = form.addMultipleChoiceItem();
+  consent.setTitle('Voce concorda em participar desta pesquisa?').setRequired(true);
+  consent.setChoiceValues(['Sim, concordo em participar', 'Nao concordo - prefiro nao participar']);
+  form.addTextItem().setTitle('[Codigo]')
+      .setHelpText('Preenchido pelo pesquisador. Nao altere.').setRequired(true);
+  form.addPageBreakItem().setTitle('Analise de Conteudos em Redes Sociais')
+      .setHelpText('Observe atentamente o conteudo abaixo antes de responder.');
+
+  // --- Secao 2: imagens ---
+  var pasta = obterPasta_(CONFIG.pastaDrive);
+  var semImagem = 0;
   CONFIG.itens.forEach(function(item, i){
-    const blob = blobDe_(item, pasta);
-    if(blob) form.addImageItem().setImage(blob).setTitle('Imagem ' + (i+1));
-    const mc = form.addMultipleChoiceItem();
-    mc.setTitle('Observe a imagem acima. Este conteúdo parece ser:').setRequired(true).setPoints(1);
+    var blob = blobDe_(item, pasta);
+    if(blob){ form.addImageItem().setImage(blob).setTitle('Imagem ' + (i+1)); }
+    else { semImagem++; }
+    var mc = form.addMultipleChoiceItem();
+    mc.setTitle('Observe a imagem acima. Este conteudo parece ser:').setRequired(true).setPoints(1);
     mc.setChoices([
       mc.createChoice('Provavelmente real.', item.gabarito === 'real'),
       mc.createChoice('Provavelmente criada por IA.', item.gabarito === 'ia')
     ]);
-    form.addMultipleChoiceItem().setTitle('Qual é o seu nível de confiança nessa resposta?')
-        .setChoiceValues(['🔴 Baixa','🟡 Média','🟢 Alta']).setRequired(true);
+    form.addMultipleChoiceItem().setTitle('Qual e o seu nivel de confianca nessa resposta?')
+        .setChoiceValues(['Baixa','Media','Alta']).setRequired(true);
     if(item.indicios){
-      const cb = form.addCheckboxItem();
-      cb.setTitle('O que mais influenciou sua resposta? Marque até 2 indícios.').setRequired(true);
+      var cb = form.addCheckboxItem();
+      cb.setTitle('O que mais influenciou sua resposta? Marque ate 2 indicios.').setRequired(true);
       cb.setChoiceValues((item.indiciosLista && item.indiciosLista.length) ? item.indiciosLista : CONFIG.indiciosPadrao);
       cb.setValidation(FormApp.createCheckboxValidation().requireSelectAtMost(2).build());
     }
     if(item.justificativa){
-      form.addParagraphTextItem().setTitle('Explique em uma frase o principal motivo da sua escolha.').setRequired(true);
+      form.addParagraphTextItem()
+          .setTitle('Explique em uma frase o principal motivo da sua escolha.').setRequired(true);
     }
   });
-  Logger.log('Formulário criado!');
+
+  Logger.log('=== FORMULARIO PRONTO ===');
+  Logger.log('Titulo:    ' + CONFIG.titulo);
   Logger.log('Responder: ' + form.getPublishedUrl());
   Logger.log('Editar:    ' + form.getEditUrl());
+  if(semImagem) Logger.log('ATENCAO: ' + semImagem + ' item(ns) ficaram sem imagem. Confira a pasta ' + CONFIG.pastaDrive + '.');
+  if(!CONFIG.modeloId) Logger.log('Tema: abra o formulario, toque na paleta e escolha ' + CONFIG.tema + '.');
 }
+
 function obterPasta_(nome){
-  const it = DriveApp.getFoldersByName(nome);
+  var it = DriveApp.getFoldersByName(nome);
   return it.hasNext() ? it.next() : null;
 }
 function blobDe_(item, pasta){
@@ -1564,11 +1691,10 @@ function blobDe_(item, pasta){
     if(item.url) return UrlFetchApp.fetch(item.url).getBlob();
     if(item.urlExterna) return UrlFetchApp.fetch(item.urlExterna).getBlob();
     if(item.arquivo && pasta){
-      const f = pasta.getFilesByName(item.arquivo);
+      var f = pasta.getFilesByName(item.arquivo);
       if(f.hasNext()) return f.next().getBlob();
     }
-  }catch(e){ Logger.log('Sem imagem para um item: ' + e); }
-  Logger.log('AVISO: imagem não encontrada (' + (item.arquivo||item.url||'?') + ') — o item entra sem imagem.');
+  }catch(e){ Logger.log('Falha ao buscar imagem: ' + e); }
   return null;
 }
 `;
@@ -1596,10 +1722,13 @@ $('#btnGerarForm').addEventListener('click', ()=>{
     return;
   }
   const cfg = configuracaoForm();
-  baixarTexto('provia_form.gs', gerarScriptForms(cfg), 'text/plain');
-  setTimeout(()=>baixarTexto('provia_form_config.json', JSON.stringify(cfg,null,2), 'application/json'), 500);
+  const suf = cfg.tipo==='pre' ? '_pre' : (cfg.tipo==='pos' ? '_pos' : '');
+  baixarTexto('provia_form'+suf+'.gs', gerarScriptForms(cfg), 'text/plain');
+  setTimeout(()=>baixarTexto('provia_form'+suf+'_config.json', JSON.stringify(cfg,null,2), 'application/json'), 500);
   marcarOk($('#btnGerarForm'));
-  $('#avisoGerarForm').textContent = 'Dois arquivos baixados. Siga os 5 passos escritos no topo do provia_form.gs — em 5 minutos o formulário nasce na sua conta Google.';
+  $('#avisoGerarForm').textContent = cfg.modeloId
+    ? 'Arquivos baixados. O script vai copiar o seu formulário modelo — tema e banner idênticos. Siga os 5 passos no topo do .gs.'
+    : 'Arquivos baixados. Siga os 5 passos no topo do .gs; depois é só aplicar o tema ' + cfg.tema + ' na paleta do Forms.';
 });
 
 
