@@ -134,7 +134,7 @@
   .prow-acoes .mini{width:34px}
   .cartao.alvo{outline:2px solid var(--acao);outline-offset:2px}
   .cartao.solta .quadro{outline:2px dashed var(--acao);outline-offset:-4px;background:#F0F4FE}
-  #acoesPrompts{display:flex;gap:12px;align-items:center;margin-top:14px;flex-wrap:wrap}
+  #acoesPrompts, .acoes-linha{display:flex;gap:12px;align-items:center;margin-top:14px;flex-wrap:wrap}
   #avisoPrompts{font-size:14px;color:var(--erro)}
   .btn-conf{font-size:15px;padding:10px 18px}
   #secMotores{display:none}
@@ -420,7 +420,20 @@
 
   /* ================= ABAS LATERAIS ================= */
   .trilho{position:fixed;left:16px;top:50%;transform:translateY(-50%);z-index:60;
-    display:flex;flex-direction:column;gap:14px;width:196px}
+    display:flex;flex-direction:column;gap:14px;width:196px;
+    max-height:94vh;overflow-y:auto;padding:4px;scrollbar-width:thin}
+  /* telas baixas: os cartões encolhem para as 4 abas caberem sem rolagem */
+  @media(max-height:820px){
+    .trilho{gap:10px}
+    .trilho button{padding:13px 14px}
+    .trilho button .ico{font-size:19px;margin-bottom:6px}
+    .trilho button .desc{display:none}
+    .trilho button .abrir{margin-top:6px}
+  }
+  @media(max-height:640px){
+    .trilho button .abrir{display:none}
+    .trilho button{padding:10px 13px}
+  }
   .trilho button{
     width:100%;text-align:left;background:var(--card);color:var(--ink);
     border:1px solid var(--line);border-radius:14px;padding:18px 16px;cursor:pointer;
@@ -554,22 +567,22 @@
 <body>
 
 <nav class="trilho" aria-label="Painéis do projeto">
-  <button id="abaCriterios" aria-controls="painel">
+  <button type="button" id="abaCriterios" aria-controls="painel">
     <span class="ico">🔍</span><span class="tit">Critérios do ProVIA</span>
     <span class="desc">Os seis critérios de análise visual, a escala de leitura e a rubrica das justificativas escritas.</span>
     <span class="abrir">abrir painel →</span>
   </button>
-  <button id="abaAnalise" aria-controls="painel">
+  <button type="button" id="abaAnalise" aria-controls="painel">
     <span class="ico">📊</span><span class="tit">Análise dos resultados</span>
     <span class="desc">Pareia os dois formulários pelo código e aplica o teste de Wilcoxon.</span>
     <span class="abrir">abrir painel →</span>
   </button>
-  <button id="abaBoasVindas" aria-controls="painel">
+  <button type="button" id="abaBoasVindas" aria-controls="painel">
     <span class="ico">👋</span><span class="tit">Como usar o ProVIA</span>
     <span class="desc">O que é esta ferramenta, para que serve e como navegar por ela.</span>
     <span class="abrir">abrir painel →</span>
   </button>
-  <button id="abaMaterial" aria-controls="painel">
+  <button type="button" id="abaMaterial" aria-controls="painel">
     <span class="ico">📄</span><span class="tit">Material do artigo</span>
     <span class="desc">Os oito prompts originais, os créditos das imagens reais e a composição dos instrumentos.</span>
     <span class="abrir">abrir painel →</span>
@@ -581,7 +594,7 @@
     <div><h2 id="painelTit">Critérios do ProVIA</h2><div class="sub" id="painelSub">Protocolo de Verificação de Imagens geradas por IA</div></div>
     <div class="painel-acoes">
       <button class="imprimir" id="painelImprimir" type="button">🖨 imprimir</button>
-      <button class="fechar" id="painelFechar" aria-label="Fechar painel">✕</button>
+      <button type="button" class="fechar" id="painelFechar" aria-label="Fechar painel">✕</button>
     </div>
   </div>
   <div class="painel-corpo" id="painelCorpo"></div>
@@ -752,7 +765,7 @@
 
   <!-- GERAR -->
   <div class="barra-gerar">
-    <button class="btn" id="btnGerar">Criar os cartões de geração</button>
+    <button type="button" class="btn" id="btnGerar">Criar os cartões de geração</button>
     <span id="distribuicao" aria-live="polite"></span>
   </div>
   <p id="progresso" aria-live="polite"></p>
@@ -763,7 +776,7 @@
     <div class="passo-cab"><div class="passo-num" style="background:var(--pronto)">✓</div><h2 id="t4">Imagens geradas</h2></div>
     <p class="dica">Toque numa imagem para ampliar. A etiqueta de cada cartão registra a proveniência: motor, modelo, dificuldade e data.</p>
     <div class="grade" id="grade"></div>
-    <div style="margin-top:18px"><button class="btn btn-sec" id="btnManifesto">Baixar manifesto de proveniência (JSON)</button></div>
+    <div style="margin-top:18px"><button type="button" class="btn btn-sec" id="btnManifesto">Baixar manifesto de proveniência (JSON)</button></div>
   </section>
 
   <section id="secReais">
@@ -776,7 +789,7 @@
       <span id="bancoStatus" class="mono" style="font-size:12px;color:var(--muted)">banco de imagens reais: listas embutidas</span>
     </div>
     <div class="grade" id="reaisGrade"></div>
-    <div id="acoesPrompts" style="margin-top:14px">
+    <div id="acoesReais" class="acoes-linha" style="margin-top:14px">
       <button class="btn btn-conf" id="btnConfirmarReais" type="button">Confirmar imagens reais ✔</button>
     </div>
   </section>
@@ -846,8 +859,8 @@
     <div class="modal-rodape">
       <div class="etiqueta" id="modalEtiqueta"></div>
       <div style="display:flex;gap:8px">
-        <button class="mini" id="modalBaixar">baixar</button>
-        <button class="mini" id="modalFechar">fechar</button>
+        <button type="button" class="mini" id="modalBaixar">baixar</button>
+        <button type="button" class="mini" id="modalFechar">fechar</button>
       </div>
     </div>
   </dialog>
@@ -1202,8 +1215,8 @@ function criarCartao(item){
     </div>
     <div class="etiqueta"></div>
     <div class="acoes" hidden>
-      <button class="mini ac-baixar">baixar</button>
-      <button class="mini ac-remover" title="apagar esta imagem e colar outra">✕ remover</button>
+      <button type="button" class="mini ac-baixar">baixar</button>
+      <button type="button" class="mini ac-remover" title="apagar esta imagem e colar outra">✕ remover</button>
     </div>`;
   atualizarEtiqueta(el, item);
   const quadro = el.querySelector('.quadro');
@@ -1652,12 +1665,12 @@ function renderPrevia(){
     el.dataset.k = idc;
     el.innerHTML = `
       <div class="pv-ordem">
-        <button class="mini pv-sobe" title="subir" ${i===0?'disabled':''}>↑</button>
+        <button type="button" class="mini pv-sobe" title="subir" ${i===0?'disabled':''}>↑</button>
         <span class="pv-n">${i+1}</span>
-        <button class="mini pv-desce" title="descer" ${i===ordemForm.length-1?'disabled':''}>↓</button>
-        <button class="mini pv-um" title="sortear nova posição para esta imagem">🔀</button>
+        <button type="button" class="mini pv-desce" title="descer" ${i===ordemForm.length-1?'disabled':''}>↓</button>
+        <button type="button" class="mini pv-um" title="sortear nova posição para esta imagem">🔀</button>
       </div>
-      <img class="pv-thumb" alt="">
+      <img class="pv-thumb" alt="Miniatura — ${esc(p.rotulo)}">
       <div class="pv-info">
         <b class="${p.tipo==='real'?'pv-real':'pv-sint'}">${esc(p.rotulo)}</b>
         <small>${esc(p.sub)}</small>
@@ -1964,8 +1977,11 @@ const semAcento = s => String(s||'').toLowerCase().normalize('NFD').replace(/[\u
 
 // ---------- leitura de tabela ----------
 function lerDelimitado(texto){
-  const delim = (texto.split('\n')[0].match(/\t/g)||[]).length >
-                (texto.split('\n')[0].match(/,/g)||[]).length ? '\t' : ',';
+  // o delimitador é o mais frequente no cabeçalho: vírgula, ponto e vírgula (Excel pt-BR) ou tabulação
+  const cabeca = texto.split('\n')[0];
+  const conta = c => (cabeca.match(new RegExp('\\' + c, 'g'))||[]).length;
+  const delim = [[',',conta(',')], [';',conta(';')], ['\t',conta('\t')]]
+                .sort((a,b)=>b[1]-a[1])[0][0];
   const linhas = []; let campo = '', linha = [], aspas = false;
   for(let i=0;i<texto.length;i++){
     const c = texto[i];
@@ -2009,6 +2025,7 @@ function interpretar(linhas, nome){
   const acha = re => cab.findIndex(c => re.test(semAcento(c)));
   const todos = re => cab.map((c,i)=>[semAcento(c),i]).filter(([t])=>re.test(t)).map(([,i])=>i);
   const iCod = acha(/codigo/);
+  const iConsent = acha(/concorda em participar/);
   if(iCod < 0) throw new Error('não achei a coluna [Código] nesta planilha');
   const iScore = acha(/^score$|pontuacao|^nota$/);
   const iJust  = acha(/explique/);
@@ -2016,10 +2033,12 @@ function interpretar(linhas, nome){
   const cClass = todos(/parece ser/);
   const cConf  = todos(/confianca/);
   const registros = [];
+  let recusas = 0, semCodigo = 0;
   for(let i=1;i<linhas.length;i++){
     const l = linhas[i];
     const codigo = String(l[iCod]||'').trim().toUpperCase();
-    if(!codigo) continue;
+    if(!codigo){ semCodigo++; continue; }
+    if(iConsent >= 0 && /nao concordo|nao aceito|discordo/.test(semAcento(l[iConsent]))){ recusas++; continue; }
     const bruto = iScore >= 0 ? String(l[iScore]||'') : '';
     const m = bruto.match(/-?\d+([.,]\d+)?/);
     registros.push({
@@ -2035,7 +2054,7 @@ function interpretar(linhas, nome){
   const mapa = new Map();
   registros.forEach(r => mapa.set(r.codigo, r));
   return {nome, linhas: registros.length, registros: [...mapa.values()],
-          duplicados: registros.length - mapa.size,
+          duplicados: registros.length - mapa.size, recusas, semCodigo,
           temScore: iScore >= 0, nQuestoes: cClass.length};
 }
 
@@ -2174,6 +2193,8 @@ function desenharSlots(){
       alvo.innerHTML = `<div class="arq">${esc(d.nome)}</div>` +
         `<div class="resumo2">${d.registros.length} respostas · ${d.nQuestoes} imagens` +
         (d.duplicados ? ` · ${d.duplicados} código(s) repetido(s): ficou a última resposta` : '') +
+        (d.recusas ? ` · <b>${d.recusas} sem consentimento (descartada[s])</b>` : '') +
+        (d.semCodigo ? ` · ${d.semCodigo} sem código (descartada[s])` : '') +
         (d.temScore ? '' : ' · <b>sem coluna de pontuação</b>') + `</div>`;
       acoes.innerHTML = '<button class="mini remover-tab" type="button">✕ remover</button>';
       acoes.querySelector('.remover-tab').addEventListener('click', ()=>{
