@@ -1,3 +1,4 @@
+[README(5).md](https://github.com/user-attachments/files/30928854/README.5.md)
 # ProVIA · Laboratório de Imagens
 
 Ferramenta aberta do projeto **ProVIA** (EEB José Arantes, Camboriú-SC) — pesquisa sobre
@@ -63,10 +64,62 @@ ideal 5,3×).
 **Prévia e geração do formulário:** com as reais confirmadas e as sintéticas
 devolvidas, a prévia mostra os itens na ordem do Forms (↑ ↓ e 🔀), com as perguntas
 fixas (real/IA + confiança) e as opcionais por imagem (indícios com limite de 2 e
-justificativa). O botão **Gerar formulário** baixa `provia_form.gs` — um Apps Script
-com a sua configuração embutida que, colado em script.google.com, cria o Google Forms
-em modo quiz (gabarito automático) na conta de quem executa — mais o
-`provia_form_config.json` de proveniência completa.
+justificativa). Antes de gerar, escolhe-se o tipo do formulário — **Pré-teste** (tema azul),
+**Pós-teste** (tema laranja) ou **nome personalizado** — e, opcionalmente, o link de um
+formulário próprio para servir de modelo visual.
+
+O botão **Gerar formulário** baixa `provia_form.gs` — um Apps Script com a configuração
+embutida que, colado em script.google.com, monta o Google Forms na conta de quem executa:
+termo de assentimento, campo de código, quebra de seção, e para cada imagem as perguntas
+de classificação (modo quiz, 1 ponto, gabarito automático), confiança, indícios (com
+limite de 2) e justificativa. Vem junto o `provia_form_config.json` com a proveniência.
+
+**Geração direta (ponte).** Além do caminho manual, o ProVIA cria o formulário sem sair
+da página: a pessoa publica uma vez um pequeno Apps Script na própria conta
+(*Implantar → App da Web*), cola o endereço `/exec` no ProVIA, e a partir daí o botão
+**Gerar formulário agora** envia o lote inteiro — imagens sintéticas em base64, imagens
+reais por URL — e devolve na tela os links de edição e de resposta. O endereço da ponte
+fica salvo no navegador; nada trafega por servidor do projeto.
+
+**Sobre o tema visual:** o Google não expõe API para cor e banner de formulários. Por
+isso o ProVIA oferece o caminho da **cópia de modelo** — o script duplica um formulário
+existente e troca só as perguntas, preservando tema, banner e configurações. Sem modelo,
+o tema é aplicado à mão na paleta do Forms, em dois cliques.
+
+## Painéis laterais
+
+Quatro abas fixas na lateral abrem painéis:
+
+- **Como usar o ProVIA** — apresentação da ferramenta, os cinco passos e o cuidado ético
+  antes de aplicar em turma. Abre sozinha a cada visita, e pode ser desligada.
+- **Análise dos resultados** — recebe as duas planilhas de respostas (CSV, TSV, XLSX ou
+  colagem direta), pareia os participantes pelo `[Código]`, mostra quantos ficaram
+  pareados e aplica o **teste de Wilcoxon pareado** sobre os pontos de acerto. Lista
+  todas as justificativas escritas para avaliação com a rubrica 0/1/2 — as notas ficam
+  salvas no navegador — e roda o teste também sobre as justificativas e sobre a
+  pontuação total (0 a 8). Exporta os resultados em CSV.
+
+  *Implementação:* postos médios para empates, descarte de diferenças nulas, valor de
+  **p exato** (distribuição completa de W⁺) quando há até 22 pares sem empates, e
+  aproximação normal com correção de continuidade e correção de empates nos demais
+  casos, com tamanho de efeito r = |Z|/√n. Conferido contra o `scipy.stats.wilcoxon`
+  nos dados reais da pesquisa (W = 434,5 · p = 0,63792 nos dois) e em casos de p exato.
+
+- **Critérios do ProVIA** — os seis critérios de análise visual, a escala de leitura
+  (0–1 provavelmente real · 2–3 sem certeza · 4–6 provavelmente gerada) e a rubrica de
+  três níveis usada para pontuar as justificativas escritas.
+- **Material do artigo** — os oito prompts exatos das imagens sintéticas (com ferramenta
+  e função de cada uma, e botão de copiar), os créditos e licenças das oito imagens
+  reais, a composição dos instrumentos e as opções de indícios do formulário.
+
+Cada painel tem botão **🖨 imprimir**, com folha de estilo própria: sai só o conteúdo do
+painel, sem a interface do site e sem quebrar tabelas ou fichas no meio.
+
+Na prévia do formulário, marcar a **pergunta de indícios** abre um editor: no mínimo dois
+indícios escritos por imagem, com botões para adicionar, remover, preencher com os seis
+indícios padrão do ProVIA, ou cancelar tudo (o que desmarca a pergunta). O formulário só
+é gerado quando toda imagem marcada tem ao menos dois indícios preenchidos, e cada
+imagem leva a sua própria lista para o Google Forms.
 
 ## Próximo módulo
 
